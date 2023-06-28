@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   config_minish.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 14:10:03 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/03/08 16:52:48 by lfreydie         ###   ########.fr       */
+/*   Created: 2023/06/28 18:34:08 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/06/28 18:35:53 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+void	config_struct_gen()
 {
-	ft_memset(s, 0, n);
+	// check env
+	// 
 }

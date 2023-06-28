@@ -6,14 +6,16 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/10 09:25:21 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/01/26 15:36:05 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/03/04 21:01:15 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/libft.h"
 
-char	*ft_tmp(char *tmp, char *buffer)
+char	*ft_tmp(char *buffer)
 {
+	char	*tmp;
+
 	tmp = buffer;
 	if (!tmp)
 	{
@@ -41,7 +43,7 @@ char	*ft_read(int fd, char *buffer)
 		if (bytes_count == -1 || (bytes_count == 0 && ft_strlen(buffer) < 1))
 			return (free(buftmp), NULL);
 		buftmp[bytes_count] = '\0';
-		tmp = ft_tmp(tmp, buffer);
+		tmp = ft_tmp(buffer);
 		if (!tmp)
 			return (NULL);
 		buffer = ft_strjoin_gnl(tmp, buftmp);
@@ -61,7 +63,7 @@ char	*ft_line(char *buffer)
 		return (NULL);
 	while (buffer[i] != '\n' && buffer[i])
 		i ++;
-	res = malloc((i + ft_strchr_gnl(buffer, '\n') + 1) * sizeof(res));
+	res = malloc((i + ft_strchr_gnl(buffer, '\n') + 1) * sizeof(*res));
 	if (!res)
 		return (NULL);
 	i = 0;
@@ -90,7 +92,7 @@ char	*ft_next(char *buffer)
 		i++;
 	if (!buffer[i] || !buffer[i + 1])
 		return (free(buffer), NULL);
-	res = malloc((ft_strlen(buffer) - i) * sizeof(res));
+	res = malloc((ft_strlen(buffer) - i) * sizeof(*res));
 	if (!res)
 		return (NULL);
 	i++;

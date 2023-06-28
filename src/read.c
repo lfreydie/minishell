@@ -1,29 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/24 15:58:36 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/04/25 17:35:45 by lfreydie         ###   ########.fr       */
+/*   Created: 2023/06/28 17:54:52 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/06/28 18:30:56 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+char	*ft_readline(void)
 {
-	t_list	*tmp;
+	char	*line;
+	char	*prompt;
 
-	if (lst)
+	prompt = get_prompt();
+	line = readline(prompt);
+	free(prompt);
+	if (line)
 	{
-		if (*lst == NULL)
-			*lst = new;
-		else
-		{
-			tmp = ft_lstlast(*(lst));
-			tmp -> next = new;
-		}
+		add_history(line);
+		return (line);
 	}
+	else
+		return (NULL);
+}
+
+char	*get_prompt(void)
+{
+	char	*dir;
+	char	*prompt;
+
+	dir = getcwd(NULL, 0);
+	if (dir)
+	{
+		prompt = ft_strjoin(dir, "$ ");
+		free(dir);
+		return (prompt);
+	}
+	else
+		return (NULL);
 }

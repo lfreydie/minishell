@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 14:10:03 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/03/08 16:52:48 by lfreydie         ###   ########.fr       */
+/*   Created: 2023/06/28 16:28:11 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/06/28 18:32:45 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "../includes/minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+int	main(void)
 {
-	ft_memset(s, 0, n);
+	char	*line;
+
+	config_struct_gen();
+	while (1)
+	{
+		line = ft_readline();
+		if (!line)
+			break ;
+		parsing_line(line);
+		ft_printf("input = %s\n", line);
+		free(line);
+		// init_line(line);
+		// exec_line(line);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:43:42 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/01/28 12:49:33 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/03/04 20:58:09 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,8 @@ char			*get_next_line(int fd);
 char			*ft_next(char *buffer);
 char			*ft_line(char *buffer);
 char			*ft_read(int fd, char *buffer);
-char			*ft_tmp(char *tmp, char *buffer);
+char			*ft_tmp(char *buffer);
 int				ft_strchr_gnl(char *str, char c);
-size_t			ft_strlen(const char *s);
 char			*ft_strjoin_gnl(char *s1, char *s2);
 
 //ft_printf
@@ -100,10 +99,7 @@ int				ft_putnbr(int nbr);
 int				put_hex(unsigned int x, char *base);
 int				ft_ptr_len(uintptr_t num);
 int				ft_print_ptr(unsigned long long ptr);
-size_t			ft_strlen(const char *s);
 void			ft_put_ptr(uintptr_t num);
-char			*ft_strchr(const char *s, int c);
-char			*ft_itoa(int n);
 char			*ft_utoa(unsigned int n);
 
 #endif

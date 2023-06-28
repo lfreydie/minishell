@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+         #
+#    By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 15:01:41 by lfreydie          #+#    #+#              #
-#    Updated: 2023/06/20 15:41:52 by lefreydier       ###   ########.fr        #
+#    Updated: 2023/06/28 17:02:47 by lfreydie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC ?= gcc
 NAME := minishell
 # NAME_B := minishell_bonus
 CFLAGS += -Wall -Wextra -Werror -g
-LIB_FLAGS = -L
+LIB_FLAGS = -L -lft -lreadline
 
 # -------- Directories -------- #
 
@@ -60,7 +60,7 @@ OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 $(NAME) :	$(LIBFT) $(OBJ)
 	@echo "$(BLUE) ==== Project compiling ==== $(END)"
-	@$(CC) $(CFLAGS) -I $(HD_DIR) $(OBJ) $(LIBFT) $(LIB_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) -I $(HD_DIR) $(OBJ) $(LIB_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN) ==== Project compiled ==== $(END)"
 
 $(LIBFT) :
@@ -72,7 +72,7 @@ $(LIBFT) :
 
 $(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(HD_DIR)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -I $(HD_DIR) -I $(LIBFT_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -I $(HD_DIR) -c $< -o $@
 
 # $(OBJ_B_DIR)/%.o : $(BONUS_DIR)/%.c $(HD_DIR)
 # 	@mkdir -p $(dir $@)

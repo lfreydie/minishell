@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 14:58:32 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/01/26 12:50:43 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/03/07 13:16:15 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 		i = (int)n - 1;
 		d = (char *)dest;
 		s = (char *)src;
-		while (i >= 0)
+		while (&d[i] && &s[i] && i >= 0)
 		{
 			d[i] = s[i];
 			i--;

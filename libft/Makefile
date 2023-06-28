@@ -6,7 +6,7 @@
 #    By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/17 10:31:53 by lefreydier        #+#    #+#              #
-#    Updated: 2023/01/28 12:50:06 by lfreydie         ###   ########.fr        #
+#    Updated: 2023/03/03 19:22:24 by lfreydie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,8 +48,7 @@ SOURCES	+=	$(SDIR)ft_lstnew.c $(SDIR)ft_lstadd_front.c $(SDIR)ft_lstsize.c $(SDI
 			$(SDIR)ft_lstiter.c $(SDIR)ft_lstmap.c
 #ft_printf
 SOURCES	+=	$(SDIR)ft_i_utoa.c $(SDIR)ft_print_ptr.c $(SDIR)ft_printf.c $(SDIR)ft_put_hex.c\
-			$(SDIR)ft_putchar.c $(SDIR)ft_putnbr_u.c $(SDIR)ft_putstr.c $(SDIR)ft_strchr.c\
-			$(SDIR)ft_strlen.c
+			$(SDIR)ft_putchar.c $(SDIR)ft_putnbr_u.c $(SDIR)ft_putstr.c
 
 #get_next_line
 SOURCES	+=	$(SDIR)get_next_line.c $(SDIR)get_next_line_utils.c
@@ -57,21 +56,18 @@ SOURCES	+=	$(SDIR)get_next_line.c $(SDIR)get_next_line_utils.c
 OBJECTS	=	$(SOURCES:.c=.o)
 
 %.o : %.c
-		@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
+	@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
 $(NAME):	$(OBJECTS) $(INCLUDE)
-			@$(AR) $(NAME) $(OBJECTS)
-			@echo "$(GREEN) ==== libft compiled ==== $(END)"
+	@$(AR) $(NAME) $(OBJECTS)
 
 all:	$(NAME)
 
 clean:
-		@$(RM) $(OBJECTS)
-		@echo "$(BLUE) ==== All objects removed ==== $(END)"
+	@$(RM) $(OBJECTS)
 
 fclean:	clean
-		@$(RM) $(NAME)
-		@echo "$(PINK) ==== All executables removed ==== $(END)"
+	@$(RM) $(NAME)
 
 re:	fclean all
 
