@@ -6,26 +6,28 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 16:28:11 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/06/28 18:32:45 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/06/29 14:39:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	char	*line;
 
-	config_struct_gen();
+	(void)av;
+	if (ac != 1)
+		return (EXIT_FAILURE);
+	// config_struct_gen();
 	while (1)
 	{
 		line = ft_readline();
 		if (!line)
 			break ;
-		parsing_line(line);
+		config_line_store(line);
 		ft_printf("input = %s\n", line);
 		free(line);
-		// init_line(line);
 		// exec_line(line);
 	}
 }
