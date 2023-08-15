@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 17:33:41 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/06/29 15:25:45 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/06/29 23:15:41 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,36 +26,15 @@ t_data	*config_line_store(char *line)
 void	ft_cut_line(t_data *data_all)
 {
 	int	i;
+	int	cmd;
 
-	data_all->line_cut = ft_split(data_all->line, ' ');
-	if (!data_all->line_cut | !(*data_all->line_cut))
-		return (ERR_TMP);
 	i = 0;
-	while (data_all->line_cut[i])
+	while (data_all->line[i])
 	{
-		if (ft_strchr(data_all->line_cut[i], '>'))
-			ft_strlcpy(data_all->line_sort->outfile, \
-			data_all->line_cut[i + 1], ft_strlen(data_all->line_cut[i + 1]));
-		else if (ft_strchr(data_all->line_cut[i], '<'))
-			ft_strlcpy(data_all->line_sort->infile, \
-			data_all->line_cut[i + 1], ft_strlen(data_all->line_cut[i + 1]));
-		else if (ft_strnstr(data_all->line_cut[i], ">>", 2))
+		if (strchr(data_all->line + i, '>'))
 		{
-			data_all->line_sort->append = 1;
-			ft_strlcpy(data_all->line_sort->outfile, \
-			data_all->line_cut[i + 1], ft_strlen(data_all->line_cut[i + 1]));
-		}
-		else if (ft_strnstr(data_all->line_cut[i], ">>", 2))
-		{
-			data_all->line_sort->append = 1;
-			ft_strlcpy(data_all->line_sort->outfile, \
-			data_all->line_cut[i + 1], ft_strlen(data_all->line_cut[i + 1]));
-		}
-		else 
-		{
-			data_all->line_sort->append = 1;
-			ft_strlcpy(data_all->line_sort->outfile, \
-			data_all->line_cut[i + 1], ft_strlen(data_all->line_cut[i + 1]));
+			if (strchr(data_all->line + i + 1, '>'))
+				
 		}
 	}
 }
