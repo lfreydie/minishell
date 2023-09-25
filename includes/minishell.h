@@ -6,7 +6,7 @@
 /*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/09/22 17:25:27 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:19:05 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ typedef struct s_data{
 	char	*tokens[MAX_TOKENS];
 	int		num_tokens;
 }					t_data;
+
+//-----------BUILT_IN_COMMANDS----------
+void	ft_pwd(void);
+void	ft_echo(char **args);
+void	ft_cd(char **args);
 
 //----------------UTILS-----------------
 char	*ft_strtok(char *str, const char *delimiters);
