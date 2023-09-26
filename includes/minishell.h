@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/09/26 16:04:52 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/09/26 17:01:14 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,26 @@
 # include <sys/resource.h>
 # include <signal.h>
 # include "libft.h"
+# include <stdbool.h>
+
 
 # define MAX_INPUT_LENGTH 1024
 # define MAX_TOKENS 100
 
+typedef struct s_tok	t_tok;
+
+typedef struct s_tok{
+	char			**cmd; // echo -n "blabalabal"
+	// char			**env;
+	char			*redir_in; // ce qui va avant <
+	char			*redir_out; // ce qui va apres >
+	bool			built_in; // true si c'est une des commandes que j'ai ecrit
+	t_tok			*next; // si plusieurs commandes c'est la prochaine commande (liste chainee)
+}					t_tok;
+
 typedef struct s_data{
-	char	*tokens[MAX_TOKENS];
-	int		num_tokens;
+	char			*tokens[MAX_TOKENS];
+	int				num_tokens;
 }					t_data;
 
 //-----------BUILT_IN_COMMANDS----------
