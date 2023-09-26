@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+         #
+#    By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 15:01:41 by lfreydie          #+#    #+#              #
-#    Updated: 2023/09/22 16:25:18 by bberthod         ###   ########.fr        #
+#    Updated: 2023/09/26 16:02:52 by blandineber      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC ?= gcc
 NAME := minishell
 CFLAGS += -Wall -Wextra -Werror -g
-LIB_FLAGS = -L -lft -lreadline
+LIB_FLAGS = -L./libft
 
 
 HD_DIR = ./includes
