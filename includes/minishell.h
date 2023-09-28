@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/09/28 12:57:10 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:05:45 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@
 
 typedef struct s_tok{
 	int				id;
+	char			**cmd;
+	char			**env;
 	bool			built_in;
-	char			*cmd;
+	pid_t			pid;
 	char			*redir_in;
 	char			*redir_out;
 	struct s_tok	next;
 }					t_tok;
 
 typedef struct s_data{
-	char			*tokens[MAX_TOKENS];
-	int				num_tokens;
 	char			*tokens[MAX_TOKENS];
 	int				num_tokens;
 }					t_data;
