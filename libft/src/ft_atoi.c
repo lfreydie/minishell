@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 14:21:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/01/26 12:50:43 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:59:52 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

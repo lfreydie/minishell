@@ -6,7 +6,7 @@
 /*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/09/25 19:44:06 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:02:21 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	main(void)
 		tokenise_input(input, &data);
 		printf("number of tokens : %d\n", data.num_tokens);
 		print_tokens(&data);
-
+		parse_token(&data);
 	}
 	return (0);
 }
