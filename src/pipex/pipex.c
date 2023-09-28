@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/05/12 12:15:02 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:36:53 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	main(int ac, char **av, char **envp)
-{
-	t_pipex	*infos;
+// int	main(int ac, char **av, char **envp)
+// {
+// 	t_pipex	*infos;
 
-	if (ac < 5)
-		return (ft_exit(NULL, ERR_ARG), 127);
-	infos = init_struct(ac, av, envp);
-	pipex_process(infos);
-	if (infos->heredoc)
-		unlink(infos->infile);
-	free_infos(infos);
-	return (0);
-}
+// 	if (ac < 5)
+// 		return (ft_exit(NULL, ERR_ARG), 127);
+// 	infos = init_struct(ac, av, envp);
+// 	pipex_process(infos);
+// 	if (infos->heredoc)
+// 		unlink(infos->infile);
+// 	free_infos(infos);
+// 	return (0);
+// }
 
 void	pipex_process(t_pipex *infos)
 {
