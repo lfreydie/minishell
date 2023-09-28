@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:43:42 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/03/04 20:58:09 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:59:27 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <string.h>
 # include <stdio.h>
 # include <ctype.h>
-# include <bsd/string.h>
 # include <stdarg.h>
 # include <limits.h>
 # include <stdint.h>

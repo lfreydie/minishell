@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/09/22 18:19:21 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:05:47 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,20 @@ void	tokenise_input(char *input, t_data *data)
 	data->tokens[data->num_tokens] = NULL;
 }
 
+void	print_prompt(void)
+{
+	char	buffer[1024];
+
+	if (getcwd(buffer, sizeof(buffer)) != NULL)
+	{
+		write(STDOUT_FILENO, buffer, strlen(buffer));
+		write(STDOUT_FILENO, "> ", 2);
+	}
+	else
+		perror("getcwd");
+
+}
+
 int	main(void)
 {
 	char	input[MAX_INPUT_LENGTH];
@@ -62,10 +76,9 @@ int	main(void)
 	int		i;
 	char	c;
 
-
 	while (1)
 	{
-		write(STDOUT_FILENO, "myShell> ", 10);
+		print_prompt();
 		i = 0;
 		while (read(STDIN_FILENO, &c, 1) && c != '\n'
 			&& i < MAX_INPUT_LENGTH - 1)
@@ -74,6 +87,7 @@ int	main(void)
 		tokenise_input(input, &data);
 		printf("number of tokens : %d\n", data.num_tokens);
 		print_tokens(&data);
+		parse_token(&data);
 	}
 	return (0);
 }
