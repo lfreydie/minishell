@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/09/28 14:55:16 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/09/29 16:39:28 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ typedef struct s_tok{
 	char			*redir_in; // file before <
 	char			*redir_out; // file after >
 	struct s_tok	*next; // lst chaine, next cmd : delimiteur '|'
+	struct s_tok	*previous;
 }					t_tok;
 
 typedef struct s_data{
 	t_tok			*head;
-	char			*tokens[MAX_TOKENS];
+	char			**tokens;
 	int				num_tokens;
 }					t_data;
 
