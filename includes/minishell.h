@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/02 11:55:07 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/10/02 12:15:50 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ typedef struct s_data{
 	t_tok			*head;
 	char			**tokens;
 	int				num_tokens;
+	int				pipefd[2];
+	int				tmp_fdin;
 	t_bin			garbage;
 }					t_data;
 
