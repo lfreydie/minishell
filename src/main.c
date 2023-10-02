@@ -3,25 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/09/28 13:02:21 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/09/29 16:53:50 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_tokens(t_data *data)
+void	clear_tokens(t_data *data)
 {
-	int	i;
+	t_tok	*current;
+	t_tok	*temp;
 
-	i = 0;
-	while (data->tokens[i] != NULL)
+	current = data->head;
+	while (current != NULL)
 	{
-		printf("Token %d : %s\n", i, data->tokens[i]);
-		i++;
+		temp = current;
+		current = current->next;
+		free(temp->cmd);
+		free(temp);
 	}
+	data->head = NULL;
+	data->num_tokens = 0;
 }
 
 int	is_special_char(char c)
@@ -31,28 +36,14 @@ int	is_special_char(char c)
 
 void	tokenise_input(char *input, t_data *data)
 {
-	char	*token;
-	char	special_char[2];
-	int		len;
+	int	id;
 
-	data->num_tokens = 0;
-	token = ft_strtok(input, " \t\n");
-	while (token != NULL && data->num_tokens < MAX_TOKENS)
-	{
-		len = ft_strlen(token);
-		if (len > 1 && is_special_char(token[len - 1]))
-		{
-			special_char[0] = token[len - 1];
-			special_char[1] = '\0';
-			token[len - 1] = '\0';
-			data->tokens[data->num_tokens++] = ft_strdup(token);
-			data->tokens[data->num_tokens++] = ft_strdup(special_char);
-		}
-		else
-			data->tokens[data->num_tokens++] = ft_strdup(token);
-		token = ft_strtok(NULL, " \t\n");
-	}
-	data->tokens[data->num_tokens] = NULL;
+	id = 0;
+	data->tokens = ft_split(input, '|');
+	while (data->tokens[id])
+		id++;
+	data->num_tokens = id;
+	// data->tokens[data->num_tokens] = NULL;
 }
 
 void	print_prompt(void)
@@ -86,8 +77,10 @@ int	main(void)
 		input[i] = '\0';
 		tokenise_input(input, &data);
 		printf("number of tokens : %d\n", data.num_tokens);
-		print_tokens(&data);
+		print_tokens1(&data);
 		parse_token(&data);
+		print_tokens(&data);
+		clear_tokens(&data);
 	}
 	return (0);
 }

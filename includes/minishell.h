@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/09/28 14:40:23 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/10/02 11:55:07 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 # include <signal.h>
 # include <stdbool.h>
 
-
 # define MAX_INPUT_LENGTH 1024
 # define MAX_TOKENS 100
 
@@ -41,20 +40,22 @@ typedef struct s_bin{
 }					t_bin;
 
 typedef struct s_tok{
-	int				id;
-	char			**cmd;
-	char			**env;
-	bool			built_in;
-	pid_t			pid;
-	char			*redir_in;
+	int				id; // id cmd
+	char			**cmd; // cmd "echo" "-n" "ldvbnkvjbej"
+	char			**env; // : env pour chaque cmd
+	bool			built_in; // exec ou ft
+	pid_t			pid; // don't touch yet
+	char			*redir_in; // file before <
 	int				heredoc;
 	bool			append;
-	char			*redir_out;
-	t_tok			next;
+	char			*redir_out; // file after >
+	struct s_tok	*next; // lst chaine, next cmd : delimiteur '|'
+	struct s_tok	*previous;
 }					t_tok;
 
 typedef struct s_data{
-	char			*tokens[MAX_TOKENS];
+	t_tok			*head;
+	char			**tokens;
 	int				num_tokens;
 	t_bin			garbage;
 }					t_data;
@@ -64,7 +65,20 @@ void	ft_pwd(void);
 void	ft_echo(char **args);
 void	ft_cd(char **args);
 
+//----------------MAIN------------------
+void	print_prompt(void);
+void	tokenise_input(char *input, t_data *data);
+int		is_special_char(char c);
+void	clear_tokens(t_data *data);
+
+//---------------PARSING----------------
+void	parse_token(t_data *data);
+void	add_token(t_data *data, t_tok *token);
+t_tok	*create_token(int id, char **cmd, char *redir_in, char *redir_out);
+
 //----------------UTILS-----------------
 char	*ft_strtok(char *str, const char *delimiters);
+void	print_tokens(t_data *data);
+void	print_tokens1(t_data *data);
 
 #endif
