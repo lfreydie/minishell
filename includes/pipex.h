@@ -6,19 +6,14 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 13:06:33 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/05/02 15:56:56 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:25:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "libft.h"
-# include <stdlib.h>
-# include <string.h>
-# include <stdio.h>
-# include <unistd.h>
-# include <sys/wait.h>
+# include "minishell.h"
 # include <fcntl.h>
 # include <errno.h>
 

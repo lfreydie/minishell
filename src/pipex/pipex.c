@@ -6,11 +6,11 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/05/12 12:15:02 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/28 15:11:27 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "pipex.h"
 
 int	main(int ac, char **av, char **envp)
 {
@@ -26,29 +26,39 @@ int	main(int ac, char **av, char **envp)
 	return (0);
 }
 
-void	pipex_process(t_pipex *infos)
+void	pipex_process(s_data *data)
 {
-	int	status;
-	int	i;
+	int		status;
+	int		i;
+	t_tok	*token;
+	int		pipefd[2];
+	int		tmp_fdin;
 
-	infos->tmp_fdin = open(infos->infile, O_RDONLY);
-	if (infos->tmp_fdin < 0)
-		perror(infos->infile);
-	i = -1;
-	while (++i < infos->ncmd)
-		infos->tab_cmd[i].pid = fork_process(infos, i);
-	close(infos->tmp_fdin);
-	i = -1;
-	waitpid(infos->tab_cmd[infos->ncmd - 1].pid, &status, 0);
-	while (++i < infos->ncmd - 1)
-		wait(0);
+	token = data->token;
+	// if (token->redir_in)
+	// 	tmp_fdin = open(token->redir_in, O_RDONLY);
+	// if (infos->tmp_fdin < 0)
+		// perror(infos->infile);
+	while (token)
+	{
+		if (data->buit_in)
+			redir_built_in(data);
+		else
+			token.pid = fork_process(token, &pipefd[2], &tmp_fdin);
+		token = token->next;
+	}
+	// close(infos->tmp_fdin);
+	// i = -1;
+	// waitpid(infos->tab_cmd[infos->ncmd - 1].pid, &status, 0);
+	// while (++i < infos->ncmd - 1)
+		// wait(0);
 }
 
-pid_t	fork_process(t_pipex *infos, int i)
+pid_t	fork_process(t_tok *token, int pipefd[2], int tmp_fdin)
 {
 	pid_t	pid;
 
-	if (pipe(infos->pipefd) < 0)
+	if (pipe(pipefd) < 0)
 		perror("pipe");
 	pid = fork();
 	if (pid < 0)
@@ -56,16 +66,16 @@ pid_t	fork_process(t_pipex *infos, int i)
 	if (pid == 0)
 	{
 		redir(infos, i);
-		close_fds(infos->tmp_fdin, infos->pipefd[0], infos->pipefd[1], -1);
-		if (ft_strchr(infos->tab_cmd[i].cmd[0], '/'))
+		close_fds(tmp_fdin, pipefd[0], pipefd[1], -1);
+		if (ft_strchr(token->cmd[0], '/'))
 			execute_path(infos, i);
 		else
 			execute(infos, i);
 		ft_exit(infos, infos->tab_cmd[i].cmd[0]);
 	}
-	close(infos->tmp_fdin);
-	close(infos->pipefd[1]);
-	infos->tmp_fdin = infos->pipefd[0];
+	close(tmp_fdin);
+	close(pipefd[1]);
+	tmp_fdin = pipefd[0];
 	return (pid);
 }
 
@@ -95,5 +105,30 @@ void	redir(t_pipex *infos, int i)
 	{
 		if (dup2(infos->pipefd[1], STDOUT_FILENO) < 0)
 			perror("dup2");
+	}
+}
+
+void	redir(t_tok *token, int tmp_fdin, int pipefd[2])
+{
+	int	fd_out;
+
+	if (token->redir_in)
+	{
+		if (token->id != 1)
+			close(tmp_fdin);
+		tmp_fdin = open(token->redir_in, O_RDONLY);
+	}
+	if (token->redir_out)
+	{
+		if (token->append)
+			fd_out = open(token->redir_out, O_RDWR | O_CREAT | O_APPEND, 0644);
+		else
+			fd_out = open(token->redir_out, O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (fd_out >= 0 && dup2(fd_out, STDOUT_FILENO) < 0)
+			perror("dup2");
+	}
+	else if (!token->next)
+	{
+
 	}
 }

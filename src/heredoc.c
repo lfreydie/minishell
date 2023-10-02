@@ -1,79 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/25 16:08:25 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/09/28 14:22:34 by lfreydie         ###   ########.fr       */
+/*   Created: 2023/09/28 14:13:04 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/09/28 14:13:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "minishell.h"
 
-t_pipex	*init_struct(int ac, char **av, char **envp)
-{
-	t_pipex	*infos;
-
-	infos = ft_calloc(sizeof(*infos), 1);
-	if (!infos)
-		return (ft_exit(NULL, ERR_MAL), NULL);
-	infos->ncmd = ac - 3;
-	infos->env = envp;
-	heredoc_set(infos, av);
-	infos->outfile = av[ac - 1];
-	parse_cmd(infos, av);
-	return (infos);
-}
-
-char	**get_paths(t_pipex *infos)
-{
-	char		*env_path;
-	char		**paths;
-	int			i;
-
-	i = 0;
-	if (!infos->env)
-		return (NULL);
-	while (infos->env[i])
-	{
-		env_path = ft_strnstr(infos->env[i], "PATH=", 5);
-		if (env_path)
-			break ;
-		i++;
-	}
-	if (!env_path)
-		ft_exit(infos, NULL);
-	paths = ft_split(env_path + 5, ':');
-	if (!paths)
-		ft_exit(infos, ERR_MAL);
-	return (paths);
-}
-
-void	parse_cmd(t_pipex *infos, char **av)
-{
-	int	i;
-
-	infos->tab_cmd = ft_calloc(sizeof(*infos->tab_cmd), infos->ncmd);
-	if (!infos->tab_cmd)
-	{
-		if (infos->heredoc)
-			close(infos->tmp_fdin);
-		ft_exit(infos, ERR_MAL);
-	}
-	i = -1;
-	while (++i < infos->ncmd)
-	{
-		infos->tab_cmd[i].cmd = ft_split(av[i + 2 + infos->heredoc], ' ');
-		if (!infos->tab_cmd[i].cmd || !(*infos->tab_cmd[i].cmd))
-		{
-			if (infos->heredoc)
-				close(infos->tmp_fdin);
-			ft_exit(infos, ERR_MAL);
-		}
-	}
-}
 
 void	heredoc_set(t_pipex *infos, char **av)
 {
@@ -125,3 +63,4 @@ void	heredoc_write(t_pipex *infos, char *limiter, char *line)
 		}
 	}
 }
+

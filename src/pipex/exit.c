@@ -6,11 +6,11 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:39:25 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/05/01 17:20:15 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:11:06 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "pipex.h"
 
 void	ft_exit(t_pipex *infos, char *err)
 {

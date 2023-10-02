@@ -6,11 +6,11 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/05/01 16:19:59 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:11:11 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
+#include "pipex.h"
 
 char	*get_path_cmd(char *paths, char *cmd)
 {

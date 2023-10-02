@@ -6,13 +6,14 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/09/28 13:05:45 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:40:23 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "libft.h"
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -28,12 +29,16 @@
 # include <sys/time.h>
 # include <sys/resource.h>
 # include <signal.h>
-# include "libft.h"
 # include <stdbool.h>
 
 
 # define MAX_INPUT_LENGTH 1024
 # define MAX_TOKENS 100
+
+typedef struct s_bin{
+	void			*obj;
+	t_bin			next;
+}					t_bin;
 
 typedef struct s_tok{
 	int				id;
@@ -42,13 +47,16 @@ typedef struct s_tok{
 	bool			built_in;
 	pid_t			pid;
 	char			*redir_in;
+	int				heredoc;
+	bool			append;
 	char			*redir_out;
-	struct s_tok	next;
+	t_tok			next;
 }					t_tok;
 
 typedef struct s_data{
 	char			*tokens[MAX_TOKENS];
 	int				num_tokens;
+	t_bin			garbage;
 }					t_data;
 
 //-----------BUILT_IN_COMMANDS----------
