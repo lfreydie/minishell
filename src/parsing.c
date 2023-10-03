@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:06:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/09/29 17:01:39 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/03 19:03:31 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,34 +46,18 @@ void	add_token(t_data *data, t_tok *token)
 	data->num_tokens++;
 }
 
-// void	parse_token(t_data *data)
-// {
-// 	int		i;
-// 	int		id;
-// 	char	**cmd;
-// 	char	*redir_in;
-// 	char	*redir_out;
+int	search_redirections(t_data *data, char *token)
+{
+	int	i;
 
-// 	i = 0;
-// 	id = 0;
-// 	redir_in = "IDK";
-// 	redir_out = "IDK";
-// 	cmd = malloc(sizeof(char **) * (MAX_TOKENS + 1));
-
-// 	while (data->tokens[i] != NULL)
-// 	{
-// 		while (ft_strncmp(data->tokens[i], "|", ft_strlen(data->tokens[i])) != 0)
-
-// 			cmd[id][i] = *ft_strdup(data->tokens[i]);
-// 			i++;
-// 			j++;
-// 		}
-// 		cmd[id][j] = '\0';
-// 		add_token(data, create_token(id, cmd, redir_in, redir_out));
-// 		id++;
-// 	}
-// 	cmd[id] = NULL;
-// }
+	i = 0;
+	while (token[i])
+	{
+		if (token[i] == '>')
+			redir[0] = 0;
+	}
+	return (0);
+}
 
 void	parse_token(t_data *data)
 {
@@ -83,12 +67,31 @@ void	parse_token(t_data *data)
 	char	*redir_out;
 
 	id = 0;
-	redir_in = "IDK";
-	redir_out = "IDK";
+	redir_in = NULL;
+	redir_out = NULL;
 	while (data->tokens[id])
 	{
-		cmd = ft_split(data->tokens[id], ' ');
+		if (search_redirections(data, data->tokens[id]) == 0)
+			cmd = ft_split(data->tokens[id], ' ');
 		add_token(data, create_token(id, cmd, redir_in, redir_out));
 		id++;
 	}
 }
+
+// void	parse_token(t_data *data)
+// {
+// 	int		id;
+// 	char	**cmd;
+// 	char	*redir_in;
+// 	char	*redir_out;
+
+// 	id = 0;
+// 	redir_in = NULL;
+// 	redir_out = NULL;
+// 	while (data->tokens[id])
+// 	{
+// 		cmd = ft_split(data->tokens[id], ' ');
+// 		add_token(data, create_token(id, cmd, redir_in, redir_out));
+// 		id++;
+// 	}
+// }

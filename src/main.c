@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/09/29 16:53:50 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/03 18:42:25 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	tokenise_input(char *input, t_data *data)
 	while (data->tokens[id])
 		id++;
 	data->num_tokens = id;
-	// data->tokens[data->num_tokens] = NULL;
 }
 
 void	print_prompt(void)

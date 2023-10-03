@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/02 12:15:50 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:03:18 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,24 @@
 # define MAX_INPUT_LENGTH 1024
 # define MAX_TOKENS 100
 
-typedef struct s_bin{
-	void			*obj;
-	t_bin			next;
-}					t_bin;
+// typedef struct s_bin{
+// 	void			*obj;
+// 	t_bin			next;
+// }					t_bin;
+
+// typedef struct s_env{
+// 	char			*name;
+// 	char			*value;
+// 	t_env			*next;
+// }					t_env;
 
 typedef struct s_tok{
 	int				id; // id cmd
 	char			**cmd; // cmd "echo" "-n" "ldvbnkvjbej"
-	char			**env; // : env pour chaque cmd
 	bool			built_in; // exec ou ft
 	pid_t			pid; // don't touch yet
 	char			*redir_in; // file before <
-	int				heredoc;
+	bool			heredoc;
 	bool			append;
 	char			*redir_out; // file after >
 	struct s_tok	*next; // lst chaine, next cmd : delimiteur '|'
@@ -55,11 +60,13 @@ typedef struct s_tok{
 
 typedef struct s_data{
 	t_tok			*head;
+	//t_env			*env;
 	char			**tokens;
+	int				**redir;
 	int				num_tokens;
 	int				pipefd[2];
 	int				tmp_fdin;
-	t_bin			garbage;
+	//t_bin			garbage;
 }					t_data;
 
 //-----------BUILT_IN_COMMANDS----------
