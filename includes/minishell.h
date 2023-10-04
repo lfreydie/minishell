@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/04 15:51:28 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 17:01:55 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_tok{
 
 typedef struct s_temp{
 	char	**tokens;
+	char	**tab_cmd;
 	int		*redir;
 }				t_temp;
 
@@ -92,9 +93,9 @@ char	*get_prompt(void);
 char	*ft_readline(void);
 
 //---------------PARSING----------------
-void	one_redirection(t_data *data, t_tok *new_token);
-void	multiple_redirections(t_data *data, t_tok *new_token);
-int		search_redirections(t_data *data, char *token);
+void	parse_redir_in(char **tab, t_tok *new_token, int id);
+void	parse_redir_out(char **tab, t_tok *new_token, int id);
+void	parse_cmd(char **tab, t_tok *new_token, int id);
 void	parse_token(t_data *data);
 
 //--------------TOKEN_UTILS-----------------
