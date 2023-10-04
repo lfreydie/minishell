@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/04 12:12:23 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/04 12:36:01 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	main(void)
 {
 	char	*input;
 	t_data	data;
-	char	c;
 
 	while (1)
 	{

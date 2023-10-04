@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/03 18:45:22 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 12:35:28 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@
 // 	if (infos->tmp_fdin >= 0 && dup2(infos->tmp_fdin, STDIN_FILENO) < 0)
 // 		perror("dup2");
 // 	else if (infos->tmp_fdin < 0)
-// 		(close_fds(infos->pipefd[0], infos->pipefd[1], \
-// 		-1, -1), ft_exit(infos, NULL));
+// 		(close_fds(infos->pipefd[0], infos->pipefd[1], -1, -1), ft_exit(infos, NULL));
 // 	if (i == infos->ncmd - 1)
 // 	{
 // 		if (!infos->heredoc)
@@ -89,8 +88,7 @@
 // 		else
 // 			io_fd = open(infos->outfile, O_RDWR | O_CREAT | O_APPEND, 0644);
 // 		if (io_fd < 0)
-// 			(close_fds(infos->tmp_fdin, infos->pipefd[0], \
-// 			infos->pipefd[1], -1), ft_exit(infos, infos->outfile));
+// 			(close_fds(infos->tmp_fdin, infos->pipefd[0], infos->pipefd[1], -1), ft_exit(infos, infos->outfile));
 // 		if (io_fd >= 0 && dup2(io_fd, STDOUT_FILENO) < 0)
 // 			perror("dup2");
 // 		close(io_fd);

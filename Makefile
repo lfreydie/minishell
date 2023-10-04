@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+         #
+#    By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 15:01:41 by lfreydie          #+#    #+#              #
-#    Updated: 2023/09/26 16:02:52 by blandineber      ###   ########.fr        #
+#    Updated: 2023/10/04 12:34:52 by lefreydier       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC ?= gcc
 NAME := minishell
 CFLAGS += -Wall -Wextra -Werror -g
+LDFLAGS = -lreadline
 LIB_FLAGS = -L./libft
 
 
@@ -39,7 +40,7 @@ OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 $(NAME) :	$(LIBFT) $(OBJ)
 	@echo "$(BLUE) ==== Project compiling ==== $(END)"
-	@$(CC) $(CFLAGS) -I $(HD_DIR) $(OBJ) $(LIB_FLAGS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) -I $(HD_DIR) $(OBJ) $(LIB_FLAGS) $(LIBFT) -o $(NAME) $(LDFLAGS)
 	@echo "$(GREEN) ==== Project compiled ==== $(END)"
 
 $(LIBFT) :
