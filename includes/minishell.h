@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/03 19:03:18 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 12:28:00 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,15 @@ typedef struct s_tok{
 	struct s_tok	*previous;
 }					t_tok;
 
+typedef struct s_temp{
+	char	**tokens;
+	int		*redir;
+}				t_temp;
+
 typedef struct s_data{
+	t_temp			*temp;
 	t_tok			*head;
 	//t_env			*env;
-	char			**tokens;
-	int				**redir;
 	int				num_tokens;
 	int				pipefd[2];
 	int				tmp_fdin;

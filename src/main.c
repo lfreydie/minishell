@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/03 18:42:25 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 12:14:46 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	tokenise_input(char *input, t_data *data)
 	int	id;
 
 	id = 0;
-	data->tokens = ft_split(input, '|');
-	while (data->tokens[id])
+	data->temp->tokens = ft_split(input, '|');
+	while (data->temp->tokens[id])
 		id++;
 	data->num_tokens = id;
 }
@@ -66,6 +66,11 @@ int	main(void)
 	int		i;
 	char	c;
 
+	data.temp = (t_temp *)malloc(sizeof(t_temp));
+	data.temp->tokens = NULL;
+	data.temp->redir = NULL;
+	data.head = NULL;
+	data.num_tokens = 0;
 	while (1)
 	{
 		print_prompt();
@@ -81,5 +86,8 @@ int	main(void)
 		print_tokens(&data);
 		clear_tokens(&data);
 	}
+	free(data.temp->redir);
+	free(data.temp->tokens);
+	free(data.temp);
 	return (0);
 }

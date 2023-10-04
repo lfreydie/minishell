@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:06:38 by bberthod          #+#    #+#             */
-/*   Updated: 2023/09/28 14:56:04 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/04 12:01:44 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	print_tokens1(t_data *data)
 	int	i;
 
 	i = 0;
-	while (data->tokens[i] != NULL)
+	while (data->temp->tokens[i] != NULL)
 	{
-		printf("Token %d : %s\n", i, data->tokens[i]);
+		printf("Token %d : %s\n", i, data->temp->tokens[i]);
 		i++;
 	}
 }
