@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/03 18:42:25 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 12:12:23 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,35 +45,18 @@ void	tokenise_input(char *input, t_data *data)
 	data->num_tokens = id;
 }
 
-void	print_prompt(void)
-{
-	char	buffer[1024];
-
-	if (getcwd(buffer, sizeof(buffer)) != NULL)
-	{
-		write(STDOUT_FILENO, buffer, strlen(buffer));
-		write(STDOUT_FILENO, "> ", 2);
-	}
-	else
-		perror("getcwd");
-
-}
-
 int	main(void)
 {
-	char	input[MAX_INPUT_LENGTH];
+	char	*input;
 	t_data	data;
-	int		i;
 	char	c;
 
 	while (1)
 	{
-		print_prompt();
-		i = 0;
-		while (read(STDIN_FILENO, &c, 1) && c != '\n'
-			&& i < MAX_INPUT_LENGTH - 1)
-			input[i++] = c;
-		input[i] = '\0';
+		input = ft_readline();
+		if (!input)
+			break ;
+		add_history(input);
 		tokenise_input(input, &data);
 		printf("number of tokens : %d\n", data.num_tokens);
 		print_tokens1(&data);
