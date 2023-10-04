@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:13:04 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/03 18:44:47 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 12:35:41 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 // 			ft_exit(infos, ERR_ARG);
 // 		infos->heredoc = 1;
 // 		infos->infile = "heredoc"; // nom de fichier qui s'incremente ou aleatoire
-// 		infos->tmp_fdin = open(infos->infile, \
-// 		O_RDWR | O_CREAT | O_EXCL, 0644);
+// 		infos->tmp_fdin = open(infos->infile, O_RDWR | O_CREAT | O_EXCL, 0644);
 // 		if (infos->tmp_fdin < 0)
 // 			perror(infos->infile);
 // 		else
@@ -49,8 +48,7 @@
 // 		write(1, "heredoc> ", 9);
 // 		line = get_next_line(0);
 // 		if (!line)
-// 			(free(limiter), close(infos->tmp_fdin), \
-// 			unlink(infos->infile), ft_exit(infos, NULL));
+// 			(free(limiter), close(infos->tmp_fdin), unlink(infos->infile), ft_exit(infos, NULL));
 // 		if (ft_strncmp(limiter, line, ft_strlen(limiter)))
 // 		{
 // 			write(infos->tmp_fdin, line, ft_strlen(line));

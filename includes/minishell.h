@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/04 12:28:00 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 12:40:09 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,13 @@ void	ft_echo(char **args);
 void	ft_cd(char **args);
 
 //----------------MAIN------------------
-void	print_prompt(void);
 void	tokenise_input(char *input, t_data *data);
 int		is_special_char(char c);
 void	clear_tokens(t_data *data);
+
+//--------------READ_LINE---------------
+char	*get_prompt(void);
+char	*ft_readline(void);
 
 //---------------PARSING----------------
 void	parse_token(t_data *data);
