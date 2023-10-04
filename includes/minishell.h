@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/04 12:40:09 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 15:51:28 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,28 @@ void	ft_pwd(void);
 void	ft_echo(char **args);
 void	ft_cd(char **args);
 
+//----------------INIT_FREE-------------
+void	clear_tokens(t_data *data);
+void	init_data(t_data *data);
+void	free_all(t_data *data);
+
 //----------------MAIN------------------
 void	tokenise_input(char *input, t_data *data);
 int		is_special_char(char c);
-void	clear_tokens(t_data *data);
 
 //--------------READ_LINE---------------
 char	*get_prompt(void);
 char	*ft_readline(void);
 
 //---------------PARSING----------------
+void	one_redirection(t_data *data, t_tok *new_token);
+void	multiple_redirections(t_data *data, t_tok *new_token);
+int		search_redirections(t_data *data, char *token);
 void	parse_token(t_data *data);
-void	add_token(t_data *data, t_tok *token);
-t_tok	*create_token(int id, char **cmd, char *redir_in, char *redir_out);
 
-//----------------UTILS-----------------
-char	*ft_strtok(char *str, const char *delimiters);
+//--------------TOKEN_UTILS-----------------
+t_tok	*create_token(void);
+void	add_token(t_data *data, t_tok *token);
 void	print_tokens(t_data *data);
 void	print_tokens1(t_data *data);
 

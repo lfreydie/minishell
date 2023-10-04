@@ -6,12 +6,41 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 17:06:38 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/04 12:01:44 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 15:36:38 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+t_tok	*create_token(void)
+{
+	t_tok	*new_token;
+
+	new_token = ft_calloc(sizeof(t_tok), 1);
+	if (!new_token)
+		return (NULL);
+	return (new_token);
+}
+
+void	add_token(t_data *data, t_tok *token)
+{
+	t_tok	*current;
+
+	if (data->head == NULL)
+	{
+		data->head = token;
+		data->head->previous = NULL;
+	}
+	else
+	{
+		current = data->head;
+		while (current->next != NULL)
+			current = current->next;
+		current->next = token;
+		token->previous = current;
+	}
+	data->num_tokens++;
+}
 
 void	print_tokens(t_data *data)
 {
@@ -49,30 +78,4 @@ void	print_tokens1(t_data *data)
 		printf("Token %d : %s\n", i, data->temp->tokens[i]);
 		i++;
 	}
-}
-
-char	*ft_strtok(char *str, const char *delimiters)
-{
-	static char	*next_token;
-	char		*token;
-
-	if (str != NULL)
-		next_token = str;
-	if (next_token == NULL)
-		return (NULL);
-	while (*next_token != '\0' && ft_strchr(delimiters, *next_token))
-		next_token++;
-	if (*next_token == '\0')
-		return (next_token = NULL, NULL);
-	token = next_token;
-	while (*next_token != '\0' && !strchr(delimiters, *next_token))
-		next_token++;
-	if (*next_token != '\0')
-	{
-		*next_token = '\0';
-		next_token++;
-	}
-	else
-		next_token = NULL;
-	return (token);
 }

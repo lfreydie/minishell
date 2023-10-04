@@ -6,48 +6,26 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:06:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/04 12:32:46 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 15:55:15 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_tok	*create_token(int id, char **cmd, char *redir_in, char *redir_out)
+void	one_redirection(t_data *data, t_tok *new_token)
 {
-	t_tok	*new_token;
-
-	new_token = ft_calloc(sizeof(t_tok), 1);
-	if (!new_token)
-		return (NULL);
-	new_token->id = id;
-	new_token->cmd = cmd;
-	new_token->redir_in = redir_in;
-	new_token->redir_out = redir_out;
-	return (new_token);
+	(void)data;
+	(void)new_token;
+	printf("One redirection\n");
 }
 
-void	add_token(t_data *data, t_tok *token)
+void	multiple_redirections(t_data *data, t_tok *new_token)
 {
-	t_tok	*current;
-
-	if (data->head == NULL)
-	{
-		data->head = token;
-		data->head->previous = NULL;
-	}
-	else
-	{
-		current = data->head;
-		while (current->next != NULL)
-			current = current->next;
-		current->next = token;
-		token->previous = current;
-	}
-	data->num_tokens++;
+	(void)data;
+	(void)new_token;
+	printf("Multiple redirection\n");
 }
 
-
-// > = 1, >> = 2, < = 3, << = 4
 int	search_redirections(t_data *data, char *token)
 {
 	int	i;
@@ -80,26 +58,22 @@ int	search_redirections(t_data *data, char *token)
 void	parse_token(t_data *data)
 {
 	int		id;
-	char	**cmd;
-	char	*redir_in;
-	char	*redir_out;
 	int		num_redir;
+	t_tok	*new_token;
 
 	id = 0;
-	redir_in = NULL;
-	redir_out = NULL;
 	while (data->temp->tokens[id])
 	{
+		new_token = create_token();
+		new_token->id = id;
 		num_redir = search_redirections(data, data->temp->tokens[id]);
-		printf("nombre de redirections :%d\n", num_redir);
 		if (num_redir == 1)
-		{
-			printf("Une seule redirection\n");
-			break ;
-		}
+			one_redirection(data, new_token);
+		else if (num_redir >= 2)
+			multiple_redirections(data, new_token);
 		else
-			cmd = ft_split(data->temp->tokens[id], ' ');
-		add_token(data, create_token(id, cmd, redir_in, redir_out));
+			new_token->cmd = ft_split(data->temp->tokens[id], ' ');
+		add_token(data, new_token);
 		id++;
 	}
 }
