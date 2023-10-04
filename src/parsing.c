@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:06:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/04 12:31:26 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/04 12:32:46 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,6 @@ int	search_redirections(t_data *data, char *token)
 	}
 	return (j);
 }
-
-
-
 
 void	parse_token(t_data *data)
 {
