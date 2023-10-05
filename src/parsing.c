@@ -6,15 +6,33 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:06:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/04 17:04:02 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/05 15:05:41 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	parse_cmd(char **tab, t_tok *new_token, int id);
+void	parse_cmd(char **tab, t_tok *new_token, int id)
 {
-	//oijioj
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (tab[i])
+	{
+		if (ft_strncmp(tab[i], "<", ft_strlen(tab[i]))
+			&& ft_strncmp(tab[i], ">", ft_strlen(tab[i])))
+		{
+			if (i > 0 && ft_strncmp(tab[i - 1], "<", ft_strlen(tab[i - 1]))
+				&& ft_strncmp(tab[i - 1], ">", ft_strlen(tab[i - 1])))
+			{
+				new_token->cmd[j] = tab[i];
+				j++;
+			}
+		}
+		i++;
+	}
 }
 
 void	parse_redir_in(char **tab, t_tok *new_token, int id)
@@ -25,7 +43,7 @@ void	parse_redir_in(char **tab, t_tok *new_token, int id)
 	i = 0;
 	while (tab[i])
 	{
-		if (ft_strncmp(tab[i], "<", ft_strlen(tab[i])))
+		if (ft_strncmp(tab[i], "<", ft_strlen(tab[i])) == 0)
 		{
 			if (new_token->redir_in != NULL)
 			{
@@ -34,7 +52,7 @@ void	parse_redir_in(char **tab, t_tok *new_token, int id)
 					perror("open");
 				close(fd);
 			}
-			if (ft_strncmp(tab[i], "<<", ft_strlen(tab[i])))
+			if (ft_strncmp(tab[i], "<<", ft_strlen(tab[i])) == 0)
 			{
 				new_token->heredoc = true;
 				//new_token->redir_in = appel heredoc;
@@ -54,7 +72,7 @@ void	parse_redir_out(char **tab, t_tok *new_token, int id)
 	i = 0;
 	while (tab[i])
 	{
-		if (ft_strncmp(tab[i], ">", ft_strlen(tab[i])))
+		if (ft_strncmp(tab[i], ">", ft_strlen(tab[i])) == 0)
 		{
 			if (new_token->redir_out != NULL)
 			{
@@ -63,7 +81,7 @@ void	parse_redir_out(char **tab, t_tok *new_token, int id)
 					perror("open");
 				close(fd);
 			}
-			if (ft_strncmp(tab[i], ">>", ft_strlen(tab[i])))
+			if (ft_strncmp(tab[i], ">>", ft_strlen(tab[i])) == 0)
 				new_token->append = true;
 			new_token->redir_out = tab[i + 1];
 		}
