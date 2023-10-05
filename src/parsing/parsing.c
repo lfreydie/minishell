@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:06:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/05 19:21:52 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/05 19:24:18 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	parse_redir_in(char **tab, t_tok *new_token, int id)
 		{
 			if (new_token->redir_in != NULL)
 			{
-				fd = open(new_token->redir_in);
+				fd = open(new_token->redir_in, O_RDONLY);
 				if (fd < 0)
 					perror("open");
 				close(fd);
@@ -76,7 +76,7 @@ void	parse_redir_out(char **tab, t_tok *new_token, int id)
 		{
 			if (new_token->redir_out != NULL)
 			{
-				fd = open(new_token->redir_out);
+				fd = open(new_token->redir_out, O_RDONLY);
 				if (fd < 0)
 					perror("open");
 				close(fd);
@@ -87,7 +87,6 @@ void	parse_redir_out(char **tab, t_tok *new_token, int id)
 		}
 		i++;
 	}
-
 }
 
 void	parse_token(t_data *data)
