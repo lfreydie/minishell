@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/02 13:46:47 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/10/05 17:59:18 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,30 @@ char	*get_path_cmd(char *paths, char *cmd)
 	if (!path)
 		perror("get_path_cmd");
 	return (path);
+}
+
+char	**get_paths(t_pipex *infos)
+{
+	char		*env_path;
+	char		**paths;
+	int			i;
+
+	i = 0;
+	if (!infos->env)
+		return (NULL);
+	while (infos->env[i])
+	{
+		env_path = ft_strnstr(infos->env[i], "PATH=", 5);
+		if (env_path)
+			break ;
+		i++;
+	}
+	if (!env_path)
+		ft_exit(infos, NULL);
+	paths = ft_split(env_path + 5, ':');
+	if (!paths)
+		ft_exit(infos, ERR_MAL);
+	return (paths);
 }
 
 void	execute(t_pipex *infos, int i)

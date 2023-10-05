@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/04 17:01:55 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/05 17:42:26 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ typedef struct s_data{
 	t_tok			*head;
 	//t_env			*env;
 	int				num_tokens;
-	int				pipefd[2];
-	int				tmp_fdin;
 	//t_bin			garbage;
 }					t_data;
 
