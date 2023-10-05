@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:06:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/05 19:05:48 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/05 19:21:52 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	parse_redir_in(char **tab, t_tok *new_token, int id)
 			if (ft_strncmp(tab[i], "<<", ft_strlen(tab[i])) == 0)
 				heredoc_set(new_token, tab[i + 1]);
 			else
+			{
+				new_token->heredoc = false;
 				new_token->redir_in = tab[i + 1];
+			}
 		}
 		i++;
 	}
