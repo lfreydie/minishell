@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/05 17:42:26 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/05 18:50:53 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include "execute.h"
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -34,10 +35,10 @@
 # define MAX_INPUT_LENGTH 1024
 # define MAX_TOKENS 100
 
-// typedef struct s_bin{
-// 	void			*obj;
-// 	t_bin			next;
-// }					t_bin;
+typedef struct s_bin{
+	void			*obj;
+	struct s_bin	*next;
+}					t_bin;
 
 // typedef struct s_env{
 // 	char			*name;
@@ -68,14 +69,10 @@ typedef struct s_data{
 	t_temp			*temp;
 	t_tok			*head;
 	//t_env			*env;
+	char			**env;
 	int				num_tokens;
-	//t_bin			garbage;
+	t_bin			garbage;
 }					t_data;
-
-//-----------BUILT_IN_COMMANDS----------
-void	ft_pwd(void);
-void	ft_echo(char **args);
-void	ft_cd(char **args);
 
 //----------------INIT_FREE-------------
 void	clear_tokens(t_data *data);

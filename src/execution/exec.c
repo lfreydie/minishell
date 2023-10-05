@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/05 17:59:18 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/05 18:14:16 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,58 +27,58 @@ char	*get_path_cmd(char *paths, char *cmd)
 	return (path);
 }
 
-char	**get_paths(t_pipex *infos)
+char	**get_paths(t_exec *exec)
 {
 	char		*env_path;
 	char		**paths;
 	int			i;
 
 	i = 0;
-	if (!infos->env)
+	if (!exec->data->env)
 		return (NULL);
-	while (infos->env[i])
+	while (exec->data->env[i])
 	{
-		env_path = ft_strnstr(infos->env[i], "PATH=", 5);
+		env_path = ft_strnstr(exec->data->env[i], "PATH=", 5);
 		if (env_path)
 			break ;
 		i++;
 	}
 	if (!env_path)
-		ft_exit(infos, NULL);
+		exit(1); // code erreur
 	paths = ft_split(env_path + 5, ':');
 	if (!paths)
-		ft_exit(infos, ERR_MAL);
+		exit(1); // code erreur
 	return (paths);
 }
 
-void	execute(t_pipex *infos, int i)
+void	execute(t_exec *exec)
 {
 	char		**paths;
 	char		*path_cmd;
-	int			n;
+	int			i;
 
-	n = 0;
-	paths = get_paths(infos);
-	while (paths[n])
+	i = 0;
+	paths = get_paths(exec);
+	while (paths[i])
 	{
-		path_cmd = get_path_cmd(paths[n], infos->tab_cmd[i].cmd[0]);
+		path_cmd = get_path_cmd(paths[i], exec->token->cmd[0]);
 		if (!access(path_cmd, F_OK))
 		{
-			execve(path_cmd, infos->tab_cmd[i].cmd, infos->env);
+			execve(path_cmd, exec->token->cmd, exec->data->env);
 			perror(path_cmd);
 		}
 		free(path_cmd);
-		n++;
+		i++;
 	}
 	free_tab(paths);
 	return ;
 }
 
-void	execute_path(t_pipex *infos, int i)
+void	execute_path(t_exec *exec)
 {
-	if (!access(infos->tab_cmd[i].cmd[0], X_OK))
-		execve(infos->tab_cmd[i].cmd[0], infos->tab_cmd[i].cmd, infos->env);
-	if (access(infos->tab_cmd[i].cmd[0], F_OK))
-		execute(infos, i);
+	if (!access(exec->token->cmd[0], X_OK))
+		execve(exec->token->cmd[0], exec->token->cmd, exec->data->env);
+	if (access(exec->token->cmd[0], F_OK))
+		execute(exec);
 	return ;
 }

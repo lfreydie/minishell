@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/05 17:56:18 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/05 18:16:24 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	launch_exec_process(t_data *data)
 	exec->data = data;
 	exec->token = data->head;
 	if (data->num_tokens == 1 && exec->token->built_in)
-		built_in_process();
+		built_in_parent_process();
 	else
 		pipex_process(exec);
 }
@@ -35,7 +35,7 @@ void	pipex_process(t_exec *exec)
 	while (exec->token)
 	{
 		if (exec->token->built_in)
-			exec->token->pid = built_in_process(exec);
+			exec->token->pid = built_in_child_process(exec);
 		else
 			exec->token->pid = fork_process(exec);
 		if (exec->token->heredoc)
@@ -64,10 +64,10 @@ pid_t	fork_process(t_exec *exec)
 		exec_redir_out(exec);
 		close_fds(exec->tmp_fdin, exec->pipefd[0], exec->pipefd[1], -1);
 		if (ft_strchr(exec->token->cmd[0], '/'))
-			execute_path(exec); // not revised yet
+			execute_path(exec);
 		else
-			execute(exec); // not revised yet
-		ft_exit(data, data->tab_cmd[i].cmd[0]); // not revised yet
+			execute(exec);
+		exit(1); // code erreur
 	}
 	close(exec->tmp_fdin);
 	close(exec->pipefd[1]);
