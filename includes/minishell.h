@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/05 18:50:53 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/06 17:49:11 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include "execute.h"
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <fcntl.h>
 # include <dirent.h>
 # include <string.h>
 # include <sys/ioctl.h>
@@ -32,8 +32,17 @@
 # include <signal.h>
 # include <stdbool.h>
 
-# define MAX_INPUT_LENGTH 1024
-# define MAX_TOKENS 100
+# define ERROR 1
+# define SUCCESS 0
+# define READ 0
+# define WRITE 1
+# define ERR "Error"
+# define ERR_ARG "Invalid number of arguments"
+# define ERR_CMD "Command not found"
+# define ERR_PIP "Pipe didn't work"
+# define ERR_MAL "Malloc didn't work"
+# define ERR_ENV "Environnement error"
+# define ERR_NOP "The file doesn't open or isn't a file"
 
 typedef struct s_bin{
 	void			*obj;
@@ -87,10 +96,14 @@ int		is_special_char(char c);
 char	*get_prompt(void);
 char	*ft_readline(void);
 
+//---------------HEREDOC----------------
+void	heredoc_set(t_tok *token, char *limiter);
+void	heredoc_write(t_tok *token, char *limiter, int fd);
+
 //---------------PARSING----------------
-void	parse_redir_in(char **tab, t_tok *new_token, int id);
-void	parse_redir_out(char **tab, t_tok *new_token, int id);
-void	parse_cmd(char **tab, t_tok *new_token, int id);
+void	parse_redir_in(char **tab, t_tok *new_token);
+void	parse_redir_out(char **tab, t_tok *new_token);
+void	parse_cmd(char **tab, t_tok *new_token);
 void	parse_token(t_data *data);
 
 //--------------TOKEN_UTILS-----------------

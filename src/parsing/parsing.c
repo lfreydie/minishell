@@ -6,13 +6,13 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 17:06:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/05 19:24:18 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/06 17:47:01 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	parse_cmd(char **tab, t_tok *new_token, int id)
+void	parse_cmd(char **tab, t_tok *new_token)
 {
 	int	i;
 	int	j;
@@ -35,7 +35,7 @@ void	parse_cmd(char **tab, t_tok *new_token, int id)
 	}
 }
 
-void	parse_redir_in(char **tab, t_tok *new_token, int id)
+void	parse_redir_in(char **tab, t_tok *new_token)
 {
 	int		i;
 	int		fd;
@@ -64,7 +64,7 @@ void	parse_redir_in(char **tab, t_tok *new_token, int id)
 	}
 }
 
-void	parse_redir_out(char **tab, t_tok *new_token, int id)
+void	parse_redir_out(char **tab, t_tok *new_token)
 {
 	int		i;
 	int		fd;
@@ -100,9 +100,9 @@ void	parse_token(t_data *data)
 		new_token = create_token();
 		new_token->id = id;
 		data->temp->tab_cmd = ft_split(data->temp->tokens[id], ' ');
-		parse_redir_in(data->temp->tab_cmd, new_token, id);
-		parse_redir_out(data->temp->tab_cmd, new_token, id);
-		parse_cmd(data->temp->tab_cmd, new_token, id);
+		parse_redir_in(data->temp->tab_cmd, new_token);
+		parse_redir_out(data->temp->tab_cmd, new_token);
+		parse_cmd(data->temp->tab_cmd, new_token);
 		add_token(data, new_token);
 		id++;
 	}

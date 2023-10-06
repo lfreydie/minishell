@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:08:59 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/05 18:44:55 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/06 17:56:07 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,19 @@ void	ft_cd(char **args)
 }
 
 void	ft_export(char **args)
-{}
+{
+	(void)args;
+}
 
 void	ft_unset(char **args)
-{}
+{
+	(void)args;
+}
 
 void	ft_env(char **args)
-{}
+{
+	(void)args;
+}
 
 void	ft_exit(void)
 {}

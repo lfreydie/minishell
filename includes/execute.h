@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 13:06:33 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/05 18:49:27 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/06 17:58:27 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,6 @@
 # include "minishell.h"
 # include <fcntl.h>
 # include <errno.h>
-
-# define ERROR 1
-# define SUCCESS 0
-# define READ 0
-# define WRITE 1
-# define ERR "Error"
-# define ERR_ARG "Invalid number of arguments"
-# define ERR_CMD "Command not found"
-# define ERR_PIP "Pipe didn't work"
-# define ERR_MAL "Malloc didn't work"
-# define ERR_ENV "Environnement error"
-# define ERR_NOP "The file doesn't open or isn't a file"
 
 typedef struct s_exec
 {
@@ -63,5 +51,9 @@ void	ft_exit(void);
 void	find_built_in_cmd(t_exec *exec);
 pid_t	built_in_child_process(t_exec *exec);
 void	built_in_parent_process(t_exec *exec);
+
+//---------------EXEC_FREE--------------
+void	close_fds(int fd1, int fd2, int fd3, int fd4);
+void	free_tab(char **tab);
 
 #endif

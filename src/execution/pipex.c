@@ -6,11 +6,11 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/05 18:16:24 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/06 17:59:10 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "execute.h"
 
 void	launch_exec_process(t_data *data)
 {
@@ -22,7 +22,7 @@ void	launch_exec_process(t_data *data)
 	exec->data = data;
 	exec->token = data->head;
 	if (data->num_tokens == 1 && exec->token->built_in)
-		built_in_parent_process();
+		built_in_parent_process(exec);
 	else
 		pipex_process(exec);
 }

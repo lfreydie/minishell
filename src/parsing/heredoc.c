@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 14:13:04 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/05 19:14:30 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/06 17:48:52 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ void	heredoc_set(t_tok *token, char *limiter)
 	}
 }
 
-int	heredoc_write(t_tok *token, char *limiter, int fd)
+void	heredoc_write(t_tok *token, char *limiter, int fd)
 {
-	int		i;
 	bool	stop;
 	char	*line;
 

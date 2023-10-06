@@ -6,11 +6,11 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/05 18:43:36 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/06 17:50:02 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execute.h"
 
 void	find_built_in_cmd(t_exec *exec)
 {

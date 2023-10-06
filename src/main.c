@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/04 15:52:13 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/06 18:16:56 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
+#include "execute.h"
 
 int	is_special_char(char c)
 {
@@ -40,12 +41,10 @@ int	main(void)
 		input = ft_readline();
 		if (!input)
 			break ;
-		add_history(input);
+		// add_history(input);
 		tokenise_input(input, data);
-		printf("number of tokens : %d\n", data->num_tokens);
-		print_tokens1(data);
 		parse_token(data);
-		print_tokens(data);
+		launch_exec_process(data);
 		clear_tokens(data);
 	}
 	free_all(data);
