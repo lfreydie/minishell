@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 13:06:33 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/06 17:58:27 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/09 16:29:24 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	execute_path(t_exec *exec);
 void	ft_pwd(void);
 void	ft_echo(char **args);
 void	ft_cd(char **args);
-void	ft_export(char **args);
-void	ft_unset(char **args);
-void	ft_env(char **args);
-void	ft_exit(void);
+// void	ft_export(char **args);
+// void	ft_unset(char **args);
+// void	ft_env(char **args);
+// void	ft_exit(void);
 
 //-----------BUILT_IN_PROCESS-----------
 void	find_built_in_cmd(t_exec *exec);

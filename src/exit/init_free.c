@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/04 15:51:19 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/09 16:25:25 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	clear_tokens(t_data *data)
 
 void	init_data(t_data *data)
 {
+	data->exit_flag = 0;
 	data->temp = (t_temp *)malloc(sizeof(t_temp));
 	data->temp->tokens = NULL;
 	data->temp->redir = NULL;
