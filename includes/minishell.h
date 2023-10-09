@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/09 17:05:39 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/09 17:07:48 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_temp{
 }				t_temp;
 
 typedef struct s_data{
+	int				exit_flag;
 	t_temp			*temp;
 	t_tok			*head;
 	//t_env			*env;

@@ -6,12 +6,26 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/09 17:05:22 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/09 17:08:46 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execute.h"
+
+void	handle_sigint(int sig)
+{
+	(void) sig;
+	printf("\n");
+	printf("%s", get_prompt());
+}
+
+void	handle_sigquit(int sig)
+{
+	(void) sig;
+	return ;
+}
+
 
 int	is_special_char(char c)
 {
@@ -38,13 +52,19 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	if (ac != 1)
 		return (ERROR);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, handle_sigquit);
 	data = ft_calloc(sizeof(t_data), 1);
 	data->env = envp;
 	while (1)
 	{
 		input = ft_readline();
 		if (!input)
+		{
+			printf("exit\n");
+			data->exit_flag = 1;
 			break ;
+		}
 		tokenise_input(input, data);
 		parse_token(data);
 		launch_exec_process(data);

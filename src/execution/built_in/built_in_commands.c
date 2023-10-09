@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_commands.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:08:59 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/06 17:56:07 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/09 16:32:55 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "execute.h"
 
 //echo, cd, pwd, export, unset, env, exit
 
@@ -65,10 +65,19 @@ void	ft_unset(char **args)
 	(void)args;
 }
 
-void	ft_env(char **args)
+int	ft_env(void *ptr)
+{
+	int		i;
+	t_data	*data;
+
+	data = (t_data *)ptr;
+	i = 0;
+	while (data->env && data->env[i])
+		printf("%s\n", data->env[i++]);
+	return (0);
+}
+
+void	ft_exit(char **args)
 {
 	(void)args;
 }
-
-void	ft_exit(void)
-{}
