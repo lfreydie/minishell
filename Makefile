@@ -6,15 +6,14 @@
 #    By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 15:01:41 by lfreydie          #+#    #+#              #
-#    Updated: 2023/10/06 18:11:45 by lefreydier       ###   ########.fr        #
+#    Updated: 2023/10/09 16:17:31 by lefreydier       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC ?= gcc
 NAME := minishell
-CFLAGS += -Wall -Wextra -Werror
-LDFLAGS = -lreadline
-LIB_FLAGS = -L./libft
+CFLAGS += -Wall -Wextra -Werror -g
+LIB_FLAGS = -L$(LIBFT_DIR) -lft -lreadline
 
 
 HD_DIR = ./includes
@@ -40,7 +39,7 @@ OBJ = $(patsubst $(SRC_DIR)/%,$(OBJ_DIR)/%,$(SRC:.c=.o))
 
 $(NAME) :	$(LIBFT) $(OBJ)
 	@echo "$(BLUE) ==== Project compiling ==== $(END)"
-	@$(CC) $(CFLAGS) -I $(HD_DIR) $(OBJ) $(LIB_FLAGS) $(LIBFT) -o $(NAME) $(LDFLAGS)
+	@$(CC) $(CFLAGS) -I $(HD_DIR) $(OBJ) $(LIB_FLAGS) $(LIBFT) -o $(NAME)
 	@echo "$(GREEN) ==== Project compiled ==== $(END)"
 
 $(LIBFT) :

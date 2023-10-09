@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/04 15:51:19 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/09 17:05:10 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ void	clear_tokens(t_data *data)
 		free(temp->cmd);
 		free(temp);
 	}
-	data->head = NULL;
-	data->num_tokens = 0;
-}
-
-void	init_data(t_data *data)
-{
-	data->temp = (t_temp *)malloc(sizeof(t_temp));
-	data->temp->tokens = NULL;
-	data->temp->redir = NULL;
 	data->head = NULL;
 	data->num_tokens = 0;
 }

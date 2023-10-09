@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/06 17:59:10 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/09 16:33:22 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	pipex_process(t_exec *exec)
 {
 	int		status;
 	int		i;
+	int		pid;
 
 	while (exec->token)
 	{
@@ -40,11 +41,12 @@ void	pipex_process(t_exec *exec)
 			exec->token->pid = fork_process(exec);
 		if (exec->token->heredoc)
 			unlink(exec->token->redir_in);
+		pid = exec->token->pid;
 		exec->token = exec->token->next;
 	}
 	close(exec->tmp_fdin);
 	i = -1;
-	waitpid(exec->token->pid, &status, 0);
+	waitpid(pid, &status, 0);
 	while (++i < exec->data->num_tokens - 1)
 		wait(0);
 }
