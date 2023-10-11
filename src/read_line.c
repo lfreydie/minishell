@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 12:12:01 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/09 17:08:55 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/11 17:31:23 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

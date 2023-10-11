@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/09 17:08:46 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/11 17:05:03 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 void	handle_sigint(int sig)
 {
 	(void) sig;
-	printf("\n");
-	printf("%s", get_prompt());
+	printf("\n%s", get_prompt());
+	fflush(stdout);
 }
 
 void	handle_sigquit(int sig)
@@ -53,7 +53,8 @@ int	main(int ac, char **av, char **envp)
 	if (ac != 1)
 		return (ERROR);
 	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
+	//signal(SIGQUIT, handle_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 	data = ft_calloc(sizeof(t_data), 1);
 	data->env = envp;
 	while (1)
@@ -61,16 +62,18 @@ int	main(int ac, char **av, char **envp)
 		input = ft_readline();
 		if (!input)
 		{
+			if (data)
+				free_all(data);
 			printf("exit\n");
 			data->exit_flag = 1;
 			break ;
 		}
 		tokenise_input(input, data);
 		parse_token(data);
-		launch_exec_process(data);
+		//launch_exec_process(data);
 		clear_tokens(data);
 		free(input);
 	}
-	free_all(data);
+	free_all(data); //SEGFAULT si ctrl_D
 	return (0);
 }

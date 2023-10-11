@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/09 17:07:18 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/11 17:32:40 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
