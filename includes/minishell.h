@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/09 17:07:48 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/12 14:51:11 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct s_data{
 	//t_env			*env;
 	char			**env;
 	int				num_tokens;
-	t_bin			garbage;
+	t_bin			*garbage;
 }					t_data;
 
 //----------------INIT_FREE-------------

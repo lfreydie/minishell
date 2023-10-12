@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/11 17:05:03 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/12 15:13:17 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

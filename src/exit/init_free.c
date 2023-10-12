@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/11 17:32:40 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/12 14:42:31 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,3 @@ void	free_all(t_data *data)
 	free(data->temp->tokens);
 	free(data->temp);
 }
-
