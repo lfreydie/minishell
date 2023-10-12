@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 13:06:33 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/09 17:49:24 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/12 14:07:05 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_echo(char **args);
 void	ft_cd(char **args);
 void	ft_export(char **args);
 void	ft_unset(char **args);
-void	ft_env(char **args);
+int		ft_env(void *ptr);
 void	ft_exit(void);
 
 //-----------BUILT_IN_PROCESS-----------

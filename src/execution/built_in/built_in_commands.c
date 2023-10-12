@@ -6,7 +6,7 @@
 /*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:08:59 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/09 16:32:55 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/12 14:07:33 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ft_env(void *ptr)
 	return (0);
 }
 
-void	ft_exit(char **args)
+void	ft_exit(void)
 {
-	(void)args;
+	return ;
 }

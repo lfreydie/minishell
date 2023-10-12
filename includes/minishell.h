@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/09 17:07:48 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/12 15:15:01 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	clear_tokens(t_data *data);
 void	free_all(t_data *data);
 
 //----------------MAIN------------------
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
 void	tokenise_input(char *input, t_data *data);
 int		is_special_char(char c);
 
