@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/06 17:56:24 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/19 16:24:13 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,25 @@ void	execute(t_exec *exec)
 	int			i;
 
 	i = 0;
+	printf("e.0\n");
 	paths = get_paths(exec);
+	printf("e.1\n");
 	while (paths[i])
 	{
 		path_cmd = get_path_cmd(paths[i], exec->token->cmd[0]);
+		printf("e.2\n");
 		if (!access(path_cmd, F_OK))
 		{
+			printf("e.3\n");
 			execve(path_cmd, exec->token->cmd, exec->data->env);
 			perror(path_cmd);
 		}
 		free(path_cmd);
 		i++;
+		printf("e.4\n");
 	}
 	free_tab(paths);
+	printf("e.5\n");
 	return ;
 }
 

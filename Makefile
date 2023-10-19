@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+         #
+#    By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 15:01:41 by lfreydie          #+#    #+#              #
-#    Updated: 2023/10/09 16:17:31 by lefreydier       ###   ########.fr        #
+#    Updated: 2023/10/19 16:39:17 by lfreydie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC ?= gcc
 NAME := minishell
-CFLAGS += -Wall -Wextra -Werror -g
+CFLAGS += -Wall -Wextra -Werror -fsanitize=address
 LIB_FLAGS = -L$(LIBFT_DIR) -lft -lreadline
 
 

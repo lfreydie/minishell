@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/12 15:17:49 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/10/19 16:55:35 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ int	main(int ac, char **av, char **envp)
 		}
 		tokenise_input(input, data);
 		parse_token(data);
-		//launch_exec_process(data);
+		print_tokens(data);
+		// launch_exec_process(data);
 		clear_tokens(data);
 		free(input);
 	}
