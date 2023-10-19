@@ -6,7 +6,7 @@
 /*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/19 16:20:09 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:52:27 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,10 @@ void	interrupt_handler(int signum)
 	if (signum == SIGINT)
 	{
 		printf("\n");
-		if (t_state.signal)
-			;
-		else
-		{
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-		}
-	}
-	else if (signum == SIGQUIT)
-	{
 		if (!t_state.signal)
 		{
 			rl_on_new_line();
+			rl_replace_line("", 0);
 			rl_redisplay();
 		}
 	}
@@ -79,7 +69,7 @@ int	main(int ac, char **av, char **envp)
 	data->env = envp;
 	t_state.signal = 0;
 	signal(SIGINT, interrupt_handler);
-	signal(SIGQUIT, interrupt_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		input = ft_readline();
