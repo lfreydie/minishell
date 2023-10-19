@@ -5,30 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/19 16:55:35 by lfreydie         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/10/19 18:09:28 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 #include "execute.h"
 
-volatile sig_atomic_t g_running = true;
-volatile sig_atomic_t g_print_newline = false;
-
-void	handle_sigint(int sig)
+struct						s_state
 {
-	(void) sig;
-	printf("\n%s", get_prompt());
-	fflush(stdout);
-	g_print_newline = true;
-}
+	volatile sig_atomic_t	signal;
+}							t_state;
 
-void	handle_sigquit(int sig)
+void	interrupt_handler(int signum)
 {
-	(void) sig;
-	printf("\b\b \b\b");
-	g_print_newline = false;
+	if (signum == SIGINT)
+	{
+		printf("\n");
+		if (!t_state.signal)
+		{
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
+	}
 }
 
 int	is_special_char(char c)
@@ -48,6 +50,14 @@ void	tokenise_input(char *input, t_data *data)
 	data->num_tokens = id;
 }
 
+void	launch_process(char *input, t_data *data)
+{
+	tokenise_input(input, data);
+	parse_token(data);
+	//launch_exec_process(data);
+	clear_tokens(data);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*input;
@@ -58,29 +68,19 @@ int	main(int ac, char **av, char **envp)
 		return (ERROR);
 	data = ft_calloc(sizeof(t_data), 1);
 	data->env = envp;
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, handle_sigquit);
-	while (g_running)
+	t_state.signal = 0;
+	signal(SIGINT, interrupt_handler);
+	signal(SIGQUIT, SIG_IGN);
+	while (1)
 	{
 		input = ft_readline();
-		if (g_print_newline)
-		{
-			printf("\n");
-			g_print_newline = false;
-		}
-		if (!input)
-		{
+		if (input == NULL)
 			printf("exit\n");
-			data->exit_flag = 1;
-			g_running = false;
-			break ;
-		}
-		tokenise_input(input, data);
-		parse_token(data);
-		print_tokens(data);
-		// launch_exec_process(data);
-		clear_tokens(data);
+		if (input == NULL)
+			return (0);
+		launch_process(input, data);
 		free(input);
+		t_state.signal = 0;
 	}
 	free_all(data);
 	return (0);
