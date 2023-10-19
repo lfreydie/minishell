@@ -6,7 +6,7 @@
 /*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:26:27 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/19 16:17:25 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:20:09 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ void	tokenise_input(char *input, t_data *data)
 	data->num_tokens = id;
 }
 
+void	launch_process(char *input, t_data *data)
+{
+	tokenise_input(input, data);
+	parse_token(data);
+	//launch_exec_process(data);
+	clear_tokens(data);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*input;
@@ -79,10 +87,7 @@ int	main(int ac, char **av, char **envp)
 			printf("exit\n");
 		if (input == NULL)
 			return (0);
-		tokenise_input(input, data);
-		parse_token(data);
-		//launch_exec_process(data);
-		clear_tokens(data);
+		launch_process(input, data);
 		free(input);
 		t_state.signal = 0;
 	}
