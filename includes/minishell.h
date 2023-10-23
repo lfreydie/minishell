@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/23 12:04:05 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/23 16:24:45 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define MORE			">"
 # define MUCH_MORE		">>"
 # define BAR			"|"
-# define S_NEWLINE		"\n"
+# define S_NEWLINE		"newline"
 # define SINGLE_QUOTE	'\''
 # define DOUBLE_QUOTE	'"'
 # define METACHARACTERS	" <>|\n\t"
