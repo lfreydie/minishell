@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/20 18:31:46 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/23 12:04:05 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,10 @@ char	*get_word_value(t_data *data, char *ptr);
 void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar);
 void	tokenize_input(t_data *data);
 
-//----------------TOKEN-----------------
+//----------------TOKEN_UTILS------------
 void	print_token(t_data *data);
+
+//-------------PARSE_TOKEN---------------
+void	parse_token(t_data *data);
 
 #endif

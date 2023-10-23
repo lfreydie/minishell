@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:10:11 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/20 18:32:03 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/23 12:00:51 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_process(t_data *data, char *input)
 	init_grammar(data);
 	tokenize_input(data);
 	print_token(data);
-	// parse_token(data);
+	parse_token(data);
 }
 
 void	init_grammar(t_data *data)
