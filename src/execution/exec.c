@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/19 16:24:13 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:56:41 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void	execute(t_exec *exec)
 	printf("e.1\n");
 	while (paths[i])
 	{
-		path_cmd = get_path_cmd(paths[i], exec->token->cmd[0]);
+		path_cmd = get_path_cmd(paths[i], exec->l_cmd->cmd[0]);
 		printf("e.2\n");
 		if (!access(path_cmd, F_OK))
 		{
 			printf("e.3\n");
-			execve(path_cmd, exec->token->cmd, exec->data->env);
+			execve(path_cmd, exec->l_cmd->cmd, exec->data->env);
 			perror(path_cmd);
 		}
 		free(path_cmd);
@@ -82,9 +82,9 @@ void	execute(t_exec *exec)
 
 void	execute_path(t_exec *exec)
 {
-	if (!access(exec->token->cmd[0], X_OK))
-		execve(exec->token->cmd[0], exec->token->cmd, exec->data->env);
-	if (access(exec->token->cmd[0], F_OK))
+	if (!access(exec->l_cmd->cmd[0], X_OK))
+		execve(exec->l_cmd->cmd[0], exec->l_cmd->cmd, exec->data->env);
+	if (access(exec->l_cmd->cmd[0], F_OK))
 		execute(exec);
 	return ;
 }

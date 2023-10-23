@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/19 16:21:47 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:31:46 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,45 +44,72 @@
 # define ERR_ENV "Environnement error"
 # define ERR_NOP "The file doesn't open or isn't a file"
 
+# define LESS			"<"
+# define MUCH_LESS		"<<"
+# define MORE			">"
+# define MUCH_MORE		">>"
+# define BAR			"|"
+# define S_NEWLINE		"\n"
+# define SINGLE_QUOTE	'\''
+# define DOUBLE_QUOTE	'"'
+# define METACHARACTERS	" <>|\n\t"
+# define SPACE			' '
+
 typedef struct s_bin{
 	void			*obj;
 	struct s_bin	*next;
-}					t_bin;
+}	t_bin;
 
-// typedef struct s_env{
-// 	char			*name;
-// 	char			*value;
-// 	t_env			*next;
-// }					t_env;
+typedef enum e_type{
+	CTRL_OP,
+	RED_OP,
+	WORD
+}	t_type;
+
+typedef enum e_op{
+	IN_RED,
+	HEREDOC_RED,
+	OUTTR_RED,
+	OUTAP_RED,
+	PIPE,
+	NWLINE,
+	NONE
+}	t_op;
 
 typedef struct s_tok{
-	int				id; // id cmd
-	char			**cmd; // cmd "echo" "-n" "ldvbnkvjbej"
-	bool			built_in; // exec ou ft
-	pid_t			pid; // don't touch yet
-	char			*redir_in; // file before <
-	bool			heredoc;
-	bool			append;
-	char			*redir_out; // file after >
-	struct s_tok	*next; // lst chaine, next cmd : delimiteur '|'
-	struct s_tok	*previous;
-}					t_tok;
+	t_type			type;
+	t_op			op;
+	char			*value;
+	struct s_tok	*next;
+}	t_tok;
 
-typedef struct s_temp{
-	char	**tokens;
-	char	**tab_cmd;
-	int		*redir;
-}				t_temp;
+typedef struct s_red{
+	char			*red_in;
+	bool			heredoc;
+	char			*red_out;
+	bool			append;
+}	t_red;
+
+typedef struct s_cmd{
+	int				id;
+	char			**cmd;
+	bool			built_in;
+	pid_t			pid;
+	t_red			io_red;
+	struct s_cmd	*next;
+	struct s_cmd	*previous;
+}	t_cmd;
 
 typedef struct s_data{
-	int				exit_flag;
-	t_temp			*temp;
-	t_tok			*head;
-	//t_env			*env;
+	char			*line;
+	t_cmd			*lst_cmd;
+	t_tok			*lst_tk;
 	char			**env;
-	int				num_tokens;
+	int				num_cmd;
+	char			**grammar;
+	int				exit_flag;
 	t_bin			*garbage;
-}					t_data;
+}	t_data;
 
 //----------------INIT_FREE-------------
 void	clear_tokens(t_data *data);
@@ -90,28 +117,22 @@ void	free_all(t_data *data);
 
 //----------------MAIN------------------
 void	interrupt_handler(int signum);
-void	tokenise_input(char *input, t_data *data);
-int		is_special_char(char c);
-void	launch_process(char *input, t_data *data);
 
 //--------------READ_LINE---------------
 char	*get_prompt(void);
 char	*ft_readline(void);
 
-//---------------HEREDOC----------------
-void	heredoc_set(t_tok *token, char *limiter);
-void	heredoc_write(t_tok *token, char *limiter, int fd);
+//-------------INIT_PROCESS-------------
+void	init_process(t_data *data, char *input);
+void	init_grammar(t_data *data);
 
-//---------------PARSING----------------
-void	parse_redir_in(char **tab, t_tok *new_token);
-void	parse_redir_out(char **tab, t_tok *new_token);
-void	parse_cmd(char **tab, t_tok *new_token);
-void	parse_token(t_data *data);
+//----------------TOKEN-----------------
+t_tok	*add_token(t_data *data);
+char	*get_word_value(t_data *data, char *ptr);
+void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar);
+void	tokenize_input(t_data *data);
 
-//--------------TOKEN_UTILS-----------------
-t_tok	*create_token(void);
-void	add_token(t_data *data, t_tok *token);
-void	print_tokens(t_data *data);
-void	print_tokens1(t_data *data);
+//----------------TOKEN-----------------
+void	print_token(t_data *data);
 
 #endif

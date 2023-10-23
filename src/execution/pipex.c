@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/19 16:50:49 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:03:26 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	launch_exec_process(t_data *data)
 	if (!exec)
 		perror(ERR_MAL);
 	exec->data = data;
-	exec->token = data->head;
-	if (data->num_tokens == 1 && exec->token->built_in)
+	exec->l_cmd = data->lst_cmd;
+	if (data->num_cmd == 1 && exec->l_cmd->built_in)
 		built_in_parent_process(exec);
 	else
 		pipex_process(exec);
@@ -33,21 +33,21 @@ void	pipex_process(t_exec *exec)
 	int		i;
 	int		pid;
 
-	while (exec->token)
+	while (exec->l_cmd)
 	{
-		if (exec->token->built_in)
-			exec->token->pid = built_in_child_process(exec);
+		if (exec->l_cmd->built_in)
+			exec->l_cmd->pid = built_in_child_process(exec);
 		else
-			exec->token->pid = fork_process(exec);
-		if (exec->token->heredoc)
-			unlink(exec->token->redir_in);
-		pid = exec->token->pid;
-		exec->token = exec->token->next;
+			exec->l_cmd->pid = fork_process(exec);
+		if (exec->l_cmd->io_red.heredoc)
+			unlink(exec->l_cmd->io_red.red_in);
+		pid = exec->l_cmd->pid;
+		exec->l_cmd = exec->l_cmd->next;
 	}
 	close(exec->tmp_fdin);
 	i = -1;
 	waitpid(pid, &status, 0);
-	while (++i < exec->data->num_tokens - 1)
+	while (++i < exec->data->num_cmd - 1)
 		wait(0);
 }
 
@@ -65,20 +65,10 @@ pid_t	fork_process(t_exec *exec)
 		exec_redir_in(exec);
 		exec_redir_out(exec);
 		close_fds(exec->tmp_fdin, exec->pipefd[0], exec->pipefd[1], -1);
-		//printf("%s\n", exec->token->cmd[0]);
-		print_tokens(exec->data);
-		printf("4\n");
-		if (ft_strchr(exec->token->cmd[0], '/'))
-		{
-			printf("4.1\n");
+		if (ft_strchr(exec->l_cmd->cmd[0], '/'))
 			execute_path(exec);
-		}
 		else
-		{
-			printf("4.2\n");
 			execute(exec);
-		}
-		printf("5\n");
 		exit(1); // code erreur
 	}
 	close(exec->tmp_fdin);
@@ -89,16 +79,16 @@ pid_t	fork_process(t_exec *exec)
 
 void	exec_redir_in(t_exec *exec)
 {
-	t_tok	*token;
+	t_cmd	*cmd;
 
-	token = exec->token;
-	if (token->redir_in) // si redir_in
+	cmd = exec->l_cmd;
+	if (cmd->io_red.red_in)
 	{
-		if (token->id != 1) // si tmp_fdin
+		if (cmd->id != 1)
 			close(exec->tmp_fdin);
-		exec->tmp_fdin = open(token->redir_in, O_RDONLY);
+		exec->tmp_fdin = open(cmd->io_red.red_in, O_RDONLY);
 	}
-	if (token->id != 1 || token->redir_in) // si redir_in || si n premier
+	if (cmd->id != 1 || cmd->io_red.red_in)
 	{
 		if (exec->tmp_fdin >= 0 && dup2(exec->tmp_fdin, STDIN_FILENO) < 0)
 			perror("dup2");
@@ -110,24 +100,26 @@ void	exec_redir_in(t_exec *exec)
 void	exec_redir_out(t_exec *exec)
 {
 	int		fd_out;
-	t_tok	*token;
+	t_cmd	*cmd;
 
-	token = exec->token;
-	if (token->redir_out) // si redir_out
+	cmd = exec->l_cmd;
+	if (cmd->io_red.red_out)
 	{
-		if (token->append)
-			fd_out = open(token->redir_out, O_RDWR | O_CREAT | O_APPEND, 0644);
+		if (cmd->io_red.append)
+			fd_out = open(cmd->io_red.red_out, \
+			O_RDWR | O_CREAT | O_APPEND, 0644);
 		else
-			fd_out = open(token->redir_out, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			fd_out = open(cmd->io_red.red_out, \
+			O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd_out >= 0 && dup2(fd_out, STDOUT_FILENO) < 0)
 			perror("dup2");
 		else if (fd_out < 0)
 			(close_fds(exec->tmp_fdin, exec->pipefd[0], exec->pipefd[1], -1));
 		close(fd_out);
 	}
-	else if (token->next) // si n redir_out & n dernier
+	else if (cmd->next)
 	{
 		if (dup2(exec->pipefd[1], STDOUT_FILENO) < 0)
 			perror("dup2");
-	} // sinon dernier & n redir_out -> stdout
+	}
 }

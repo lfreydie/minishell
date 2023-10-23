@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/19 18:09:28 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:27:17 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,6 @@ void	interrupt_handler(int signum)
 	}
 }
 
-int	is_special_char(char c)
-{
-	return (c == '|' || c == ' ' || c == '<' || c == '>' || c == '\0');
-}
-
-void	tokenise_input(char *input, t_data *data)
-{
-	int	id;
-
-	id = 0;
-	data->temp = ft_calloc(sizeof(t_temp), 1);
-	data->temp->tokens = ft_split(input, '|');
-	while (data->temp->tokens[id])
-		id++;
-	data->num_tokens = id;
-}
-
-void	launch_process(char *input, t_data *data)
-{
-	tokenise_input(input, data);
-	parse_token(data);
-	//launch_exec_process(data);
-	clear_tokens(data);
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	char	*input;
@@ -74,12 +49,11 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		input = ft_readline();
-		if (input == NULL)
-			printf("exit\n");
-		if (input == NULL)
-			return (0);
-		launch_process(input, data);
-		free(input);
+		if (!input)
+			return (printf("exit\n"), 0);
+		init_process(data, input);
+		// launch_exec_process(data);
+		free(input); // free_part(data) -> token + cmd + line + exec
 		t_state.signal = 0;
 	}
 	free_all(data);
