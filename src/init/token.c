@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:04:37 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/20 18:32:15 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/23 12:13:56 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_tok	*add_token(t_data *data)
 		last_tk = last_tk->next;
 	new_tk = ft_calloc(sizeof(t_tok), 1);
 	if (!new_tk)
-		exit (1);
+		exit (1); // code erreur
 	if (!last_tk)
 		data->lst_tk = new_tk;
 	else
