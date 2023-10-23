@@ -44,8 +44,8 @@ void	add_tk_red(t_data *data, t_tok	*tk, t_cmd *cmd)
 		cmd->io_red.red_in = tk->next->value;
 		cmd->io_red.heredoc = false;
 	}
-	//else if (tk->op == HEREDOC_RED)
-		//heredoc_set(data, tk->next->value);
+	else if (tk->op == HEREDOC_RED)
+		heredoc_set(data, cmd, tk->next->value);
 	else if (tk->op == OUTTR_RED || tk->op == OUTAP_RED)
 	{
 		if (cmd->io_red.red_out)

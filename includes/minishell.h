@@ -6,7 +6,7 @@
 /*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/23 17:26:30 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/23 17:38:19 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ typedef enum e_type{
 }	t_type;
 
 typedef enum e_op{
-	IN_RED,
 	HEREDOC_RED,
-	OUTTR_RED,
+	IN_RED,
 	OUTAP_RED,
+	OUTTR_RED,
 	PIPE,
 	NWLINE,
 	NONE
@@ -138,5 +138,9 @@ void	print_cmd_list(t_data *data);
 
 //-------------PARSE_TOKEN--------------
 void	parse_token(t_data *data);
+
+//---------------HEREDOC----------------
+void	heredoc_write(t_data *data, char *limiter, int fd, char *filename);
+void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter);
 
 #endif
