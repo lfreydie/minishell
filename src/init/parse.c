@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/23 17:23:06 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/24 13:29:23 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ t_cmd	*add_cmd(t_data *data)
 	t_cmd	*last_cmd;
 
 	last_cmd = data->lst_cmd;
+	data->num_cmd++;
 	while (last_cmd && last_cmd->next)
 		last_cmd = last_cmd->next;
 	new_cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (!new_cmd)
 		exit(1); // code erreur
+	new_cmd->id = data->num_cmd - 1;
 	if (!last_cmd)
 		data->lst_cmd = new_cmd;
 	else
@@ -34,18 +36,16 @@ void	add_tk_red(t_data *data, t_tok	*tk, t_cmd *cmd)
 {
 	int	fd;
 
-	if (tk->op == IN_RED || tk->op == HEREDOC_RED)
+	(void) data;
+	if (tk->op == IN_RED)
 	{
 		if (cmd->io_red.red_in)
 			(fd = open(cmd->io_red.red_in, O_RDONLY), close(fd));
-		if (tk->op == IN_RED)
-		{
-			cmd->io_red.red_in = tk->next->value;
-			cmd->io_red.heredoc = false;
-		}
-		else
-			heredoc_set(data, tk->next->value);
+		cmd->io_red.red_in = tk->next->value;
+		cmd->io_red.heredoc = false;
 	}
+	else if (tk->op == HEREDOC_RED)
+		heredoc_set(data, cmd, tk->next->value);
 	else if (tk->op == OUTTR_RED || tk->op == OUTAP_RED)
 	{
 		if (cmd->io_red.red_out)
@@ -58,13 +58,34 @@ void	add_tk_red(t_data *data, t_tok	*tk, t_cmd *cmd)
 	}
 }
 
-void	add_tk_cmd(t_data *data, t_tok *tk, int i)
+void	append_cmd(t_data *data, t_tok *tk, t_cmd *cmd)
 {
-	int	id;
+	int		j;
+	char	**n_cmd;
+	int		current_size;
 
-	id = data->lst_cmd->id;
-	if (tk->type == WORD)
-		data->lst_cmd->cmd[id][i] = tk->value;
+	(void) data;
+	current_size = 0;
+	while (cmd->cmd_value && cmd->cmd_value[current_size] != NULL)
+		current_size++;
+	n_cmd = ft_calloc(sizeof(char *), current_size + 2);
+	if (!n_cmd)
+		exit(1); //code erreur
+	j = 0;
+	while (cmd->cmd_value && cmd->cmd_value[j])
+	{
+		n_cmd[j] = ft_strdup(cmd->cmd_value[j]);
+		j++;
+	}
+	n_cmd[j] = ft_strdup(tk->value);
+	j = -1;
+	if (cmd->cmd_value)
+	{
+		while (cmd->cmd_value[++j])
+			free(cmd->cmd_value[j]);
+		free(cmd->cmd_value);
+	}
+	cmd->cmd_value = n_cmd;
 }
 
 void	parse_token(t_data *data)
@@ -72,15 +93,16 @@ void	parse_token(t_data *data)
 	t_cmd	*cmd;
 	t_tok	*tk;
 	t_tok	*prev_tk;
-	int		i;
 
-	i = 0;
+	(void) prev_tk;
+	cmd = add_cmd(data);
 	tk = data->lst_tk;
 	prev_tk = NULL;
 	while (tk && tk->op != NWLINE)
 	{
-		check_syntax(tk, prev_tk);
+		//check_syntax(tk, prev_tk);
 		if (tk->type == CTRL_OP)
+			cmd = add_cmd(data);
 			cmd = add_cmd(data);
 		else if (tk->type == RED_OP)
 		{
@@ -88,10 +110,7 @@ void	parse_token(t_data *data)
 			tk = tk->next;
 		}
 		else
-		{
-			add_tk_cmd(data, tk, i);
-			i++;
-		}
+			append_cmd(data, tk, cmd);
 		prev_tk = tk;
 		tk = tk->next;
 	}

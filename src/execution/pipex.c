@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/20 18:03:26 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/23 16:50:52 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ pid_t	fork_process(t_exec *exec)
 		exec_redir_in(exec);
 		exec_redir_out(exec);
 		close_fds(exec->tmp_fdin, exec->pipefd[0], exec->pipefd[1], -1);
-		if (ft_strchr(exec->l_cmd->cmd[0], '/'))
+		if (ft_strchr(exec->l_cmd->cmd_value[0], '/'))
 			execute_path(exec);
 		else
 			execute(exec);
