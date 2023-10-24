@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/24 15:37:46 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/24 16:30:52 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void	parse_token(t_data *data);
 
 //----------------SYNTAX----------------
 void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
+t_tok	*expand(t_tok *tk);
 
 //---------------HEREDOC----------------
 void	heredoc_write(t_data *data, char *limiter, int fd, char *filename);
