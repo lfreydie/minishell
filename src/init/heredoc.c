@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/24 13:32:06 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/24 15:40:27 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ void	heredoc_write(t_data *data, char *limiter, int fd, char *filename)
 	close(fd);
 }
 
-void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter)
+void	heredoc_set(t_data *data, t_cmd *cmd, t_tok *tk, char *limiter)
 {
-	int	fd;
+	int		fd;
 
+	check_syntax(data, tk, tk->next);
 	cmd->io_red.heredoc = true;
 	cmd->io_red.red_in = "heredoc"; // aleatoire
-	fd = open(cmd->io_red.red_in, O_RDWR | O_CREAT | O_EXCL, 0644);
+	fd = open(cmd->io_red.red_in, O_RDWR | O_CREAT | O_EXCL, 0744);
 	if (fd < 0)
 		exit (1); // code erreur
 	heredoc_write(data, limiter, fd, cmd->io_red.red_in);

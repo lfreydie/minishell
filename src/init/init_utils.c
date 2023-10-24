@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/23 17:23:56 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:42:34 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,21 @@ void	print_token(t_data *data)
 	current = data->lst_tk;
 	while (current)
 	{
-		printf("value = '%s'\n", current->value);
-		printf("op = '%d'\n", current->op);
-		printf("type = '%d'\n", current->type);
+		printf("value = %s, ", current->value);
+		printf("op = %d, ", current->op);
+		printf("type = %d\n", current->type);
 		current = current->next;
 	}
+}
+
+void	create_close(char *file, int flag, int mode)
+{
+	int	fd;
+
+	fd = open(file, flag, mode);
+	if (fd < 0)
+		exit (1); // code erreur
+	close(fd);
 }
 
 void	print_cmd_list(t_data *data)

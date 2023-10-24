@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/23 17:38:19 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/24 15:37:46 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,17 @@ void	tokenize_input(t_data *data);
 
 //--------------INIT_UTILS--------------
 void	print_token(t_data *data);
+void	create_close(char *file, int flag, int mode);
 void	print_cmd_list(t_data *data);
 
 //-------------PARSE_TOKEN--------------
 void	parse_token(t_data *data);
 
+//----------------SYNTAX----------------
+void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
+
 //---------------HEREDOC----------------
 void	heredoc_write(t_data *data, char *limiter, int fd, char *filename);
-void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter);
+void	heredoc_set(t_data *data, t_cmd *cmd, t_tok *tk, char *limiter);
 
 #endif

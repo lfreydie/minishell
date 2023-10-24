@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/24 13:32:30 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/24 15:48:07 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,23 @@ t_cmd	*add_cmd(t_data *data)
 
 void	add_tk_red(t_data *data, t_tok	*tk, t_cmd *cmd)
 {
-	int	fd;
-
 	(void) data;
-	if (tk->op == IN_RED)
+	if (tk->op == HEREDOC_RED || tk->op == IN_RED)
 	{
-		if (cmd->io_red.red_in)
-			(fd = open(cmd->io_red.red_in, O_RDONLY), close(fd));
-		cmd->io_red.red_in = tk->next->value;
-		cmd->io_red.heredoc = false;
+		if (cmd->io_red.red_in && cmd->io_red.heredoc)
+			unlink(cmd->io_red.red_in);
+		if (tk->op == HEREDOC_RED)
+			heredoc_set(data, cmd, tk, tk->next->value);
+		else
+		{
+			cmd->io_red.red_in = tk->next->value;
+			cmd->io_red.heredoc = false;
+		}
 	}
-	else if (tk->op == HEREDOC_RED)
-		heredoc_set(data, cmd, tk->next->value);
 	else if (tk->op == OUTTR_RED || tk->op == OUTAP_RED)
 	{
 		if (cmd->io_red.red_out)
-			(fd = open(cmd->io_red.red_out, O_RDONLY), close(fd));
+			create_close(cmd->io_red.red_out, O_CREAT | O_RDWR, 0744);
 		if (tk->op == OUTAP_RED)
 			cmd->io_red.append = true;
 		else
@@ -100,7 +101,7 @@ void	parse_token(t_data *data)
 	prev_tk = NULL;
 	while (tk && tk->op != NWLINE)
 	{
-		//check_syntax(tk, prev_tk);
+		check_syntax(data, tk, prev_tk);
 		if (tk->type == CTRL_OP)
 			cmd = add_cmd(data);
 		else if (tk->type == RED_OP)
