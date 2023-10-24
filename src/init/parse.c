@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/24 13:29:23 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/24 13:32:30 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	parse_token(t_data *data)
 	{
 		//check_syntax(tk, prev_tk);
 		if (tk->type == CTRL_OP)
-			cmd = add_cmd(data);
 			cmd = add_cmd(data);
 		else if (tk->type == RED_OP)
 		{
