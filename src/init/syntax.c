@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:11:10 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/24 16:32:26 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/24 16:38:25 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_tok	*expand(t_tok *tk)
 		quote = ptr[i++];
 		while (ptr[i] && ptr[i] != quote)
 		{
-			if (ptr[i] == '$')
+			if (ptr[i] == '$' && quote == DOUBLE_QUOTE)
 			{
 				// expand env var
 			}
