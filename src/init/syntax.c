@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:11:10 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/24 16:38:25 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/25 11:24:29 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_tok	*expand(t_tok *tk)
 			if (ptr[i] == '$' && quote == DOUBLE_QUOTE)
 			{
 				// expand env var
+				printf("expand\n");
 			}
 			i++;
 		}
@@ -52,4 +53,5 @@ t_tok	*expand(t_tok *tk)
 		tk->value = ft_substr(ptr, 1, (ft_strlen(ptr) - 2));
 		free(ptr);
 	}
+	return (tk);
 }

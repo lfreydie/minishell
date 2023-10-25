@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/24 16:30:52 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/25 11:51:43 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,7 @@ typedef struct s_data{
 }	t_data;
 
 //----------------INIT_FREE-------------
-void	clear_tokens(t_data *data);
-void	free_all(t_data *data);
+void	free_t_data(t_data *data);
 
 //----------------MAIN------------------
 void	interrupt_handler(int signum);
