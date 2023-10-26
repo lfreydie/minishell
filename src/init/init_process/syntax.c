@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:11:10 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/26 15:02:31 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/26 15:08:12 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ t_tok	*expand(t_tok *tk)
 		while (ptr[i] && ptr[i] != quote)
 		{
 			if (ptr[i] == '$' && quote == DOUBLE_QUOTE)
-				i++; //expand_env_var
+			{
+				// expand env var
+			}
 			i++;
 		}
 		if (!ptr[i])
@@ -50,5 +52,4 @@ t_tok	*expand(t_tok *tk)
 		tk->value = ft_substr(ptr, 1, (ft_strlen(ptr) - 2));
 		free(ptr);
 	}
-	return (tk);
 }

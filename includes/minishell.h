@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/26 15:03:24 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/26 15:07:57 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,7 @@ typedef struct s_data{
 }	t_data;
 
 //----------------INIT_FREE-------------
-void	clear_tokens(t_data *data);
-void	free_all(t_data *data);
+void	free_t_data(t_data *data);
 
 //----------------MAIN------------------
 void	interrupt_handler(int signum);

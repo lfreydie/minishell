@@ -3,37 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   init_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/20 18:01:27 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/25 12:22:40 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	clear_tokens(t_data *data)
+void free_t_tok(t_tok *token)
 {
-	(void)data;
-	// t_tok	*current;
-	// t_tok	*temp;
+	t_tok	*next;
 
-	// current = data->head;
-	// while (current != NULL)
-	// {
-	// 	temp = current;
-	// 	current = current->next;
-	// 	free(temp->cmd);
-	// 	free(temp);
-	// }
-	// data->head = NULL;
-	// data->num_tokens = 0;
+	while (token)
+	{
+		next = token->next;
+		free(token->value);
+		free(token);
+		token = next;
+	}
 }
 
-void	free_all(t_data *data)
+void	free_t_red(t_red *red)
 {
-	(void)data;
-	// free(data->temp->redir);
-	// free(data->temp->tokens);
-	// free(data->temp);
+	if (red)
+	{
+		free(red->red_in);
+		free(red->red_out);
+	}
+}
+
+void free_t_cmd(t_cmd *command)
+{
+	t_cmd	*next;
+	int		j;
+
+	while (command)
+	{
+		next = command->next;
+		if (command->cmd_value)
+		{
+			j = -1;
+			while (command->cmd_value[++j])
+				free(command->cmd_value[j]);
+			free(command->cmd_value);
+		}
+		free_t_red(&command->io_red);
+		free(command);
+		command = next;
+	}
+}
+
+void free_t_data(t_data *data)
+{
+	if (data)
+	{
+		free(data->line);
+		// free(data->env);
+		free_t_cmd(data->lst_cmd);
+		free_t_tok(data->lst_tk);
+		free(data->grammar);
+		free(data);
+	}
 }
