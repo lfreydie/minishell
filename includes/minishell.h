@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/26 14:19:34 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:24:13 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@
 # define DOUBLE_QUOTE	'"'
 # define METACHARACTERS	" <>|\n\t"
 # define SPACE			' '
+
+struct s_state
+{
+	volatile sig_atomic_t	signal;
+}	t_state;
 
 typedef enum e_type{
 	CTRL_OP,
@@ -107,16 +112,20 @@ typedef struct s_data{
 void	free_t_data(t_data *data);
 void	free_part(t_data *data);
 
-//----------------MAIN------------------
+//-----------------SIG------------------
 void	interrupt_handler(int signum);
+void	sig_init(void);
 
 //--------------READ_LINE---------------
 char	*get_prompt(void);
 char	*ft_readline(void);
 
+//--------------INIT_PROG---------------
+void	init_prog(t_data *data);
+void	init_grammar(t_data *data);
+
 //-------------INIT_PROCESS-------------
 void	init_process(t_data *data, char *input);
-void	init_grammar(t_data *data);
 
 //---------------INIT_ENV---------------
 void	new_env(t_data *data);
