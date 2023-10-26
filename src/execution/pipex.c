@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/23 16:50:52 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/26 15:00:14 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	launch_exec_process(t_data *data)
 
 	exec = ft_calloc(sizeof(t_exec), 1);
 	if (!exec)
-		perror(ERR_MAL);
+		perror("ERR_MAL");
 	exec->data = data;
 	exec->l_cmd = data->lst_cmd;
 	if (data->num_cmd == 1 && exec->l_cmd->built_in)

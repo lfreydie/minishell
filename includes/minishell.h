@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/24 16:30:52 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/26 15:03:24 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,11 @@
 # define SUCCESS 0
 # define READ 0
 # define WRITE 1
-# define ERR "Error"
-# define ERR_ARG "Invalid number of arguments"
-# define ERR_CMD "Command not found"
-# define ERR_PIP "Pipe didn't work"
-# define ERR_MAL "Malloc didn't work"
-# define ERR_ENV "Environnement error"
-# define ERR_NOP "The file doesn't open or isn't a file"
+
+# define DEFAULT_ENV	"PATH=NULL:PWD=NULL:PS1=>:SHLVL=0:_=NULL"
+# define DEFAULT_PATH	"PATH=/usr/local/sbin:\
+						/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+# define ENV_SEP		':'
 
 # define LESS			"<"
 # define MUCH_LESS		"<<"
@@ -125,6 +123,11 @@ char	*ft_readline(void);
 //-------------INIT_PROCESS-------------
 void	init_process(t_data *data, char *input);
 void	init_grammar(t_data *data);
+
+//---------------INIT_ENV---------------
+void	new_env(t_data *data);
+void	copy_env(t_data *data);
+void	init_env(t_data *data);
 
 //----------------TOKEN-----------------
 t_tok	*add_token(t_data *data);

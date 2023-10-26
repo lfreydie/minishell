@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_process.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/23 16:51:19 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:59:32 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	built_in_parent_process(t_exec *exec)
 	{
 		fd = open(cmd->io_red.red_in, O_RDONLY);
 		if (fd < 0)
-			perror(ERR_NOP);
+			perror("ERR_NOP");
 		if (dup2(fd, STDIN_FILENO) < 0)
 			perror("dup2");
 		close(fd);
@@ -79,7 +79,7 @@ void	built_in_parent_process(t_exec *exec)
 		else
 			fd = open(cmd->io_red.red_out, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd < 0)
-			perror(ERR_NOP);
+			perror("ERR_NOP");
 		if (dup2(fd, STDIN_FILENO) < 0)
 			perror("dup2");
 		close(fd);

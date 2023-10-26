@@ -6,17 +6,17 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/23 14:08:18 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/26 15:04:03 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execute.h"
 
-struct						s_state
+struct	s_state
 {
 	volatile sig_atomic_t	signal;
-}							t_state;
+}	t_state;
 
 void	interrupt_handler(int signum)
 {
@@ -32,29 +32,42 @@ void	interrupt_handler(int signum)
 	}
 }
 
-int	main(int ac, char **av, char **envp)
+void	sig_init(void)
+{
+	t_state.signal = 0;
+	signal(SIGINT, interrupt_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	init_prog(t_data *data)
+{
+	sig_init();
+	data = ft_calloc(sizeof(t_data), 1);
+	if (!data)
+		exit (1); // code erreur
+	init_env(data);
+	init_grammar(data);
+}
+
+int	main(int ac, char **av)
 {
 	char	*input;
-	t_data	*data;
+	t_data	data;
 
 	(void)av;
 	if (ac != 1)
 		return (ERROR);
-	data = ft_calloc(sizeof(t_data), 1);
-	data->env = envp;
-	t_state.signal = 0;
-	signal(SIGINT, interrupt_handler);
-	signal(SIGQUIT, SIG_IGN);
-	while (1)
+	init_prog(&data);
+	while (42)
 	{
 		input = ft_readline();
 		if (!input)
 			return (printf("exit\n"), 0);
-		init_process(data, input);
-		// launch_exec_process(data);
-		free(input); // free_part(data) -> token + cmd + line + exec
+		init_process(&data, input);
+		// launch_exec_process(&data);
+		free(input);
 		t_state.signal = 0;
 	}
-	free_all(data);
+	free_all(&data);
 	return (0);
 }
