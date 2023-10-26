@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/26 15:07:57 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/26 15:44:05 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@
 # define DOUBLE_QUOTE	'"'
 # define METACHARACTERS	" <>|\n\t"
 # define SPACE			' '
-
-typedef struct s_bin{
-	void			*obj;
-	struct s_bin	*next;
-}	t_bin;
 
 typedef enum e_type{
 	CTRL_OP,
@@ -106,7 +101,6 @@ typedef struct s_data{
 	int				num_cmd;
 	char			**grammar;
 	int				exit_flag;
-	t_bin			*garbage;
 }	t_data;
 
 //----------------INIT_FREE-------------
