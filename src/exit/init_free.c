@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/26 15:44:47 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/10/26 14:20:59 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,22 @@ void	free_t_data(t_data *data)
 {
 	if (data)
 	{
-		free(data->line); // oui
+		//free(data->line);
 		free(data->env); // non
-		free_t_cmd(data->lst_cmd); // oui
-		free_t_tok(data->lst_tk); //oui
+		//free_t_cmd(data->lst_cmd);
+		//free_t_tok(data->lst_tk);
 		free(data->grammar); // non
 		free(data); // non
-		// num command = 0 et exit flag = ?
+	}
+}
+
+void	free_part(t_data *data)
+{
+		if (data)
+	{
+		free(data->line);
+		free_t_cmd(data->lst_cmd);
+		free_t_tok(data->lst_tk);
+		data->num_cmd = 0;
 	}
 }
