@@ -6,7 +6,7 @@
 /*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/26 14:20:59 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/10/26 14:34:50 by bberthod         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,22 +55,9 @@ void	free_t_cmd(t_cmd *command)
 	}
 }
 
-void	free_t_data(t_data *data)
-{
-	if (data)
-	{
-		//free(data->line);
-		free(data->env); // non
-		//free_t_cmd(data->lst_cmd);
-		//free_t_tok(data->lst_tk);
-		free(data->grammar); // non
-		free(data); // non
-	}
-}
-
 void	free_part(t_data *data)
 {
-		if (data)
+	if (data)
 	{
 		free(data->line);
 		free_t_cmd(data->lst_cmd);
@@ -78,3 +65,16 @@ void	free_part(t_data *data)
 		data->num_cmd = 0;
 	}
 }
+
+void	free_t_data(t_data *data, int free_flag)
+{
+	if (data)
+	{
+		if (free_flag == 0)
+			free_part(data);
+		free(data->env);
+		free(data->grammar);
+		free(data);
+	}
+}
+
