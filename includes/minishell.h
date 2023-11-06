@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/26 14:32:31 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:37:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@
 # define DOUBLE_QUOTE	'"'
 # define METACHARACTERS	" <>|\n\t"
 # define SPACE			' '
-
-struct s_state
-{
-	volatile sig_atomic_t	signal;
-}	t_state;
 
 typedef enum e_type{
 	CTRL_OP,

@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/26 14:32:11 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:40:16 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "execute.h"
+
+sig_atomic_t	sig;
 
 int	main(int ac, char **av)
 {
@@ -33,7 +35,7 @@ int	main(int ac, char **av)
 		// launch_exec_process(data);
 		free_part(&data);
 		free_flag = 1;
-		t_state.signal = 0;
+		sig = 0;
 	}
 	free_t_data(&data, free_flag);
 	return (0);

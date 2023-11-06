@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/10/26 14:34:50 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:11:22 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	free_t_tok(t_tok *token)
 {
