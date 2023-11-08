@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 15:32:10 by blandineber       #+#    #+#             */
-/*   Updated: 2023/11/06 17:11:22 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:04:43 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	free_t_tok(t_tok *token)
 	while (token)
 	{
 		next = token->next;
-		free(token->value);
+		if (token->value)
+			free(token->value);
 		free(token);
 		token = next;
 	}
@@ -59,9 +60,12 @@ void	free_part(t_data *data)
 {
 	if (data)
 	{
-		free(data->line);
-		free_t_cmd(data->lst_cmd);
-		free_t_tok(data->lst_tk);
+		if (data->line)
+			free(data->line);
+		if (data->lst_cmd)
+			free_t_cmd(data->lst_cmd);
+		if (data->lst_tk)
+			free_t_tok(data->lst_tk);
 		data->num_cmd = 0;
 	}
 }
