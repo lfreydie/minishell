@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/24 15:42:34 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/08 15:06:48 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@ void	print_token(t_data *data)
 		printf("type = %d\n", current->type);
 		current = current->next;
 	}
+}
+
+int	ft_streq(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	if (!str1)
+		return (!str2);
+	if (!str2)
+		return (0);
+	while (str1[i])
+	{
+		if (str1[i] != str2[i])
+			return (0);
+		i++;
+	}
+	return (!str2[i]);
 }
 
 void	create_close(char *file, int flag, int mode)

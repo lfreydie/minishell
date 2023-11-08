@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/24 15:40:27 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/08 15:06:43 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,15 @@ void	heredoc_write(t_data *data, char *limiter, int fd, char *filename)
 {
 	int		flag;
 	char	*line;
-	// char	*limiter;
 
 	(void)data;
 	flag = 1;
-	// limiter = ft_strjoin(stop, "\n");
-	// readline enleve le "\n" de line -> get_next_line(0); ?
 	while (flag)
 	{
 		line = readline("> ");
 		if (!line)
 			(close(fd), unlink(filename), exit (1));
-		if (ft_strncmp(limiter, line, ft_strlen(limiter)))
+		if (!ft_streq(line, limiter))
 			write(fd, line, ft_strlen(line));
 		else
 			flag = 0;

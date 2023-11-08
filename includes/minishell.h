@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/06 17:37:17 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/08 15:07:04 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	tokenize_input(t_data *data);
 
 //--------------INIT_UTILS--------------
 void	print_token(t_data *data);
+int		ft_streq(char *str1, char *str2);
 void	create_close(char *file, int flag, int mode);
 void	print_cmd_list(t_data *data);
 
