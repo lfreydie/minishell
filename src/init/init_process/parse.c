@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/10/25 12:01:39 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:55:46 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	add_tk_red(t_data *data, t_tok	*tk, t_cmd *cmd)
 	if (tk->op == HEREDOC_RED || tk->op == IN_RED)
 	{
 		if (cmd->io_red.red_in && cmd->io_red.heredoc)
-			unlink(cmd->io_red.red_in);
+			(unlink(cmd->io_red.red_in), free(cmd->io_red.red_in));
 		if (tk->op == HEREDOC_RED)
 			heredoc_set(data, cmd, tk, tk->next->value);
 		else

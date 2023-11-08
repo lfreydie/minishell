@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/08 15:37:29 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:31:14 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,12 @@ char	*get_word_value(t_data *data, char *ptr);
 void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar);
 void	tokenize_input(t_data *data);
 
-//-------------lst_tk-INIT_UTILS--------------
+//--------------INIT_UTILS--------------
 void	print_token(t_data *data);
 int		ft_streq(char *str1, char *str2);
 void	create_close(char *file, int flag, int mode);
 void	print_cmd_list(t_data *data);
+void	print_data(t_data *data);
 
 //-------------PARSE_TOKEN--------------
 void	parse_token(t_data *data);

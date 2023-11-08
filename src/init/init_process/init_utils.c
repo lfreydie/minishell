@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/11/08 15:33:41 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:30:20 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,15 @@ void	print_cmd_list(t_data *data)
 		printf("\n");
 		current = current->next;
 	}
+}
+
+void	print_data(t_data *data)
+{
+	printf("line = %s\n", (data->line ? "Yes" : "No"));
+	printf("cmd = %s\n", (data->lst_cmd ? "Yes" : "No"));
+	printf("token = %s\n", (data->lst_tk ? "Yes" : "No"));
+	printf("env = %s\n", (data->env ? "Yes" : "No"));
+	printf("grammar = %s\n", (data->grammar ? "Yes" : "No"));
+	printf("num cmd = %d\n", data->num_cmd);
+	printf("exit flag = %d\n", data->exit_flag);
 }
