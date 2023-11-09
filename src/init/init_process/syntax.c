@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:11:10 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/26 15:39:18 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/09 14:35:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,4 @@ void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk)
 		else if (prev_tk->type == CTRL_OP && tk->type == CTRL_OP)
 			exit (1); // code erreur : "bash: syntax error near unexpected token `data->grammar[tk->op]'"
 	}
-}
-
-t_tok	*expand(t_tok *tk)
-{
-	char	quote;
-	char	*ptr;
-	int		i;
-
-	i = 0;
-	ptr = tk->value;
-	if (ptr[i] == SINGLE_QUOTE || ptr[i] == DOUBLE_QUOTE)
-	{
-		quote = ptr[i++];
-		while (ptr[i] && ptr[i] != quote)
-		{
-			if (ptr[i] == '$' && quote == DOUBLE_QUOTE)
-			{
-				// expand env var
-			}
-			i++;
-		}
-		if (!ptr[i])
-			exit (1); // quote unclose
-		tk->value = ft_substr(ptr, 1, (ft_strlen(ptr) - 2));
-		free(ptr);
-	}
-	return (tk);
 }

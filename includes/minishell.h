@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/08 16:31:14 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/09 12:05:21 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define DOUBLE_QUOTE	'"'
 # define METACHARACTERS	" <>|\n\t"
 # define SPACE			' '
+# define BACKSLASH		'\\'
 
 typedef enum e_type{
 	CTRL_OP,
@@ -145,7 +146,7 @@ void	parse_token(t_data *data);
 
 //----------------SYNTAX----------------
 void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
-t_tok	*expand(t_tok *tk);
+t_tok	*expand(t_data *data, t_tok *tk);
 
 //---------------HEREDOC----------------
 void	heredoc_write(t_data *data, char *limiter, int fd, char *filename);

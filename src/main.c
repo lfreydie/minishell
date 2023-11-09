@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/11/08 16:39:48 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:41:29 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main(int ac, char **av)
 		// launch_exec_process(data);
 		free_part(data);
 		free_flag = 1;
-		sig = 0;
 	}
 	free_t_data(data, free_flag);
 	return (0);
