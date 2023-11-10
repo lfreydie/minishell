@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/09 14:51:50 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:15:40 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern sig_atomic_t	sig;
+extern sig_atomic_t	g_sig;
 
 char	*find_var(char *ptr)
 {
@@ -29,6 +29,8 @@ char	*find_var(char *ptr)
 			i++;
 	}
 	var = malloc(sizeof(char) * i + 1);
+	if (!var)
+		exit (1); // code erreur
 	ft_strlcpy(var, ptr, i + 1);
 	return (var);
 }
@@ -47,11 +49,12 @@ char	*create_new_value(char *ptr, char *var, char *env_val, int i)
 	ft_memcpy(new, ptr, i);
 	ft_memcpy(new + i, env_val, env_val_len);
 	ft_memcpy(new + (i + env_val_len), ptr + (i + var_len), \
-	ft_strlen(ptr + (i + var_len)));
+	ft_strlen(ptr + (i + var_len)) + 1);
+	free(ptr);
 	return (new);
 }
 
-void	expand_value(t_data *data, char *var, char *ptr, int i)
+char	*expand_value(t_data *data, char *var, char *ptr, int i)
 {
 	int		l;
 	int		var_len;
@@ -61,13 +64,14 @@ void	expand_value(t_data *data, char *var, char *ptr, int i)
 	env_val = NULL;
 	var_len = ft_strlen(var) + 1;
 	if (ft_streq("?", var))
-		env_val = ft_itoa(sig);
+		env_val = ft_itoa(g_sig);
 	else
 	{
 		l = -1;
 		while (data->env[++l])
 		{
-			if (!ft_memcmp(var, data->env[l], ft_strlen(var) - 1))
+			if (!ft_memcmp(var, data->env[l], ft_strlen(var) - 1) \
+			&& data->env[l][ft_strlen(var)] == '=')
 			{
 				env_val = ft_substr(data->env[l], var_len, \
 				ft_strlen(data->env[l]) - var_len);
@@ -76,8 +80,7 @@ void	expand_value(t_data *data, char *var, char *ptr, int i)
 		}
 	}
 	new = create_new_value(ptr, var, env_val, i);
-	free(ptr);
-	ptr = new;
+	return (new);
 }
 
 t_tok	*expand(t_data *data, t_tok *tk)
@@ -91,16 +94,15 @@ t_tok	*expand(t_data *data, t_tok *tk)
 	if (ptr[i] == SINGLE_QUOTE || ptr[i] == DOUBLE_QUOTE)
 	{
 		quote = ptr[i++];
-		while (ptr[i] && ptr[i] != quote)
+		while (ptr[i] != quote)
 		{
+			if (!ptr[i])
+				exit (1); // quote unclose
 			if (ptr[i] == '$' && quote == DOUBLE_QUOTE)
-				expand_value(data, find_var(ptr + i + 1), ptr, i);
+				ptr = expand_value(data, find_var(ptr + i + 1), ptr, i);
 			else
 				i++;
 		}
-		printf("%s\n", ptr);
-		if (!ptr[i])
-			exit (1); // quote unclose
 		tk->value = ft_substr(ptr, 1, (ft_strlen(ptr) - 2));
 		free(ptr);
 	}

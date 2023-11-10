@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/09 12:05:21 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/10 12:13:48 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,12 @@ void	parse_token(t_data *data);
 
 //----------------SYNTAX----------------
 void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
+
+//----------------EXPAND----------------
 t_tok	*expand(t_data *data, t_tok *tk);
+char	*find_var(char *ptr);
+char	*create_new_value(char *ptr, char *var, char *env_val, int i);
+char	*expand_value(t_data *data, char *var, char *ptr, int i);
 
 //---------------HEREDOC----------------
 void	heredoc_write(t_data *data, char *limiter, int fd, char *filename);
