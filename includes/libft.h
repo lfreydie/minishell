@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 10:43:42 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/09/26 16:01:07 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/11/10 13:43:33 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

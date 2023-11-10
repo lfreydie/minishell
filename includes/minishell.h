@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 12:13:48 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/10 13:46:28 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_data{
 	char			**env;
 	int				num_cmd;
 	char			**grammar;
+	t_list			*garbage;
 	int				exit_flag;
 }	t_data;
 
