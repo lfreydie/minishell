@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/08 17:50:47 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:16:57 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	heredoc_write(t_data *data, char *limiter, int fd, char *filename)
 	flag = 1;
 	while (flag)
 	{
-		line = readline("> ");
+		line = gc(readline("> "));
 		if (!line)
 			(close(fd), unlink(filename), exit (1));
 		if (!ft_streq(line, limiter))
 			write(fd, line, ft_strlen(line));
 		else
 			flag = 0;
-		free(line);
+		rm_node(line);
 	}
 	close(fd);
 }
@@ -41,16 +41,16 @@ char	*heredoc_name(void)
 
 	while (1)
 	{
-		count_s = ft_itoa(counter);
+		count_s = gc(ft_itoa(counter));
 		if (!count_s)
 			exit (1); // code erreur
-		name = ft_strjoin("heredoc_", count_s);
+		name = gc(ft_strjoin("heredoc_", count_s));
 		if (!name)
-			(free(count_s), exit (1)); // code erreur
-		free(count_s);
+			(rm_node(count_s), exit (1)); // code erreur
+		rm_node(count_s);
 		if (access(name, F_OK))
 			break ;
-		free(name);
+		rm_node(name);
 		counter++;
 	}
 	return (name);

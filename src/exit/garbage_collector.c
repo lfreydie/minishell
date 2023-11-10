@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:43:17 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 17:30:31 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/10 20:40:59 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,16 @@ void	rm_node(void *ptr)
 	t_list	*node;
 	t_list	*cpy;
 
+	printf("0\n");
 	garbage = _get_garbage();
+	printf("0.1\n");
 	if ((*garbage)->content == ptr)
 	{
+		printf("1\n");
 		node = (*garbage)->next;
+		printf("2\n");
 		ft_lstdelone((*garbage), free);
+		printf("3\n");
 		(*garbage) = node;
 	}
 	node = (*garbage);

@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 13:46:28 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/10 20:07:18 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,16 @@ void	init_process(t_data *data, char *input);
 void	new_env(t_data *data);
 void	copy_env(t_data *data);
 void	init_env(t_data *data);
+
+//-----------GARBAGE_COLLECTOR----------
+void	*gc(void *ptr);
+void	rm_node(void *ptr);
+void	gc_collect(void);
+void	gc_collect_part(t_data *data);
+
+//-------GARBAGE_COLLECTOR_UTILS--------
+t_list	**_get_garbage(void);
+int		ft_ptreq(char **tab, void *ptr);
 
 //----------------TOKEN-----------------
 t_tok	*add_token(t_data *data);

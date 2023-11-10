@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_prog.c                                        :+:      :+:    :+:   */
+/*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:01:19 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/26 14:51:49 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/10 20:05:45 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	new_env(t_data *data)
 {
 	char	*path;
 
-	data->env = ft_split(DEFAULT_ENV, ENV_SEP);
+	data->env = gc(ft_split(DEFAULT_ENV, ENV_SEP));
 	if (!data->env)
 		exit(1); // code erreur 139
-	path = ft_strdup(DEFAULT_PATH);
+	path = gc(ft_strdup(DEFAULT_PATH));
 	if (!path)
 		exit(1); // code erreur 139
-	free(data->env[0]);
+	rm_node(data->env[0]);
 	data->env[0] = path;
 }
 
@@ -35,12 +35,12 @@ void	copy_env(t_data *data)
 	env_size = 0;
 	while (__environ && __environ[env_size])
 		env_size++;
-	data->env = ft_calloc(sizeof(char *), (env_size + 1));
+	data->env = gc(ft_calloc(sizeof(char *), (env_size + 1)));
 	if (!data->env)
 		exit(1); // code erreur 139
 	while (i < env_size)
 	{
-		data->env[i] = ft_strdup(__environ[i]);
+		data->env[i] = gc(ft_strdup(__environ[i]));
 		if (!data->env[i])
 			exit(1); // code erreur 139
 		i++;

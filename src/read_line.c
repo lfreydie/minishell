@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bberthod <bberthod@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 12:12:01 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/19 16:41:59 by bberthod         ###   ########.fr       */
+/*   Updated: 2023/11/10 20:37:31 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@ char	*get_prompt(void)
 	char	*dir;
 	char	*prompt;
 
-	dir = getcwd(NULL, 0);
+	dir = gc(getcwd(NULL, 0));
 	if (dir)
 	{
-		prompt = ft_strjoin(dir, "$ ");
-		free(dir);
+		prompt = gc(ft_strjoin(dir, "$ "));
+		if (!prompt)
+			exit (1);
+		rm_node(dir);
 		return (prompt);
 	}
 	else
@@ -34,8 +36,8 @@ char	*ft_readline(void)
 	char	*prompt;
 
 	prompt = get_prompt();
-	line = readline(prompt);
-	free(prompt);
+	line = gc(readline(prompt));
+	rm_node(prompt);
 	if (line)
 	{
 		add_history(line);

@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/10 13:15:40 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/10 20:23:16 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*find_var(char *ptr)
 		while (ft_isalnum(ptr[i]) || ptr[i] == '_')
 			i++;
 	}
-	var = malloc(sizeof(char) * i + 1);
+	var = gc(malloc(sizeof(char) * i + 1));
 	if (!var)
 		exit (1); // code erreur
 	ft_strlcpy(var, ptr, i + 1);
@@ -43,14 +43,16 @@ char	*create_new_value(char *ptr, char *var, char *env_val, int i)
 
 	var_len = ft_strlen(var) + 1;
 	env_val_len = ft_strlen(env_val);
-	new = malloc(sizeof(char) * (ft_strlen(ptr) + env_val_len - var_len));
+	new = gc(malloc(sizeof(char) * (ft_strlen(ptr) + env_val_len - var_len)));
 	if (!new)
 		exit (1); // code erreur
 	ft_memcpy(new, ptr, i);
 	ft_memcpy(new + i, env_val, env_val_len);
 	ft_memcpy(new + (i + env_val_len), ptr + (i + var_len), \
 	ft_strlen(ptr + (i + var_len)) + 1);
-	free(ptr);
+	rm_node(env_val);
+	rm_node(var);
+	rm_node(ptr);
 	return (new);
 }
 
@@ -64,7 +66,7 @@ char	*expand_value(t_data *data, char *var, char *ptr, int i)
 	env_val = NULL;
 	var_len = ft_strlen(var) + 1;
 	if (ft_streq("?", var))
-		env_val = ft_itoa(g_sig);
+		env_val = gc(ft_itoa(g_sig));
 	else
 	{
 		l = -1;
@@ -73,8 +75,8 @@ char	*expand_value(t_data *data, char *var, char *ptr, int i)
 			if (!ft_memcmp(var, data->env[l], ft_strlen(var) - 1) \
 			&& data->env[l][ft_strlen(var)] == '=')
 			{
-				env_val = ft_substr(data->env[l], var_len, \
-				ft_strlen(data->env[l]) - var_len);
+				env_val = gc(ft_substr(data->env[l], var_len, \
+				ft_strlen(data->env[l]) - var_len));
 				break ;
 			}
 		}
@@ -103,8 +105,8 @@ t_tok	*expand(t_data *data, t_tok *tk)
 			else
 				i++;
 		}
-		tk->value = ft_substr(ptr, 1, (ft_strlen(ptr) - 2));
-		free(ptr);
+		tk->value = gc(ft_substr(ptr, 1, (ft_strlen(ptr) - 2)));
+		rm_node(ptr);
 	}
 	return (tk);
 }

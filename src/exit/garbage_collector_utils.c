@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 17:26:16 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 17:30:57 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/10 20:07:02 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_list	**_get_garbage(void)
 	return (&garbage);
 }
 
-int	ft_ptreq(void **tab, void *ptr)
+int	ft_ptreq(char **tab, void *ptr)
 {
 	int	i;
 
