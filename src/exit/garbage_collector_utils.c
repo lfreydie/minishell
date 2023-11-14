@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 17:26:16 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 20:07:02 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/14 16:21:27 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_ptreq(char **tab, void *ptr)
 
 	if (tab == ptr)
 		return (1);
+	i = 0;
 	while (tab[i])
 	{
 		if (tab[i] == ptr)
