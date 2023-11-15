@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/10 20:23:16 by lefreydier       ###   ########.fr       */
+/*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/11/15 18:13:27 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,28 +85,15 @@ char	*expand_value(t_data *data, char *var, char *ptr, int i)
 	return (new);
 }
 
-t_tok	*expand(t_data *data, t_tok *tk)
+char	**word_split(char *ptr)
 {
-	char	quote;
-	char	*ptr;
-	int		i;
+	int	count;
+	int	i;
 
+	count = 1;
 	i = 0;
-	ptr = tk->value;
-	if (ptr[i] == SINGLE_QUOTE || ptr[i] == DOUBLE_QUOTE)
+	while (ptr[i])
 	{
-		quote = ptr[i++];
-		while (ptr[i] != quote)
-		{
-			if (!ptr[i])
-				exit (1); // quote unclose
-			if (ptr[i] == '$' && quote == DOUBLE_QUOTE)
-				ptr = expand_value(data, find_var(ptr + i + 1), ptr, i);
-			else
-				i++;
-		}
-		tk->value = gc(ft_substr(ptr, 1, (ft_strlen(ptr) - 2)));
-		rm_node(ptr);
+		if (ptr[i] == ' ' || ptr[i] == '\t' || ptr[i] == '\n')
 	}
-	return (tk);
 }

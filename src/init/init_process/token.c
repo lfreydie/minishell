@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:04:37 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 20:10:14 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/15 18:16:22 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar)
 		tk->type = CTRL_OP;
 	else
 		tk->type = WORD;
-	if (tk->op == NEWLINE)
+	if (tk->op == NWLINE)
 		tk->value = S_NEWLINE;
 	else if (tk->op == NONE)
 		tk->value = get_word_value(data, ptr);

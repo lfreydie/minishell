@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 20:16:57 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/15 15:15:38 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*heredoc_name(void)
 		count_s = gc(ft_itoa(counter));
 		if (!count_s)
 			exit (1); // code erreur
-		name = gc(ft_strjoin("heredoc_", count_s));
+		name = gc(ft_strjoin("/tmp/heredoc_", count_s));
 		if (!name)
 			(rm_node(count_s), exit (1)); // code erreur
 		rm_node(count_s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 20:07:18 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/15 17:08:06 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,9 @@ typedef struct s_tok{
 }	t_tok;
 
 typedef struct s_red{
-	char			*red_in;
-	bool			heredoc;
-	char			*red_out;
-	bool			append;
+	char			*redir;
+	t_op			type;
+	struct s_red	*next;
 }	t_red;
 
 typedef struct s_cmd{
@@ -105,67 +104,66 @@ typedef struct s_data{
 	int				exit_flag;
 }	t_data;
 
-//----------------INIT_FREE-------------
-void	free_t_data(t_data *data, int free_flag);
-void	free_part(t_data *data);
-
-//-----------------SIG------------------
+//-----------------sig------------------
 void	interrupt_handler(int signum);
 void	sig_init(void);
-
-//--------------READ_LINE---------------
+//--------------read_line---------------
 char	*get_prompt(void);
 char	*ft_readline(void);
 
-//--------------INIT_PROG---------------
+//-----------------INIT-----------------
+
+//------------INIT_PROGRAMME------------
+//--------------init_prog---------------
 void	init_prog(t_data *data);
 void	init_grammar(t_data *data);
-
-//-------------INIT_PROCESS-------------
-void	init_process(t_data *data, char *input);
-
-//---------------INIT_ENV---------------
+//---------------init_env---------------
 void	new_env(t_data *data);
 void	copy_env(t_data *data);
 void	init_env(t_data *data);
 
-//-----------GARBAGE_COLLECTOR----------
-void	*gc(void *ptr);
-void	rm_node(void *ptr);
-void	gc_collect(void);
-void	gc_collect_part(t_data *data);
-
-//-------GARBAGE_COLLECTOR_UTILS--------
-t_list	**_get_garbage(void);
-int		ft_ptreq(char **tab, void *ptr);
-
-//----------------TOKEN-----------------
+//-------------INIT_PROCESS-------------
+//-------------init_process-------------
+void	init_process(t_data *data, char *input);
+//----------------token-----------------
 t_tok	*add_token(t_data *data);
 char	*get_word_value(t_data *data, char *ptr);
 void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar);
 void	tokenize_input(t_data *data);
-
-//--------------INIT_UTILS--------------
+//--------------init_utils--------------
 void	print_token(t_data *data);
 int		ft_streq(char *str1, char *str2);
 void	create_close(char *file, int flag, int mode);
 void	print_cmd_list(t_data *data);
 void	print_data(t_data *data);
-
-//-------------PARSE_TOKEN--------------
+//----------------parse-----------------
 void	parse_token(t_data *data);
-
-//----------------SYNTAX----------------
+//----------------syntax----------------
 void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
-
-//----------------EXPAND----------------
+//----------------expand----------------
 t_tok	*expand(t_data *data, t_tok *tk);
 char	*find_var(char *ptr);
 char	*create_new_value(char *ptr, char *var, char *env_val, int i);
 char	*expand_value(t_data *data, char *var, char *ptr, int i);
-
-//---------------HEREDOC----------------
+//-------------REDIRECTION--------------
+//----------------redir-----------------
+t_red	*lstadd_red(t_cmd *cmd);
+void	add_red(t_red *red, t_tok *tk);
+//---------------heredoc----------------
 void	heredoc_write(t_data *data, char *limiter, int fd, char *filename);
 void	heredoc_set(t_data *data, t_cmd *cmd, t_tok *tk, char *limiter);
+
+//-----------------EXIT-----------------
+//-----------garbage_collector----------
+void	*gc(void *ptr);
+void	rm_node(void *ptr);
+void	gc_collect(void);
+void	gc_collect_part(t_data *data);
+//-------garbage_collector_utils--------
+t_list	**_get_garbage(void);
+int		ft_ptreq(char **tab, void *ptr);
+//-----------------exit-----------------
+
+
 
 #endif

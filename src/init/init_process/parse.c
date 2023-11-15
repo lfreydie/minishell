@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/11/10 20:25:52 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/15 16:56:01 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,6 @@ t_cmd	*add_cmd(t_data *data)
 	else
 		last_cmd->next = new_cmd;
 	return (new_cmd);
-}
-
-void	add_tk_red(t_data *data, t_tok	*tk, t_cmd *cmd)
-{
-	(void) data;
-	if (tk->op == HEREDOC_RED || tk->op == IN_RED)
-	{
-		if (cmd->io_red.red_in && cmd->io_red.heredoc)
-			(unlink(cmd->io_red.red_in), rm_node(cmd->io_red.red_in));
-		if (tk->op == HEREDOC_RED)
-			heredoc_set(data, cmd, tk, tk->next->value);
-		else
-		{
-			cmd->io_red.red_in = tk->next->value;
-			cmd->io_red.heredoc = false;
-		}
-	}
-	else if (tk->op == OUTTR_RED || tk->op == OUTAP_RED)
-	{
-		if (cmd->io_red.red_out)
-			create_close(cmd->io_red.red_out, O_CREAT | O_RDWR, 0744);
-		if (tk->op == OUTAP_RED)
-			cmd->io_red.append = true;
-		else
-			cmd->io_red.append = false;
-		cmd->io_red.red_out = tk->next->value;
-	}
 }
 
 void	append_cmd(t_data *data, t_tok *tk, t_cmd *cmd)
@@ -106,7 +79,7 @@ void	parse_token(t_data *data)
 			cmd = add_cmd(data);
 		else if (tk->type == RED_OP)
 		{
-			add_tk_red(data, tk, cmd);
+			add_red(lstadd_red(cmd), tk);
 			tk = tk->next;
 		}
 		else
