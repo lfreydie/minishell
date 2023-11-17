@@ -1,12 +1,12 @@
-/* ************************************************************************** */
+s/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/15 18:13:27 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/17 14:29:54 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,15 +85,32 @@ char	*expand_value(t_data *data, char *var, char *ptr, int i)
 	return (new);
 }
 
-char	**word_split(char *ptr)
+char	*rrange_str_join(char *s1, char *s2)
 {
-	int	count;
-	int	i;
+	char	*new;
 
-	count = 1;
-	i = 0;
-	while (ptr[i])
-	{
-		if (ptr[i] == ' ' || ptr[i] == '\t' || ptr[i] == '\n')
-	}
+	if (!s1 || !s2)
+		exit (1);
+	new = gc(ft_strjoin(s1, s2));
+	if (!new)
+		exit (1);
+	rm_node(s1);
+	rm_node(s2);
+	return (new);
+}
+
+char	*rrange_str(t_tok *tk, int start, int end_q)
+{
+	char	*n_ptr;
+
+	n_ptr = gc(ft_substr(tk->value, start + 1, (end_q - start - 2)));
+	if (!n_ptr)
+		exit (1);
+	if (start)
+		n_ptr = rrange_str_join(gc(ft_substr(tk->value, 0, start)), n_ptr);
+	if (tk->value[end_q + 1])
+		n_ptr = rrange_str_join(n_ptr, gc(ft_substr(tk->value, end_q + 1, \
+		(ft_strlen(tk->value) - end_q))));
+	rm_node(tk->value);
+	return (n_ptr);
 }

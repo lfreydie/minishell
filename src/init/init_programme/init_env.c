@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:01:19 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 20:05:45 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/17 15:15:51 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

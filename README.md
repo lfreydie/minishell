@@ -1,2 +1,5 @@
 # MINISHELL
-garbage collector necessary ?
+
+Souce d'erreur possible :
+	+	expand_string return i
+	+	

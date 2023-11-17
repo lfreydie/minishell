@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/17 10:42:11 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/17 15:02:31 by blandineber      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,20 @@ void	print_data(t_data *data);
 void	parse_token(t_data *data);
 //----------------syntax----------------
 void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
+//-------------INIT_PROCESS-------------
+//----------------EXPAND----------------
 //----------------expand----------------
 t_tok	*expand(t_data *data, t_tok *tk);
+int		expand_quote(t_data *data, t_tok *tk, int start);
+void	expand_var(t_data *data, t_tok *tk);
+//----------expand_string_utils---------
 char	*find_var(char *ptr);
 char	*create_new_value(char *ptr, char *var, char *env_val, int i);
 char	*expand_value(t_data *data, char *var, char *ptr, int i);
+char	*rrange_str_join(char *s1, char *s2);
+char	*rrange_str(t_tok *tk, int start, int end_q);
+//-----------expand_var_utils-----------
+char	**word_split(char *ptr);
 //-------------REDIRECTION--------------
 //----------------redir-----------------
 t_red	*lstadd_red(t_cmd *cmd);
