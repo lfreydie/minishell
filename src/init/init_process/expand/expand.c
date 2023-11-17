@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/15 18:45:56 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/17 11:13:42 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	expand_string(t_data *data, t_tok *tk)
+void	expand_string(t_data *data, t_tok *tk, int start)
 {
 	char	quote;
 	char	*ptr;
 	int		i;
 
-	i = 0;
-	ptr = tk->value;
+	i = start;
+	ptr = gc(ft_substr(tk->value, start, (ft_strlen(tk->value) - start)));
+	if (!ptr)
+		exit (1);
 	quote = ptr[i++];
 	while (ptr[i] != quote)
 	{
@@ -30,8 +32,7 @@ void	expand_string(t_data *data, t_tok *tk)
 		else
 			i++;
 	}
-	tk->value = gc(ft_substr(ptr, 1, (ft_strlen(ptr) - 2)));
-	// rm quote (str doesn't always begin at quote)
+	tk->value = rrange_str(tk, ptr, start, i);
 	rm_node(ptr);
 }
 
@@ -52,9 +53,9 @@ t_tok	*expand(t_data *data, t_tok *tk)
 	while (!tk->value[i])
 	{
 		if (tk->value[i] == SINGLE_QUOTE || tk->value[0] == DOUBLE_QUOTE)
-			expand_string(data, tk);
-		else if (ptr[i] == '$')
-			expand_var(data, tk, cmd);
+			expand_string(data, tk, i);
+		else if (tk->value[i] == '$')
+			expand_var(data, tk);
 	}
 	return (tk);
 }
