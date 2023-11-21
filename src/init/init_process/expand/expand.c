@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/17 15:22:08 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/11/20 11:43:18 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 		if (!tk->value[i])
 			exit (1); // quote unclose
 		if (tk->value[i] == '$' && quote == DOUBLE_QUOTE)
-			tk->value = expand_value(data, find_var(tk->value + i + 1), tk->value, i);
+			tk->value = expand_value(data, \
+			find_var(tk->value + i + 1), tk->value, i);
 		else
 			i++;
 	}
@@ -35,9 +36,11 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 void	expand_var(t_data *data, t_tok *tk, int i)
 {
 	char	**ws;
+	char	*ptr;
 
 	tk->value = expand_value(data, find_var(tk->value[i + 1]), tk->value, i);
-	ws = word_split(tk->value + i);
+	ptr = ft_strdup(tk->value + i);
+	ws = word_split(ptr);
 }
 
 t_tok	*expand(t_data *data, t_tok *tk)
