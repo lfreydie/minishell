@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/20 11:43:18 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/26 16:20:12 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	expand_var(t_data *data, t_tok *tk, int i)
 	char	**ws;
 	char	*ptr;
 
-	tk->value = expand_value(data, find_var(tk->value[i + 1]), tk->value, i);
-	ptr = ft_strdup(tk->value + i);
+	ptr = expand_env_val(data, find_var(tk->value + i + 1));
 	ws = word_split(ptr);
+	manage_ws(ws, tk, i);
 }
 
 t_tok	*expand(t_data *data, t_tok *tk)

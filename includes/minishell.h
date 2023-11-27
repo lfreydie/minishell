@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/17 15:02:31 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/11/26 16:18:31 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
 //----------------expand----------------
 t_tok	*expand(t_data *data, t_tok *tk);
 int		expand_quote(t_data *data, t_tok *tk, int start);
-void	expand_var(t_data *data, t_tok *tk);
+void	expand_var(t_data *data, t_tok *tk, int i);
 //----------expand_string_utils---------
 char	*find_var(char *ptr);
 char	*create_new_value(char *ptr, char *var, char *env_val, int i);
