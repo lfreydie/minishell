@@ -6,27 +6,37 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:04:37 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/15 18:16:22 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/27 18:37:08 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tok	*add_token(t_data *data)
+t_tok	*new_token(void)
 {
 	t_tok	*new_tk;
-	t_tok	*last_tk;
 
-	last_tk = data->lst_tk;
-	while (last_tk && last_tk->next)
-		last_tk = last_tk->next;
 	new_tk = gc(ft_calloc(sizeof(t_tok), 1));
 	if (!new_tk)
 		exit (1); // code erreur
-	if (!last_tk)
-		data->lst_tk = new_tk;
-	else
-		last_tk->next = new_tk;
+	return (new_tk);
+}
+
+t_tok	*add_token(t_tok **lst_tk, t_tok *new_tk)
+{
+	t_tok	*tmp;
+
+	if (lst_tk)
+	{
+		if (!*lst_tk)
+			lst_tk = new_tk;
+		else
+		{
+			while (tmp && tmp->next)
+				tmp = tmp->next;
+			tmp->next = new_tk;
+		}
+	}
 	return (new_tk);
 }
 
@@ -91,7 +101,7 @@ void	tokenize_input(t_data *data)
 	{
 		while (*ptr == SPACE)
 			ptr++;
-		tk = add_token(data);
+		tk = add_token(&data->lst_tk, new_token());
 		token_data(data, ptr, tk, data->grammar);
 		ptr += ft_strlen(tk->value);
 	}

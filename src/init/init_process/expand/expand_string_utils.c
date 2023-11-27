@@ -1,12 +1,12 @@
-s/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_utils.c                                     :+:      :+:    :+:   */
+/*   expand_string_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/17 14:29:54 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/11/27 20:07:21 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,9 @@ char	*create_new_value(char *ptr, char *var, char *env_val, int i)
 char	*expand_value(t_data *data, char *var, char *ptr, int i)
 {
 	int		l;
-	int		var_len;
 	char	*env_val;
 	char	*new;
 
-	env_val = NULL;
-	var_len = ft_strlen(var) + 1;
 	env_val = expand_env_val(data, var);
 	new = create_new_value(ptr, var, env_val, i);
 	rm_node(env_val);

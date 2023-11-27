@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/11/26 16:30:48 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/27 19:55:53 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,48 +68,29 @@ char	*expand_env_val(t_data *data, char *var)
 	return (env_val);
 }
 
-void	manage_ws(char **ws, t_tok *tk, int start)
+void	manage_ws(char **ws, t_tok *tk, char *var, int start)
 {
-	int		i;
-	t_tok	*nxt_tk;
+	t_tok	*lst_exp;
 	t_tok	*current_tk;
-	char	*n_ptr;
-	char	*end_str;
+	int		index;
+	int		end_var;
 
-	nxt_tk = tk->next;
-	end_str = cpy_end_str(tk, start);
-	current_tk = tk;
-	while (ws[i])
+	index = 0;
+	lst_exp = NULL;
+	end_var = i + ft_strlen(var);
+	while (ws[index])
 	{
-		if (i == 0)
-		{
-			if (start)
-			{
-				n_ptr = gc(ft_substr(current_tk->value, 0, start));
-				tk->value = rrange_str_join(n_ptr, ws[i]);
-			}
-			else
-			{
-				tk->value = gc(ft_strdup(ws[i]));
-				if (!tk->value)
-					exit (1);
-			}
-		}
+		current_tk = add_token(&lst_exp, new_token());
+		if (!index && start)
+			current_tk->value = \
+			rrange_str_join(gc(ft_substr(tk->value, 0, start)), ws[index]);
 		else
-		{
-			current_tk->next = gc(ft_calloc(sizeof(t_tok), 1));
-			if (!current_tk->next)
-				exit (1);
-			current_tk = current_tk->next;
-			current_tk->type = WORD;
-			current_tk->op = NONE;
-			current_tk->value = gc(ft_strdup(ws[i]));
-		}
-		if (!ws[i + 1])
-		{
-			current_tk->next = nxt_tk;
-			if (end_str)
-				tk->value = rrange_str_join(n_ptr, ws[i]);
-		}
+			current_tk->value = gc(ft_strdup(ws[index]));
+		index++;
 	}
+	if (tk->value[end_var + 1])
+		current_tk->value = rrange_str_join(gc(ft_substr(tk->value, \
+		end_var + 1, ft_strlen(tk->value) - end_var - 1)), current_tk->value);
+	current_tk->next = tk->next;
+	return (lst_exp);
 }

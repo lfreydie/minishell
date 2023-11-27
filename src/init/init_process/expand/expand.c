@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/26 16:20:12 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/27 20:10:50 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,41 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 		else
 			i++;
 	}
-	tk->value = rrange_str(tk, start, i);
+	tk->value = rrange_str(tk, start, i); // unquote					
 	return (i - 2);
 }
 
-void	expand_var(t_data *data, t_tok *tk, int i)
+t_tok	*expand_var(t_data *data, t_tok *tk, t_tok *prev_tk, int i)
 {
 	char	**ws;
 	char	*ptr;
+	char	*var;
+	int		l;
 
-	ptr = expand_env_val(data, find_var(tk->value + i + 1));
+	var = find_var(tk->value + i + 1);
+	ptr = expand_env_val(data, var);
 	ws = word_split(ptr);
-	manage_ws(ws, tk, i);
+	tk = manage_ws(ws, tk, var, i);
+	if (prev_tk)
+		prev_tk->next = tk;
+	else
+		data->lst_tk = tk;
+	return (tk);
 }
 
-t_tok	*expand(t_data *data, t_tok *tk)
+t_tok	*expand(t_data *data, t_tok *tk, t_tok *prev_tk)
 {
 	int	i;
 
 	i = 0;
-	while (!tk->value[i])
+	while (tk->value[i])
 	{
 		if (tk->value[i] == SINGLE_QUOTE || tk->value[i] == DOUBLE_QUOTE)
 			i == expand_quote(data, tk, i);
 		else if (tk->value[i] == '$')
-			expand_var(data, tk, i);
+			tk = expand_var(data, tk, prev_tk, i);
+		else
+			i++;
 	}
 	return (tk);
 }

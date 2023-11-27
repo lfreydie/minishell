@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/26 16:18:31 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/27 20:08:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ void	init_env(t_data *data);
 //-------------init_process-------------
 void	init_process(t_data *data, char *input);
 //----------------token-----------------
-t_tok	*add_token(t_data *data);
+t_tok	*new_token(void);
+t_tok	*add_token(t_tok **lst_tk, t_tok *new_tk);
 char	*get_word_value(t_data *data, char *ptr);
 void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar);
 void	tokenize_input(t_data *data);
@@ -143,9 +144,9 @@ void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
 //-------------INIT_PROCESS-------------
 //----------------EXPAND----------------
 //----------------expand----------------
-t_tok	*expand(t_data *data, t_tok *tk);
+t_tok	*expand(t_data *data, t_tok *tk, t_tok *prev_tk);
 int		expand_quote(t_data *data, t_tok *tk, int start);
-void	expand_var(t_data *data, t_tok *tk, int i);
+t_tok	*expand_var(t_data *data, t_tok *tk, t_tok *prev_tk, int i);
 //----------expand_string_utils---------
 char	*find_var(char *ptr);
 char	*create_new_value(char *ptr, char *var, char *env_val, int i);
