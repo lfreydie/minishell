@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:43:17 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/13 15:03:00 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/28 19:12:41 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	rm_node(void *ptr)
 	{
 		node = (*garbage)->next;
 		ft_lstdelone(*garbage, free);
+		ptr = NULL;
 		*garbage = node;
 		return ;
 	}
@@ -50,7 +51,9 @@ void	rm_node(void *ptr)
 		{
 			cpy = node->next->next;
 			ft_lstdelone(node->next, free);
+			ptr = NULL;
 			node->next = cpy;
+			return ;
 		}
 		node = node->next;
 	}
@@ -72,18 +75,21 @@ void	gc_collect(void)
 
 void	gc_collect_part(t_data *data)
 {
-	t_list	**garbage;
 	t_list	*node;
 	t_list	*cpy;
+	void	*tmp;
 
-	garbage = _get_garbage();
-	node = (*garbage);
+	node = (t_list *)_get_garbage();
 	while (node)
 	{
 		cpy = node->next;
-		if (node->content != data || !ft_ptreq(data->env, node->content) \
-		|| !ft_ptreq(data->grammar, node->content))
+		if (node->content != data && !ft_ptreq(data->env, node->content) \
+		&& !ft_ptreq(data->grammar, node->content))
+		{
+			tmp = node->content;
 			ft_lstdelone(node, free);
+			tmp = NULL;
+		}
 		node = cpy;
 	}
 }

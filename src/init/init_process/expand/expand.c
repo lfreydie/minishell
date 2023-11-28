@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/28 10:37:05 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/28 20:46:50 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 	while (tk->value[i] != quote)
 	{
 		if (!tk->value[i])
-			exit (1); // quote unclose
+			exit (1);
 		if (tk->value[i] == '$' && quote == DOUBLE_QUOTE)
 			tk->value = expand_value(data, \
 			find_var(tk->value + i + 1), tk->value, i);
 		else
 			i++;
 	}
-	tk->value = rrange_str(tk, start, i); // unquote
+	tk->value = rrange_str(tk, start, i);
 	return (i - 2);
 }
 

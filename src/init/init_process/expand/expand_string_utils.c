@@ -3,52 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   expand_string_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/28 10:37:26 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/28 20:57:52 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*create_new_value(char *ptr, char *var, char *env_val, int i)
-{
-	int		env_val_len;
-	int		var_len;
-	char	*new;
-
-	var_len = ft_strlen(var) + 1;
-	env_val_len = ft_strlen(env_val);
-	new = gc(malloc(sizeof(char) * (ft_strlen(ptr) + env_val_len - var_len)));
-	if (!new)
-		exit (1);
-	ft_memcpy(new, ptr, i);
-	ft_memcpy(new + i, env_val, env_val_len);
-	ft_memcpy(new + (i + env_val_len), ptr + (i + var_len), \
-	ft_strlen(ptr + (i + var_len)) + 1);
-	return (new);
-}
-
-char	*expand_value(t_data *data, char *var, char *ptr, int i)
-{
-	char	*env_val;
-	char	*new;
-
-	env_val = expand_env_val(data, var);
-	new = create_new_value(ptr, var, env_val, i);
-	rm_node(env_val);
-	rm_node(var);
-	rm_node(ptr);
-	return (new);
-}
-
 char	*rrange_str_join(char *s1, char *s2)
 {
 	char	*new;
 
-	if (!s1 || !s2)
-		exit (1);
+	if (!s1)
+		return (s2);
+	if (!s2)
+		return (s1);
 	new = gc(ft_strjoin(s1, s2));
 	if (!new)
 		exit (1);
@@ -57,11 +28,37 @@ char	*rrange_str_join(char *s1, char *s2)
 	return (new);
 }
 
+char	*expand_value(t_data *data, char *var, char *ptr, int i)
+{
+	char	*new;
+	char	*env_val;
+	int		var_len;
+
+	if (var)
+	{
+		var_len = ft_strlen(var) + 1;
+		env_val = expand_env_val(data, var);
+	}
+	else
+	{
+		var_len = find_var_len(ptr + i + 1) + 1;
+		env_val = NULL;
+	}
+	if (i)
+		new = rrange_str_join(gc(ft_substr(ptr, 0, i)), env_val);
+	else
+		new = env_val;
+	if (ptr[i + var_len])
+		new = rrange_str_join(new, gc(ft_substr(ptr, i + var_len, \
+		ft_strlen(ptr) - (i + var_len))));
+	return (new);
+}
+
 char	*rrange_str(t_tok *tk, int start, int end_q)
 {
 	char	*n_ptr;
 
-	n_ptr = gc(ft_substr(tk->value, start + 1, (end_q - start - 2)));
+	n_ptr = gc(ft_substr(tk->value, start + 1, (end_q - start - 1)));
 	if (!n_ptr)
 		exit (1);
 	if (start)
