@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/11/28 10:35:13 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/28 21:37:15 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	**word_split(char *ptr)
 
 	len_ptr = ft_strlen(ptr);
 	count = count_word(ptr);
+	printf("%d %d\n", len_ptr, count);
 	ws = gc(ft_calloc(sizeof(char *), (count + 1)));
 	if (!ws)
 		exit (1);
@@ -31,12 +32,11 @@ char	**word_split(char *ptr)
 	wc = 0;
 	while (wc < count)
 	{
-		while (!ptr[i] && i < len_ptr)
+		while (ft_memchr(" \t\n", ptr[i], 3) && i < len_ptr)
 			i++;
-		if (i >= len_ptr)
-			exit (1);
-		ws[i] = ft_strdup(ptr + i);
+		ws[wc] = ft_strdup(ptr + i);
 		i += ft_strlen(ptr + i);
+		wc++;
 	}
 	return (ws);
 }

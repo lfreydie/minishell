@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/28 20:57:52 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/28 21:09:31 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,8 @@ char	*expand_value(t_data *data, char *var, char *ptr, int i)
 	char	*env_val;
 	int		var_len;
 
-	if (var)
-	{
-		var_len = ft_strlen(var) + 1;
-		env_val = expand_env_val(data, var);
-	}
-	else
-	{
-		var_len = find_var_len(ptr + i + 1) + 1;
-		env_val = NULL;
-	}
+	var_len = ft_strlen(var) + 1;
+	env_val = expand_env_val(data, var);
 	if (i)
 		new = rrange_str_join(gc(ft_substr(ptr, 0, i)), env_val);
 	else
