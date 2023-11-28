@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/26 15:00:14 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/28 10:28:24 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	pipex_process(t_exec *exec)
 			exec->l_cmd->pid = built_in_child_process(exec);
 		else
 			exec->l_cmd->pid = fork_process(exec);
-		if (exec->l_cmd->io_red.heredoc)
-			unlink(exec->l_cmd->io_red.red_in);
+		if (exec->l_cmd->io_red->op == HEREDOC_RED)
+			unlink(exec->l_cmd->io_red->redir);
 		pid = exec->l_cmd->pid;
 		exec->l_cmd = exec->l_cmd->next;
 	}
@@ -82,13 +82,13 @@ void	exec_redir_in(t_exec *exec)
 	t_cmd	*cmd;
 
 	cmd = exec->l_cmd;
-	if (cmd->io_red.red_in)
+	if (cmd->io_red->op == HEREDOC_RED || cmd->io_red->op == IN_RED)
 	{
 		if (cmd->id != 1)
 			close(exec->tmp_fdin);
-		exec->tmp_fdin = open(cmd->io_red.red_in, O_RDONLY);
+		exec->tmp_fdin = open(cmd->io_red->redir, O_RDONLY);
 	}
-	if (cmd->id != 1 || cmd->io_red.red_in)
+	if (cmd->id != 1 || cmd->io_red->op == HEREDOC_RED || cmd->io_red->op == IN_RED)
 	{
 		if (exec->tmp_fdin >= 0 && dup2(exec->tmp_fdin, STDIN_FILENO) < 0)
 			perror("dup2");
@@ -103,13 +103,13 @@ void	exec_redir_out(t_exec *exec)
 	t_cmd	*cmd;
 
 	cmd = exec->l_cmd;
-	if (cmd->io_red.red_out)
+	if (cmd->io_red->op == OUTAP_RED || cmd->io_red->op == OUTTR_RED)
 	{
-		if (cmd->io_red.append)
-			fd_out = open(cmd->io_red.red_out, \
+		if (cmd->io_red-> op == OUTAP_RED)
+			fd_out = open(cmd->io_red->redir, \
 			O_RDWR | O_CREAT | O_APPEND, 0644);
 		else
-			fd_out = open(cmd->io_red.red_out, \
+			fd_out = open(cmd->io_red->redir, \
 			O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd_out >= 0 && dup2(fd_out, STDOUT_FILENO) < 0)
 			perror("dup2");

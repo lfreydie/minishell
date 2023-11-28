@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/15 15:15:38 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:33:29 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	heredoc_set(t_data *data, t_cmd *cmd, t_tok *tk, char *limiter)
 	int		fd;
 
 	check_syntax(data, tk, tk->next);
-	cmd->io_red.heredoc = true;
-	cmd->io_red.red_in = heredoc_name();
-	fd = open(cmd->io_red.red_in, O_RDWR | O_CREAT | O_EXCL, 0744);
+	cmd->io_red->op = HEREDOC_RED;
+	cmd->io_red->redir = heredoc_name();
+	fd = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_EXCL, 0744);
 	if (fd < 0)
 		exit (1); // code erreur
-	heredoc_write(data, limiter, fd, cmd->io_red.red_in);
+	heredoc_write(data, limiter, fd, cmd->io_red->redir);
 }

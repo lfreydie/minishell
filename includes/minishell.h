@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/27 20:08:44 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:36:21 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_cmd{
 	char			**cmd_value;
 	bool			built_in;
 	pid_t			pid;
-	t_red			io_red;
+	t_red			*io_red;
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }	t_cmd;
@@ -153,8 +153,14 @@ char	*create_new_value(char *ptr, char *var, char *env_val, int i);
 char	*expand_value(t_data *data, char *var, char *ptr, int i);
 char	*rrange_str_join(char *s1, char *s2);
 char	*rrange_str(t_tok *tk, int start, int end_q);
+//-------------expand_utils-------------
+int	ft_isspace(char c);
+int	count_word(char *ptr);
+char	*find_var(char *ptr);
 //-----------expand_var_utils-----------
 char	**word_split(char *ptr);
+char	*expand_env_val(t_data *data, char *var);
+t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start);
 //-------------REDIRECTION--------------
 //----------------redir-----------------
 t_red	*lstadd_red(t_cmd *cmd);

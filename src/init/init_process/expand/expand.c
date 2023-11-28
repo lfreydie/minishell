@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/27 20:10:50 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:37:05 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 		else
 			i++;
 	}
-	tk->value = rrange_str(tk, start, i); // unquote					
+	tk->value = rrange_str(tk, start, i); // unquote
 	return (i - 2);
 }
 
@@ -38,7 +38,6 @@ t_tok	*expand_var(t_data *data, t_tok *tk, t_tok *prev_tk, int i)
 	char	**ws;
 	char	*ptr;
 	char	*var;
-	int		l;
 
 	var = find_var(tk->value + i + 1);
 	ptr = expand_env_val(data, var);
@@ -59,7 +58,7 @@ t_tok	*expand(t_data *data, t_tok *tk, t_tok *prev_tk)
 	while (tk->value[i])
 	{
 		if (tk->value[i] == SINGLE_QUOTE || tk->value[i] == DOUBLE_QUOTE)
-			i == expand_quote(data, tk, i);
+			i = expand_quote(data, tk, i);
 		else if (tk->value[i] == '$')
 			tk = expand_var(data, tk, prev_tk, i);
 		else

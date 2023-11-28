@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/11/08 16:30:20 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:31:33 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void	print_cmd_list(t_data *data)
 		}
 		printf("Built-in Command: %s\n", current->built_in ? "Yes" : "No");
 		printf("Process ID: %d\n", (int)current->pid);
-		printf("Input Redirection: %s\n", current->io_red.red_in);
-		printf("Heredoc Input: %s\n", current->io_red.heredoc ? "Yes" : "No");
-		printf("Output Redirection: %s\n", current->io_red.red_out);
-		printf("Append Output: %s\n", current->io_red.append ? "Yes" : "No");
+		// printf("Input Redirection: %s\n", current->io_red.red_in);
+		// printf("Heredoc Input: %s\n", current->io_red.heredoc ? "Yes" : "No");
+		// printf("Output Redirection: %s\n", current->io_red.red_out);
+		// printf("Append Output: %s\n", current->io_red.append ? "Yes" : "No");
 		printf("\n");
 		current = current->next;
 	}

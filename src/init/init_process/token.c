@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:04:37 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/27 18:37:08 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:32:23 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_tok	*add_token(t_tok **lst_tk, t_tok *new_tk)
 	if (lst_tk)
 	{
 		if (!*lst_tk)
-			lst_tk = new_tk;
+			*lst_tk = new_tk;
 		else
 		{
 			while (tmp && tmp->next)

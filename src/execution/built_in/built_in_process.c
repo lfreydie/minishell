@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/10/26 14:59:32 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/28 10:30:37 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,21 @@ void	built_in_parent_process(t_exec *exec)
 	int		fd;
 
 	cmd = exec->l_cmd;
-	if (cmd->io_red.red_in)
+	if (cmd->io_red->op == HEREDOC_RED || cmd->io_red->op == IN_RED)
 	{
-		fd = open(cmd->io_red.red_in, O_RDONLY);
+		fd = open(cmd->io_red->redir, O_RDONLY);
 		if (fd < 0)
 			perror("ERR_NOP");
 		if (dup2(fd, STDIN_FILENO) < 0)
 			perror("dup2");
 		close(fd);
 	}
-	if (cmd->io_red.red_out)
+	if (cmd->io_red->op == OUTAP_RED || cmd->io_red->op == OUTTR_RED)
 	{
-		if (cmd->io_red.append)
-			fd = open(cmd->io_red.red_out, O_RDWR | O_CREAT | O_APPEND, 0644);
+		if (cmd->io_red->op == OUTAP_RED)
+			fd = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_APPEND, 0644);
 		else
-			fd = open(cmd->io_red.red_out, O_RDWR | O_CREAT | O_TRUNC, 0644);
+			fd = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (fd < 0)
 			perror("ERR_NOP");
 		if (dup2(fd, STDIN_FILENO) < 0)

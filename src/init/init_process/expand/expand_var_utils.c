@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/11/27 19:55:53 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:35:13 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*expand_env_val(t_data *data, char *var)
 	return (env_val);
 }
 
-void	manage_ws(char **ws, t_tok *tk, char *var, int start)
+t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start)
 {
 	t_tok	*lst_exp;
 	t_tok	*current_tk;
@@ -77,7 +77,7 @@ void	manage_ws(char **ws, t_tok *tk, char *var, int start)
 
 	index = 0;
 	lst_exp = NULL;
-	end_var = i + ft_strlen(var);
+	end_var = start + ft_strlen(var);
 	while (ws[index])
 	{
 		current_tk = add_token(&lst_exp, new_token());
