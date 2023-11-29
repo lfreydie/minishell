@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:49:12 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/10 20:03:37 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/29 18:41:40 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ void	init_prog(t_data *data)
 
 void	init_grammar(t_data *data)
 {
-	data->grammar = (char **)gc(ft_calloc(6, sizeof (char *)));
-	if (!data->grammar)
-		exit (1); // code erreur
 	data->grammar[0] = MUCH_LESS;
 	data->grammar[1] = LESS;
 	data->grammar[2] = MUCH_MORE;

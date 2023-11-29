@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:43:17 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/28 19:12:41 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/29 19:20:02 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ void	gc_collect_part(t_data *data)
 	while (node)
 	{
 		cpy = node->next;
-		if (node->content != data && !ft_ptreq(data->env, node->content) \
-		&& !ft_ptreq(data->grammar, node->content))
+		if (ft_ptreq(data->env, node->content))
 		{
 			tmp = node->content;
 			ft_lstdelone(node, free);

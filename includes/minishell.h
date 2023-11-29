@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/28 20:23:54 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:09:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ typedef struct s_data{
 	t_tok			*lst_tk;
 	char			**env;
 	int				num_cmd;
-	char			**grammar;
+	char			*grammar[6];
 	t_list			*garbage;
 	int				exit_flag;
 }	t_data;
@@ -132,7 +132,7 @@ char	*get_word_value(t_data *data, char *ptr);
 void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar);
 void	tokenize_input(t_data *data);
 //--------------init_utils--------------
-void	print_token(t_data *data);
+void	print_token(t_tok *lst_tk);
 int		ft_streq(char *str1, char *str2);
 void	create_close(char *file, int flag, int mode);
 void	print_cmd_list(t_data *data);
@@ -144,9 +144,9 @@ void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
 //-------------INIT_PROCESS-------------
 //----------------EXPAND----------------
 //----------------expand----------------
-t_tok	*expand(t_data *data, t_tok *tk, t_tok *prev_tk);
+t_tok	*expand(t_data *data, t_tok *tk);
 int		expand_quote(t_data *data, t_tok *tk, int start);
-t_tok	*expand_var(t_data *data, t_tok *tk, t_tok *prev_tk, int i);
+t_tok	*expand_var(t_data *data, t_tok *tk, int i);
 //----------expand_string_utils---------
 char	*rrange_str_join(char *s1, char *s2);
 char	*expand_value(t_data *data, char *var, char *ptr, int i);

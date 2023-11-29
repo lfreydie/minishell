@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/28 21:28:43 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:08:25 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 	return (i - 2);
 }
 
-t_tok	*expand_var(t_data *data, t_tok *tk, t_tok *prev_tk, int i)
+t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 {
 	char	**ws;
 	char	*ptr;
@@ -54,17 +54,11 @@ t_tok	*expand_var(t_data *data, t_tok *tk, t_tok *prev_tk, int i)
 		return (tk);
 	}
 	ws = word_split(ptr);
-	printf("HERE\n");
 	tk = manage_ws(ws, tk, var, i);
-	printf("HERE\n");
-	if (prev_tk)
-		prev_tk->next = tk;
-	else
-		data->lst_tk = tk;
 	return (tk);
 }
 
-t_tok	*expand(t_data *data, t_tok *tk, t_tok *prev_tk)
+t_tok	*expand(t_data *data, t_tok *tk)
 {
 	int	i;
 
@@ -75,7 +69,7 @@ t_tok	*expand(t_data *data, t_tok *tk, t_tok *prev_tk)
 			i = expand_quote(data, tk, i);
 		else if (tk->value[i] == '$' && \
 		(ft_isalpha(tk->value[i + 1]) || tk->value[i + 1] == '_'))
-			tk = expand_var(data, tk, prev_tk, i);
+			tk = expand_var(data, tk, i);
 		else
 			i++;
 	}

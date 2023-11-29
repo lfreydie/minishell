@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:15:50 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/28 21:10:24 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:43:41 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	count_word(char *ptr)
 	while (ptr[i])
 	{
 		if (ft_isspace(ptr[i]))
-			ptr[i++] = '\0';
+			i++;
 		else
 		{
 			count++;

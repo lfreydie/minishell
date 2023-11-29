@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/11/28 10:31:33 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/11/29 18:39:53 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_token(t_data *data)
+void	print_token(t_tok *lst_tk)
 {
 	t_tok	*current;
 
-	current = data->lst_tk;
+	current = lst_tk;
 	while (current)
 	{
 		printf("value = %s, ", current->value);
@@ -87,7 +87,7 @@ void	print_data(t_data *data)
 	printf("cmd = %s\n", (data->lst_cmd ? "Yes" : "No"));
 	printf("token = %s\n", (data->lst_tk ? "Yes" : "No"));
 	printf("env = %s\n", (data->env ? "Yes" : "No"));
-	printf("grammar = %s\n", (data->grammar ? "Yes" : "No"));
+	// printf("grammar = %s\n", (data->grammar ? "Yes" : "No"));
 	printf("num cmd = %d\n", data->num_cmd);
 	printf("exit flag = %d\n", data->exit_flag);
 }

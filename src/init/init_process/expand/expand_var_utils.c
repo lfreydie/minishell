@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/11/28 21:37:15 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/11/29 20:13:45 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ extern sig_atomic_t	g_sig;
 char	**word_split(char *ptr)
 {
 	char	**ws;
-	int		len_ptr;
 	int		count;
 	int		wc;
 	int		i;
+	int		end_w;
 
-	len_ptr = ft_strlen(ptr);
 	count = count_word(ptr);
-	printf("%d %d\n", len_ptr, count);
 	ws = gc(ft_calloc(sizeof(char *), (count + 1)));
 	if (!ws)
 		exit (1);
@@ -32,10 +30,13 @@ char	**word_split(char *ptr)
 	wc = 0;
 	while (wc < count)
 	{
-		while (ft_memchr(" \t\n", ptr[i], 3) && i < len_ptr)
+		while (ptr[i] && ft_isspace(ptr[i]))
 			i++;
-		ws[wc] = ft_strdup(ptr + i);
-		i += ft_strlen(ptr + i);
+		end_w = i;
+		while (ptr[end_w] && !ft_isspace(ptr[end_w]))
+				end_w++;
+		ws[wc] = ft_substr(ptr, i, end_w - i);
+		i = end_w;
 		wc++;
 	}
 	return (ws);
@@ -81,6 +82,8 @@ t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start)
 	while (ws[index])
 	{
 		current_tk = add_token(&lst_exp, new_token());
+		current_tk->op = NONE;
+		current_tk->type = WORD;
 		if (!index && start)
 			current_tk->value = \
 			rrange_str_join(gc(ft_substr(tk->value, 0, start)), ws[index]);
@@ -89,8 +92,7 @@ t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start)
 		index++;
 	}
 	if (tk->value[end_var + 1])
-		current_tk->value = rrange_str_join(gc(ft_substr(tk->value, \
-		end_var + 1, ft_strlen(tk->value) - end_var - 1)), current_tk->value);
-	current_tk->next = tk->next;
+		current_tk->value = rrange_str_join(current_tk->value, gc(ft_substr(tk->value, \
+		end_var + 1, ft_strlen(tk->value) - end_var - 1)));
 	return (lst_exp);
 }
