@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:10:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/04 18:42:50 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 18:51:55 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	add_red(t_red *red, t_tok *tk)
 	red->next = NULL;
 }
 
-void	manage_redir_out(t_data *data, t_cmd *cmd, t_red *red)
+void	manage_redir_out(t_cmd *cmd, t_red *red)
 {
 	if (cmd->fd[OUT])
 		close(cmd->fd[OUT]);
@@ -82,7 +82,7 @@ void	manage_redir(t_data *data)
 			if ((l_red->op == HEREDOC_RED) || (l_red->op == IN_RED))
 				manage_redir_in(data, l_cmd, l_red);
 			else if ((l_red->op == OUTAP_RED) || (l_red->op == OUTTR_RED))
-				manage_redir_out(data, l_cmd, l_red);
+				manage_redir_out(l_cmd, l_red);
 			l_red = l_red->next;
 		}
 		l_cmd = l_cmd->next;

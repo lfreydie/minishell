@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/04 18:39:13 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 18:52:30 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd)
 	{
 		line = gc(readline("> "));
 		if (!line)
-			(close(cmd->fd), exit (1));
+			(close(cmd->fd[IN]), exit (1));
 		if (!ft_streq(line, limiter))
-			write(cmd->fd, line, ft_strlen(line));
+			write(cmd->fd[IN], line, ft_strlen(line));
 		else
 			flag = 0;
 		rm_node(line);

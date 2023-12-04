@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/04 18:22:56 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:00:16 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 	return (tk);
 }
 
-int	expand_redir(t_data *data, t_cmd *cmd, t_red *red)
+int	expand_redir(t_data *data, t_red *red)
 {
 	t_tok	tk;
 	t_tok	*tmp_tk;
