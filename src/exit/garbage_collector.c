@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:43:17 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/29 19:20:02 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/02 12:36:32 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	gc_collect_part(t_data *data)
 	t_list	*cpy;
 	void	*tmp;
 
+	(void)tmp;
 	node = (t_list *)_get_garbage();
 	while (node)
 	{
