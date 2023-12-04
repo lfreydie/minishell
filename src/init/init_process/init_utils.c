@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/11/29 18:39:53 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:52:29 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,26 @@ void	create_close(char *file, int flag, int mode)
 void	print_cmd_list(t_data *data)
 {
 	t_cmd	*current;
+	t_red	*red;
 	int		i;
 
 	current = data->lst_cmd;
-	while (current)
+	red = current->io_red;
+	while (current != NULL)
 	{
 		printf("Command ID: %d\n", current->id);
-		printf("Command Arguments:\n");
-		i = 0;
-		while (current->cmd_value[i])
+		printf("Command Value:\n");
+		i = -1;
+		while (current->cmd_value[++i])
+			printf("\t%s\n", current->cmd_value[i]);
+		printf("Built-in: %d\n", current->built_in);
+		printf("Launch: %d\n", current->launch);
+		while (red != NULL)
 		{
-			printf("  %s\n", current->cmd_value[i]);
-			i++;
+			printf("\tRedirection: %s, %d\n", red->redir, red->op);
+			red = red->next;
 		}
-		printf("Built-in Command: %s\n", current->built_in ? "Yes" : "No");
-		printf("Process ID: %d\n", (int)current->pid);
-		// printf("Input Redirection: %s\n", current->io_red.red_in);
-		// printf("Heredoc Input: %s\n", current->io_red.heredoc ? "Yes" : "No");
-		// printf("Output Redirection: %s\n", current->io_red.red_out);
-		// printf("Append Output: %s\n", current->io_red.append ? "Yes" : "No");
-		printf("\n");
+		printf("Next Command:\n");
 		current = current->next;
 	}
 }

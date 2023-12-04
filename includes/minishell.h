@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/04 19:23:41 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:40:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct s_tok{
 typedef struct s_red{
 	char			*redir;
 	t_op			op;
-	int				fd;
 	struct s_red	*next;
 }	t_red;
 

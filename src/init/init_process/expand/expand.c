@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/04 19:36:42 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 20:04:33 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	expand_redir(t_data *data, t_red *red)
 	tk.value = red->redir;
 	tk.type = WORD;
 	tk.op = NONE;
+	tk.next = NULL;
 	tmp_tk = expand(data, &tk, 0);
 	if (!tmp_tk->next)
 		red->redir = ft_strdup(tmp_tk->value);

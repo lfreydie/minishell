@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:10:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/04 18:51:55 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:48:39 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	manage_redir(t_data *data)
 		l_red = l_cmd->io_red;
 		while (l_red)
 		{
-			if (!expand_redir(data, l_cmd, l_red))
+			if (!expand_redir(data, l_red))
 			{
 				l_cmd->launch = false;
 				break ;

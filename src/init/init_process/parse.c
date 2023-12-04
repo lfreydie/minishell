@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/04 19:04:46 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 20:00:07 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,26 @@ void	append_cmd(t_data *data, t_tok *tk, t_cmd *cmd)
 	cmd->cmd_value = n_cmd;
 }
 
+void	token_word(t_data *data, t_cmd *cmd, t_tok *tk)
+{
+	t_tok	*tmp_tk;
+	t_tok	copy_tk;
+
+	copy_tk = *tk;
+	copy_tk.next = NULL;
+	tmp_tk = expand(data, &copy_tk, 0);
+	while (tmp_tk)
+	{
+		append_cmd(data, tmp_tk, cmd);
+		tmp_tk = tmp_tk->next;
+	}
+}
+
 void	parse_token(t_data *data)
 {
 	t_cmd	*cmd;
 	t_tok	*tk;
 	t_tok	*prev_tk;
-	t_tok	*tmp_tk;
-	t_tok	copy_tk;
 
 	cmd = add_cmd(data);
 	tk = data->lst_tk;
@@ -85,16 +98,7 @@ void	parse_token(t_data *data)
 			tk = tk->next;
 		}
 		else
-		{
-			copy_tk = *tk;
-			copy_tk.next = NULL;
-			tmp_tk = expand(data, &copy_tk, 0);
-			while (tmp_tk)
-			{
-				append_cmd(data, tmp_tk, cmd);
-				tmp_tk = tmp_tk->next;
-			}
-		}
+			token_word(data, cmd, tk);
 		prev_tk = tk;
 		tk = tk->next;
 	}
