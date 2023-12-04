@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/04 19:00:16 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:36:42 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 
 t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 {
+	t_tok	*n_tk;
 	char	**ws;
 	char	*ptr;
 	char	*var;
@@ -58,8 +59,9 @@ t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 		return (tk);
 	}
 	ws = word_split(ptr);
-	tk = manage_ws(ws, tk, var, i);
-	return (tk);
+	n_tk = manage_ws(ws, tk, var, i);
+	n_tk = manage_end_ws(data, tk, n_tk, (i + ft_strlen(var)));
+	return (n_tk);
 }
 
 int	expand_redir(t_data *data, t_red *red)
@@ -70,7 +72,7 @@ int	expand_redir(t_data *data, t_red *red)
 	tk.value = red->redir;
 	tk.type = WORD;
 	tk.op = NONE;
-	tmp_tk = expand(data, &tk);
+	tmp_tk = expand(data, &tk, 0);
 	if (!tmp_tk->next)
 		red->redir = ft_strdup(tmp_tk->value);
 	else
@@ -78,18 +80,15 @@ int	expand_redir(t_data *data, t_red *red)
 	return (1);
 }
 
-t_tok	*expand(t_data *data, t_tok *tk)
+t_tok	*expand(t_data *data, t_tok *tk, int i)
 {
-	int	i;
-
-	i = 0;
 	while (tk->value[i])
 	{
 		if (tk->value[i] == SINGLE_QUOTE || tk->value[i] == DOUBLE_QUOTE)
 			i = expand_quote(data, tk, i);
 		else if (tk->value[i] == '$' && \
 		(ft_isalpha(tk->value[i + 1]) || tk->value[i + 1] == '_'))
-			tk = expand_var(data, tk, i); // tmp->tk = last_tk
+			tk = expand_var(data, tk, i);
 		else
 			i++;
 	}

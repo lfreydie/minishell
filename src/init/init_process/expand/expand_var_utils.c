@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/12/04 16:42:49 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:36:33 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*expand_env_val(t_data *data, char *var)
 		i = -1;
 		while (data->env[++i])
 		{
-			if (!ft_memcmp(var, data->env[i], ft_strlen(var) - 1) \
+			if (!ft_memcmp(var, data->env[i], ft_strlen(var)) \
 			&& data->env[i][ft_strlen(var)] == '=')
 			{
 				env_val = gc(ft_substr(data->env[i], var_len, \
@@ -67,6 +67,27 @@ char	*expand_env_val(t_data *data, char *var)
 		}
 	}
 	return (env_val);
+}
+
+t_tok	*manage_end_ws(t_data *data, t_tok *tk, t_tok *n_tk, int end_var)
+{
+	t_tok	*last_tk;
+	int		len;
+
+	last_tk = n_tk;
+	while (last_tk->next)
+		last_tk = last_tk->next;
+	if (tk->value[end_var + 1])
+	{
+		if (last_tk == n_tk)
+			return (n_tk);
+		len = ft_strlen(last_tk->value);
+		last_tk->value = rrange_str_join(last_tk->value, \
+		gc(ft_substr(tk->value, end_var + 1, \
+		ft_strlen(tk->value) - end_var - 1)));
+		expand(data, last_tk, len);
+	}
+	return (n_tk);
 }
 
 t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start)
@@ -91,9 +112,5 @@ t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start)
 			current_tk->value = gc(ft_strdup(ws[index]));
 		index++;
 	}
-	if (tk->value[end_var + 1])
-		current_tk->value = rrange_str_join(current_tk->value, \
-		gc(ft_substr(tk->value, end_var + 1, \
-		ft_strlen(tk->value) - end_var - 1)));
 	return (lst_exp);
 }

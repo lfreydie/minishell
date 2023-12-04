@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/04 18:25:38 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:04:46 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	parse_token(t_data *data)
 		{
 			copy_tk = *tk;
 			copy_tk.next = NULL;
-			tmp_tk = expand(data, &copy_tk);
+			tmp_tk = expand(data, &copy_tk, 0);
 			while (tmp_tk)
 			{
 				append_cmd(data, tmp_tk, cmd);

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/04 18:58:47 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 19:23:41 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
 //-------------INIT_PROCESS-------------
 //----------------EXPAND----------------
 //----------------expand----------------
-t_tok	*expand(t_data *data, t_tok *tk);
+t_tok	*expand(t_data *data, t_tok *tk, int i);
 int		expand_quote(t_data *data, t_tok *tk, int start);
 t_tok	*expand_var(t_data *data, t_tok *tk, int i);
 int		expand_redir(t_data *data, t_red *red);
@@ -165,6 +165,7 @@ int		find_var_len(char *ptr);
 //-----------expand_var_utils-----------
 char	**word_split(char *ptr);
 char	*expand_env_val(t_data *data, char *var);
+t_tok	*manage_end_ws(t_data *data, t_tok *tk, t_tok *n_tk, int end_var);
 t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start);
 //-------------REDIRECTION--------------
 //----------------redir-----------------
