@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/29 20:09:17 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 18:40:12 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define SUCCESS 0
 # define READ 0
 # define WRITE 1
+# define IN 0
+# define OUT 1
 
 # define DEFAULT_ENV	"PATH=NULL:PWD=NULL:PS1=>:SHLVL=0:_=NULL"
 # define DEFAULT_PATH	"PATH=/usr/local/sbin:\
@@ -80,6 +82,7 @@ typedef struct s_tok{
 typedef struct s_red{
 	char			*redir;
 	t_op			op;
+	int				fd;
 	struct s_red	*next;
 }	t_red;
 
@@ -87,8 +90,10 @@ typedef struct s_cmd{
 	int				id;
 	char			**cmd_value;
 	bool			built_in;
+	bool			launch;
 	pid_t			pid;
 	t_red			*io_red;
+	int				fd[2];
 	struct s_cmd	*next;
 	struct s_cmd	*previous;
 }	t_cmd;
@@ -147,6 +152,7 @@ void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
 t_tok	*expand(t_data *data, t_tok *tk);
 int		expand_quote(t_data *data, t_tok *tk, int start);
 t_tok	*expand_var(t_data *data, t_tok *tk, int i);
+int		expand_redir(t_data *data, t_cmd *cmd, t_red *red);
 //----------expand_string_utils---------
 char	*rrange_str_join(char *s1, char *s2);
 char	*expand_value(t_data *data, char *var, char *ptr, int i);
@@ -164,9 +170,10 @@ t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start);
 //----------------redir-----------------
 t_red	*lstadd_red(t_cmd *cmd);
 void	add_red(t_red *red, t_tok *tk);
+void	manage_redir(t_data *data);
 //---------------heredoc----------------
-void	heredoc_write(t_data *data, char *limiter, int fd, char *filename);
-void	heredoc_set(t_data *data, t_cmd *cmd, t_tok *tk, char *limiter);
+void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd);
+void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter);
 
 //-----------------EXIT-----------------
 //-----------garbage_collector----------

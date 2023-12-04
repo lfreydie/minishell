@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/29 20:08:25 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/04 18:22:56 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	expand_quote(t_data *data, t_tok *tk, int start)
 {
+	char	*var;
 	char	quote;
 	int		i;
 
@@ -25,8 +26,11 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 			exit (1);
 		if (tk->value[i] == '$' && quote == DOUBLE_QUOTE \
 		&& (ft_isalpha(tk->value[i + 1]) || tk->value[i + 1] == '_'))
-			tk->value = expand_value(data, \
-			find_var(tk->value + i + 1), tk->value, i);
+		{
+			var = find_var(tk->value + i + 1);
+			tk->value = expand_value(data, var, tk->value, i);
+			i += ft_strlen(expand_env_val(data, var));
+		}
 		else
 			i++;
 	}
@@ -58,6 +62,22 @@ t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 	return (tk);
 }
 
+int	expand_redir(t_data *data, t_cmd *cmd, t_red *red)
+{
+	t_tok	tk;
+	t_tok	*tmp_tk;
+
+	tk.value = red->redir;
+	tk.type = WORD;
+	tk.op = NONE;
+	tmp_tk = expand(data, &tk);
+	if (!tmp_tk->next)
+		red->redir = ft_strdup(tmp_tk->value);
+	else
+		return (0);
+	return (1);
+}
+
 t_tok	*expand(t_data *data, t_tok *tk)
 {
 	int	i;
@@ -69,7 +89,7 @@ t_tok	*expand(t_data *data, t_tok *tk)
 			i = expand_quote(data, tk, i);
 		else if (tk->value[i] == '$' && \
 		(ft_isalpha(tk->value[i + 1]) || tk->value[i + 1] == '_'))
-			tk = expand_var(data, tk, i);
+			tk = expand_var(data, tk, i); // tmp->tk = last_tk
 		else
 			i++;
 	}

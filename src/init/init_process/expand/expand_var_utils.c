@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/12/02 16:42:27 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/04 16:42:49 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ t_tok	*manage_ws(char **ws, t_tok *tk, char *var, int start)
 		index++;
 	}
 	if (tk->value[end_var + 1])
-		current_tk->value = rrange_str_join(current_tk->value, gc(ft_substr(tk->value, \
-		end_var + 1, ft_strlen(tk->value) - end_var - 1)));
+		current_tk->value = rrange_str_join(current_tk->value, \
+		gc(ft_substr(tk->value, end_var + 1, \
+		ft_strlen(tk->value) - end_var - 1)));
 	return (lst_exp);
 }

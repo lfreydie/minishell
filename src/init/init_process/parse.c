@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/02 12:38:33 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/04 18:25:38 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_cmd	*add_cmd(t_data *data)
 	if (!new_cmd)
 		exit(1); // code erreur
 	new_cmd->id = data->num_cmd - 1;
+	new_cmd->launch = true;
 	if (!last_cmd)
 		data->lst_cmd = new_cmd;
 	else

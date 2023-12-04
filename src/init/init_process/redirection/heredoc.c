@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/28 10:33:29 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/04 18:39:13 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	heredoc_write(t_data *data, char *limiter, int fd, char *filename)
+void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd)
 {
 	int		flag;
 	char	*line;
@@ -23,14 +23,13 @@ void	heredoc_write(t_data *data, char *limiter, int fd, char *filename)
 	{
 		line = gc(readline("> "));
 		if (!line)
-			(close(fd), unlink(filename), exit (1));
+			(close(cmd->fd), exit (1));
 		if (!ft_streq(line, limiter))
-			write(fd, line, ft_strlen(line));
+			write(cmd->fd, line, ft_strlen(line));
 		else
 			flag = 0;
 		rm_node(line);
 	}
-	close(fd);
 }
 
 char	*heredoc_name(void)
@@ -56,15 +55,14 @@ char	*heredoc_name(void)
 	return (name);
 }
 
-void	heredoc_set(t_data *data, t_cmd *cmd, t_tok *tk, char *limiter)
+void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter)
 {
-	int		fd;
+	char	*name;
 
-	check_syntax(data, tk, tk->next);
-	cmd->io_red->op = HEREDOC_RED;
-	cmd->io_red->redir = heredoc_name();
-	fd = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_EXCL, 0744);
-	if (fd < 0)
+	name = heredoc_name();
+	cmd->fd[IN] = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_EXCL, 0744);
+	if (cmd->fd[IN] < 0)
 		exit (1); // code erreur
-	heredoc_write(data, limiter, fd, cmd->io_red->redir);
+	unlink(name);
+	heredoc_write(data, limiter, cmd);
 }
