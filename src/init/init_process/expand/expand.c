@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/04 20:04:33 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/07 10:50:31 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 			i++;
 	}
 	tk->value = rrange_str(tk, start, i);
-	return (i - 2);
+	return (i - 1);
 }
 
 t_tok	*expand_var(t_data *data, t_tok *tk, int i)
@@ -59,7 +59,7 @@ t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 		return (tk);
 	}
 	ws = word_split(ptr);
-	n_tk = manage_ws(ws, tk, var, i);
+	n_tk = manage_ws(ws, tk, i);
 	n_tk = manage_end_ws(data, tk, n_tk, (i + ft_strlen(var)));
 	return (n_tk);
 }
@@ -87,8 +87,9 @@ t_tok	*expand(t_data *data, t_tok *tk, int i)
 	{
 		if (tk->value[i] == SINGLE_QUOTE || tk->value[i] == DOUBLE_QUOTE)
 			i = expand_quote(data, tk, i);
-		else if (tk->value[i] == '$' && \
-		(ft_isalpha(tk->value[i + 1]) || tk->value[i + 1] == '_'))
+		else if (tk->value[i] == '$' && (tk->value[i + 1] && \
+		(ft_isalpha(tk->value[i + 1]) || tk->value[i + 1] == '_' || \
+		tk->value[i + 1] == SINGLE_QUOTE || tk->value[i + 1] == DOUBLE_QUOTE)))
 			tk = expand_var(data, tk, i);
 		else
 			i++;
