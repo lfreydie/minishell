@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/04 19:52:29 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:02:17 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	print_cmd_list(t_data *data)
 		printf("Command ID: %d\n", current->id);
 		printf("Command Value:\n");
 		i = -1;
-		while (current->cmd_value[++i])
-			printf("\t%s\n", current->cmd_value[i]);
+		while (current->value[++i])
+			printf("\t%s\n", current->value[i]);
 		printf("Built-in: %d\n", current->built_in);
 		printf("Launch: %d\n", current->launch);
 		while (red != NULL)

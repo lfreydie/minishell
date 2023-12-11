@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/28 10:28:24 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/07 17:02:17 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ pid_t	fork_process(t_exec *exec)
 		exec_redir_in(exec);
 		exec_redir_out(exec);
 		close_fds(exec->tmp_fdin, exec->pipefd[0], exec->pipefd[1], -1);
-		if (ft_strchr(exec->l_cmd->cmd_value[0], '/'))
+		if (ft_strchr(exec->l_cmd->value[0], '/'))
 			execute_path(exec);
 		else
 			execute(exec);

@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/07 10:34:40 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/07 17:02:17 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ typedef struct s_red{
 
 typedef struct s_cmd{
 	int				id;
-	char			**cmd_value;
+	char			**value;
+	int				n_args_cmd:
 	bool			built_in;
 	bool			launch;
 	pid_t			pid;

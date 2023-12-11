@@ -6,7 +6,7 @@
 /*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/11/28 10:30:37 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/07 17:02:17 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ void	find_built_in_cmd(t_exec *exec)
 {
 	char	*cmd;
 
-	cmd = exec->l_cmd->cmd_value[0];
+	cmd = exec->l_cmd->value[0];
 	if (ft_strncmp(cmd, "pwd", ft_strlen(cmd)))
 		ft_pwd();
 	else if (ft_strncmp(cmd, "echo", ft_strlen(cmd)))
-		ft_echo(exec->l_cmd->cmd_value);
+		ft_echo(exec->l_cmd->value);
 	else if (ft_strncmp(cmd, "cd", ft_strlen(cmd)))
-		ft_cd(exec->l_cmd->cmd_value);
+		ft_cd(exec->l_cmd->value);
 	else if (ft_strncmp(cmd, "export", ft_strlen(cmd)))
-		ft_export(exec->l_cmd->cmd_value);
+		ft_export(exec->l_cmd->value);
 	else if (ft_strncmp(cmd, "unset", ft_strlen(cmd)))
-		ft_unset(exec->l_cmd->cmd_value);
+		ft_unset(exec->l_cmd->value);
 	else if (ft_strncmp(cmd, "env", ft_strlen(cmd)))
-		ft_env(exec->l_cmd->cmd_value);
+		ft_env(exec->l_cmd->value);
 	else if (ft_strncmp(cmd, "exit", ft_strlen(cmd)))
 		ft_exit();
 }

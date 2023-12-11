@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/04 20:00:07 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:02:17 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,20 @@ void	append_cmd(t_data *data, t_tok *tk, t_cmd *cmd)
 {
 	int		j;
 	char	**n_cmd;
-	int		current_size;
 
 	(void) data;
-	current_size = 0;
-	while (cmd->cmd_value && cmd->cmd_value[current_size] != NULL)
-		current_size++;
-	n_cmd = gc(ft_calloc(sizeof(char *), current_size + 2));
+	cmd->n_args_cmd++;
+	n_cmd = gc(ft_calloc(sizeof(char *), cmd->n_args_cmd + 1));
 	if (!n_cmd)
-		exit(1); //code erreur
+		exit(1);
 	j = 0;
-	while (cmd->cmd_value && cmd->cmd_value[j])
+	while (cmd->value && cmd->value[j])
 	{
-		n_cmd[j] = gc(ft_strdup(cmd->cmd_value[j]));
+		n_cmd[j] = gc(ft_strdup(cmd->value[j]));
 		j++;
 	}
 	n_cmd[j] = gc(ft_strdup(tk->value));
-	j = -1;
-	if (cmd->cmd_value)
-	{
-		while (cmd->cmd_value[++j])
-			rm_node(cmd->cmd_value[j]);
-		rm_node(cmd->cmd_value);
-	}
-	cmd->cmd_value = n_cmd;
+	cmd->value = n_cmd;
 }
 
 void	token_word(t_data *data, t_cmd *cmd, t_tok *tk)
