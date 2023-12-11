@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:43:17 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/02 12:36:32 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/11 22:05:05 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,23 @@ void	*gc(void *ptr)
 	t_list	*new;
 
 	if (!ptr)
-		exit (1);
+		err_sys(MALERR);
+	new = ft_lstnew(ptr);
+	if (!new)
+	{
+		free(ptr);
+		err_sys(MALERR);
+	}
+	ft_lstadd_back(_get_garbage(), new);
+	return (ptr);
+}
+
+void	*gc_null(void *ptr)
+{
+	t_list	*new;
+
+	if (!ptr)
+		return (NULL);
 	new = ft_lstnew(ptr);
 	if (!new)
 	{

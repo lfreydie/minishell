@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/07 10:50:31 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/11 21:57:38 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 			var_len + 1, (ft_strlen(tk->value) - (i + var_len + 1)))));
 		return (tk);
 	}
-	ws = word_split(ptr);
+	ws = word_split(ptr, count_word(ptr));
 	n_tk = manage_ws(ws, tk, i);
 	n_tk = manage_end_ws(data, tk, n_tk, (i + ft_strlen(var)));
 	return (n_tk);
@@ -75,7 +75,7 @@ int	expand_redir(t_data *data, t_red *red)
 	tk.next = NULL;
 	tmp_tk = expand(data, &tk, 0);
 	if (!tmp_tk->next)
-		red->redir = ft_strdup(tmp_tk->value);
+		red->redir = gc(ft_strdup(tmp_tk->value));
 	else
 		return (0);
 	return (1);

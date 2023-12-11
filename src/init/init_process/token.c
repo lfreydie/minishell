@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:04:37 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/29 18:36:04 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:54:27 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ t_tok	*new_token(void)
 	t_tok	*new_tk;
 
 	new_tk = gc(ft_calloc(sizeof(t_tok), 1));
-	if (!new_tk)
-		exit (1); // code erreur
 	return (new_tk);
 }
 
@@ -41,14 +39,13 @@ t_tok	*add_token(t_tok **lst_tk, t_tok *new_tk)
 	return (new_tk);
 }
 
-char	*get_word_value(t_data *data, char *ptr)
+char	*get_word_value(char *ptr)
 {
 	char	*value;
 	char	quote;
 	int		i;
 
 	i = 0;
-	(void)data; // for error bellow
 	while (ptr && ptr[i] && !ft_strchr(METACHARACTERS, ptr[i]))
 	{
 		if (ptr[i] == SINGLE_QUOTE || ptr[i] == DOUBLE_QUOTE)
@@ -57,17 +54,15 @@ char	*get_word_value(t_data *data, char *ptr)
 			while (ptr[i] && ptr[i] != quote)
 				i++;
 			if (!ptr[i])
-				exit (1); // quote unclose
+				return (ft_err_syntax(SHELL, UNQUOTE, NULL), NULL);
 		}
 		i++;
 	}
 	value = gc(ft_substr(ptr, 0, i));
-	if (!value)
-		exit (1); // code erreur
 	return (value);
 }
 
-void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar)
+int	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar)
 {
 	if (!*ptr)
 		tk->op = NWLINE;
@@ -88,10 +83,13 @@ void	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar)
 	if (tk->op == NWLINE)
 		tk->value = S_NEWLINE;
 	else if (tk->op == NONE)
-		tk->value = get_word_value(data, ptr);
+		tk->value = get_word_value(ptr);
+	if (!tk->value)
+		return (FAILED);
+	return (SUCCESS);
 }
 
-void	tokenize_input(t_data *data)
+int	tokenize_input(t_data *data)
 {
 	t_tok	*tk;
 	char	*ptr;
@@ -103,7 +101,9 @@ void	tokenize_input(t_data *data)
 		while (*ptr == SPACE)
 			ptr++;
 		tk = add_token(&data->lst_tk, new_token());
-		token_data(data, ptr, tk, data->grammar);
+		if (token_data(data, ptr, tk, data->grammar) == -1)
+			return (FAILED);
 		ptr += ft_strlen(tk->value);
 	}
+	return (SUCCESS);
 }

@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   built_pwd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 15:35:19 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/14 16:21:54 by lfreydie         ###   ########.fr       */
+/*   Created: 2023/12/11 16:19:59 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/12/11 18:51:47 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern sig_atomic_t	g_sig;
+int	ft_pwd(t_data *data, int fd_out)
+{
+	char	path;
 
-// void	ft_strerr(char *str, )
-// {
-
-// }
-
-// void	ft_exit(void)
-// {
-// 	gc_collect();
-// 	exit (g_sig);
-// }
+	path = gc(getcwd(NULL, 0));
+	if (path)
+	{
+		ft_putendl_fd(path, fd_out);
+		data->exit = 0;
+	}
+	else
+		return (perror("getcwd"), FAILED);
+	return (SUCCESS);
+}

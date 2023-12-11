@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blandineberthod <blandineberthod@studen    +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 14:01:19 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/17 15:15:51 by blandineber      ###   ########.fr       */
+/*   Updated: 2023/12/11 21:56:12 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ void	new_env(t_data *data)
 	char	*path;
 
 	data->env = gc(ft_split(DEFAULT_ENV, ENV_SEP));
-	if (!data->env)
-		exit(1); // code erreur 139
 	path = gc(ft_strdup(DEFAULT_PATH));
-	if (!path)
-		exit(1); // code erreur 139
 	rm_node(data->env[0]);
 	data->env[0] = path;
 }
@@ -36,13 +32,9 @@ void	copy_env(t_data *data)
 	while (__environ && __environ[env_size])
 		env_size++;
 	data->env = gc(ft_calloc(sizeof(char *), (env_size + 1)));
-	if (!data->env)
-		exit(1); // code erreur 139
 	while (i < env_size)
 	{
 		data->env[i] = gc(ft_strdup(__environ[i]));
-		if (!data->env[i])
-			exit(1); // code erreur 139
 		i++;
 	}
 }
@@ -53,7 +45,5 @@ void	init_env(t_data *data)
 		new_env(data);
 	else
 		copy_env(data);
-	if (!data->env)
-		exit (1); // code erreur
 	__environ = data->env;
 }

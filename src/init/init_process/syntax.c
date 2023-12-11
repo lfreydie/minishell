@@ -6,22 +6,21 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:11:10 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/15 16:49:53 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:16:04 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk)
+int	check_syntax(t_tok *tk, t_tok *prev_tk)
 {
-	(void)data; // error handles
 	if (tk->op == PIPE)
 	{
 		if (!prev_tk)
-			exit (1);
-		else if (!tk->next || tk->next->type == CTRL_OP)
-			exit (1);
+			return (ft_err_syntax(SHELL, SYNERR, tk->value), FAILED);
+		else if (tk->next->type == CTRL_OP)
+			return (ft_err_syntax(SHELL, SYNERR, tk->next->value), FAILED);
 	}
-	if (tk->type == RED_OP && (!tk->next || tk->next->type != WORD))
-		exit (1);
+	if (tk->type == RED_OP && tk->next->type != WORD)
+		return (ft_err_syntax(SHELL, SYNERR, tk->next->value), FAILED);
 }

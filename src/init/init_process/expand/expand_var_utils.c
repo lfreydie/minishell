@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/12/07 10:34:19 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/11 21:55:46 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 
 extern sig_atomic_t	g_sig;
 
-char	**word_split(char *ptr)
+char	**word_split(char *ptr, int count)
 {
 	char	**ws;
-	int		count;
 	int		wc;
 	int		i;
 	int		end_w;
 
-	count = count_word(ptr);
 	ws = gc(ft_calloc(sizeof(char *), (count + 1)));
-	if (!ws)
-		exit (1);
 	i = 0;
 	wc = 0;
 	while (wc < count)
@@ -35,14 +31,14 @@ char	**word_split(char *ptr)
 		end_w = i;
 		while (ptr[end_w] && !ft_isspace(ptr[end_w]))
 				end_w++;
-		ws[wc] = ft_substr(ptr, i, end_w - i);
+		ws[wc] = gc(ft_substr(ptr, i, end_w - i));
 		i = end_w;
 		wc++;
 	}
 	return (ws);
 }
 
-char	*expand_env_val(t_data *data, char *var)
+char	*expand_env_val(t_data *data, const char *var)
 {
 	char	*env_val;
 	int		var_len;
@@ -53,27 +49,18 @@ char	*expand_env_val(t_data *data, char *var)
 	env_val = NULL;
 	var_len = ft_strlen(var) + 1;
 	if (ft_streq("?", var))
-		env_val = gc(ft_itoa(g_sig));
-	else
 	{
-		i = -1;
-		while (data->env[++i])
-		{
-			if (!ft_memcmp(var, data->env[i], ft_strlen(var)) \
-			&& data->env[i][ft_strlen(var)] == '=')
-			{
-				env_val = gc(ft_substr(data->env[i], var_len, \
-				ft_strlen(data->env[i]) - var_len));
-				break ;
-			}
-		}
+		env_val = gc(ft_itoa(g_sig));
 	}
+	else
+		env_val = getenv(var);
 	return (env_val);
 }
 
 t_tok	*manage_end_ws(t_data *data, t_tok *tk, t_tok *n_tk, int end_var)
 {
 	t_tok	*last_tk;
+	char	*tmp;
 	int		len;
 
 	last_tk = n_tk;
@@ -83,10 +70,10 @@ t_tok	*manage_end_ws(t_data *data, t_tok *tk, t_tok *n_tk, int end_var)
 	{
 		if (last_tk == n_tk)
 			return (n_tk);
+		tmp = gc(ft_substr(tk->value, end_var + 1, \
+		ft_strlen(tk->value) - end_var - 1));
 		len = ft_strlen(last_tk->value);
-		last_tk->value = rrange_str_join(last_tk->value, \
-		gc(ft_substr(tk->value, end_var + 1, \
-		ft_strlen(tk->value) - end_var - 1)));
+		last_tk->value = rrange_str_join(last_tk->value, tmp);
 		expand(data, last_tk, len);
 	}
 	return (n_tk);
@@ -96,21 +83,23 @@ t_tok	*manage_ws(char **ws, t_tok *tk, int start)
 {
 	t_tok	*lst_exp;
 	t_tok	*current_tk;
+	char	*tmp;
 	int		index;
 
-	index = 0;
+	index = -1;
 	lst_exp = NULL;
-	while (ws[index])
+	while (ws[++index])
 	{
 		current_tk = add_token(&lst_exp, new_token());
 		current_tk->op = NONE;
 		current_tk->type = WORD;
 		if (!index && start)
-			current_tk->value = \
-			rrange_str_join(gc(ft_substr(tk->value, 0, start)), ws[index]);
+		{
+			tmp = gc(ft_substr(tk->value, 0, start));
+			current_tk->value = rrange_str_join(tmp, ws[index]);
+		}
 		else
 			current_tk->value = gc(ft_strdup(ws[index]));
-		index++;
 	}
 	return (lst_exp);
 }

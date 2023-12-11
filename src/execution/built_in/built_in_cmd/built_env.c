@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_process.c                                     :+:      :+:    :+:   */
+/*   built_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 15:10:11 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 21:17:46 by lfreydie         ###   ########.fr       */
+/*   Created: 2023/12/11 16:22:19 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/12/11 18:57:32 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_process(t_data *data, char *input)
+int	ft_env(t_data *data, t_cmd *cmd, int fd_out)
 {
-	data->line = input;
-	if (tokenize_input(data) == -1)
-		return (FAILED);
-	// print_token(data->lst_tk);
-	if (parse_token(data) == -1)
-		return (FAILED);
-	manage_redir(data);
-	print_cmd_list(data);
-}
+	int	i;
+	int	j;
 
+	i = 0;
+	if (cmd->n_args_cmd > 1)
+		return (FAILED);
+	if (!data || !data->env)
+		return (printf("ERR ENV"), 1);
+	while (data->env[i])
+	{
+		j = 0;
+		while (data->env[i][j] && data->env[i][j] != '=')
+			j++;
+		if (data->env[i][j] == '\0')
+			i++;
+		else
+		{
+			ft_putendl_fd(data->env[i], fd_out);
+			i++;
+		}
+	}
+	return (0);
+}

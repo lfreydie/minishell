@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/07 17:02:17 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/11 22:23:38 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,6 @@ int	ft_streq(char *str1, char *str2)
 	return (!str2[i]);
 }
 
-void	create_close(char *file, int flag, int mode)
-{
-	int	fd;
-
-	fd = open(file, flag, mode);
-	if (fd < 0)
-		exit (1); // code erreur
-	close(fd);
-}
-
 void	print_cmd_list(t_data *data)
 {
 	t_cmd	*current;
@@ -79,15 +69,4 @@ void	print_cmd_list(t_data *data)
 		printf("Next Command:\n");
 		current = current->next;
 	}
-}
-
-void	print_data(t_data *data)
-{
-	printf("line = %s\n", (data->line ? "Yes" : "No"));
-	printf("cmd = %s\n", (data->lst_cmd ? "Yes" : "No"));
-	printf("token = %s\n", (data->lst_tk ? "Yes" : "No"));
-	printf("env = %s\n", (data->env ? "Yes" : "No"));
-	// printf("grammar = %s\n", (data->grammar ? "Yes" : "No"));
-	printf("num cmd = %d\n", data->num_cmd);
-	printf("exit flag = %d\n", data->exit_flag);
 }

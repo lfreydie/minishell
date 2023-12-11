@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/04 18:58:25 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:55:07 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ char	*rrange_str_join(char *s1, char *s2)
 	if (!s2)
 		return (s1);
 	new = gc(ft_strjoin(s1, s2));
-	if (!new)
-		exit (1);
 	rm_node(s1);
 	rm_node(s2);
 	return (new);
@@ -32,32 +30,44 @@ char	*expand_value(t_data *data, char *var, char *ptr, int i)
 {
 	char	*new;
 	char	*env_val;
+	char	*tmp;
 	int		var_len;
 
 	var_len = ft_strlen(var) + 1;
 	env_val = expand_env_val(data, var);
 	if (i)
-		new = rrange_str_join(gc(ft_substr(ptr, 0, i)), env_val);
+	{
+		tmp = gc(ft_substr(ptr, 0, i));
+		new = rrange_str_join(tmp, env_val);
+	}
 	else
 		new = env_val;
 	if (ptr[i + var_len])
-		new = rrange_str_join(new, gc(ft_substr(ptr, i + var_len, \
-		ft_strlen(ptr) - (i + var_len))));
+	{
+		tmp = gc(ft_substr(ptr, i + var_len, \
+		ft_strlen(ptr) - (i + var_len)));
+		new = rrange_str_join(new, tmp);
+	}
 	return (new);
 }
 
 char	*rrange_str(t_tok *tk, int start, int end_q)
 {
 	char	*n_ptr;
+	char	*tmp;
 
 	n_ptr = gc(ft_substr(tk->value, start + 1, (end_q - start - 1)));
-	if (!n_ptr)
-		exit (1);
 	if (start)
-		n_ptr = rrange_str_join(gc(ft_substr(tk->value, 0, start)), n_ptr);
+	{
+		tmp = gc(ft_substr(tk->value, 0, start));
+		n_ptr = rrange_str_join(tmp, n_ptr);
+	}
 	if (tk->value[end_q + 1])
-		n_ptr = rrange_str_join(n_ptr, gc(ft_substr(tk->value, end_q + 1, \
-		(ft_strlen(tk->value) - end_q))));
+	{
+		tmp = gc(ft_substr(tk->value, end_q + 1, \
+		(ft_strlen(tk->value) - end_q)));
+		n_ptr = rrange_str_join(n_ptr, tmp);
+	}
 	rm_node(tk->value);
 	return (n_ptr);
 }

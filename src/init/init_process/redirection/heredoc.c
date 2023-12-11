@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/04 18:52:30 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:06:27 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd)
 	flag = 1;
 	while (flag)
 	{
-		line = gc(readline("> "));
+		line = gc_null(readline("> "));
 		if (!line)
-			(close(cmd->fd[IN]), exit (1));
+			(close(cmd->fd[IN]), err_sys(MALERR));
 		if (!ft_streq(line, limiter))
 			write(cmd->fd[IN], line, ft_strlen(line));
 		else
@@ -41,11 +41,7 @@ char	*heredoc_name(void)
 	while (1)
 	{
 		count_s = gc(ft_itoa(counter));
-		if (!count_s)
-			exit (1); // code erreur
 		name = gc(ft_strjoin("/tmp/heredoc_", count_s));
-		if (!name)
-			(rm_node(count_s), exit (1)); // code erreur
 		rm_node(count_s);
 		if (access(name, F_OK))
 			break ;
@@ -62,7 +58,7 @@ void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter)
 	name = heredoc_name();
 	cmd->fd[IN] = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_EXCL, 0744);
 	if (cmd->fd[IN] < 0)
-		exit (1); // code erreur
+		err_sys(PERDEN);
 	unlink(name);
 	heredoc_write(data, limiter, cmd);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_free.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 17:52:17 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/10/06 17:58:15 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/11 18:51:47 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "minishell.h"
 
 void	close_fds(int fd1, int fd2, int fd3, int fd4)
 {

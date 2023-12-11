@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_process.c                                     :+:      :+:    :+:   */
+/*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 15:10:11 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 21:17:46 by lfreydie         ###   ########.fr       */
+/*   Created: 2023/12/11 16:22:43 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/12/11 19:27:25 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_process(t_data *data, char *input)
+int	ft_exit(t_data *data, t_cmd *cmd, int fd_out)
 {
-	data->line = input;
-	if (tokenize_input(data) == -1)
-		return (FAILED);
-	// print_token(data->lst_tk);
-	if (parse_token(data) == -1)
-		return (FAILED);
-	manage_redir(data);
-	print_cmd_list(data);
-}
+	int	exit_status;
 
+	if (cmd->n_args_cmd > 2)
+		return (ft_error_msg(SHELL, EXT, NULL, ARGNB), 2);
+	if (cmd->value[1])
+		exit_status = (ft_atoi(cmd->value[1]) % 256);
+	else
+		exit_status = 0;
+	hell->exit = exit_status;
+	ft_putstr_fd("exit\n", 1);
+	gc_collect();
+	return (exit_status);
+}

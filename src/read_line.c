@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 12:12:01 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/07 16:26:34 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/11 21:53:48 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,9 @@ char	*get_prompt(void)
 	if (dir)
 	{
 		prompt = gc(ft_strjoin(dir, "$ "));
-		if (!prompt)
-			exit (1);
 		rm_node(dir);
 		return (prompt);
 	}
-	else
-		return (perror("getcwd"), NULL);
 }
 
 char	*ft_readline(void)
@@ -43,6 +39,4 @@ char	*ft_readline(void)
 		add_history(line);
 		return (line);
 	}
-	else
-		return (NULL);
 }

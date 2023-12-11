@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_process.c                                     :+:      :+:    :+:   */
+/*   built_unset.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/20 15:10:11 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 21:17:46 by lfreydie         ###   ########.fr       */
+/*   Created: 2023/12/11 16:21:39 by lfreydie          #+#    #+#             */
+/*   Updated: 2023/12/11 19:11:31 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_process(t_data *data, char *input)
-{
-	data->line = input;
-	if (tokenize_input(data) == -1)
-		return (FAILED);
-	// print_token(data->lst_tk);
-	if (parse_token(data) == -1)
-		return (FAILED);
-	manage_redir(data);
-	print_cmd_list(data);
-}
 
+int	ft_unset(t_data *data, t_cmd *cmd)
+{
+	int	var_l;
+	int	i;
+
+	i = 1;
+	if (!cmd->value[1])
+		return (0);
+	while (cmd->value[i])
+	{
+		if (cmd->value[i][0] == '-')
+			i++;
+		else if (ft_check_arg(cmd->value[i]) == FAILED)
+			i++;
+		else
+		{
+			var_l = ft_var_line(data->env, cmd->value[i++]);
+			if (var_l >= 0)
+				ft_del_var(&data->env, var_l);
+		}
+	}
+	return (SUCCESS);
+}

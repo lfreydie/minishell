@@ -3,46 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/07 17:02:17 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/11 22:39:01 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "minishell.h"
 
 void	launch_exec_process(t_data *data)
 {
-	t_exec	*exec;
+	t_exec	exec;
 
-	exec = ft_calloc(sizeof(t_exec), 1);
-	if (!exec)
-		perror("ERR_MAL");
-	exec->data = data;
-	exec->l_cmd = data->lst_cmd;
-	if (data->num_cmd == 1 && exec->l_cmd->built_in)
-		built_in_parent_process(exec);
+	exec.data = data;
+	exec.l_cmd = data->lst_cmd;
+	if (data->num_cmd == 1 && exec.l_cmd->built_in < 7)
+		built_in_parent_process(&exec);
 	else
-		pipex_process(exec);
+		pipex_process(&exec);
 }
 
 void	pipex_process(t_exec *exec)
 {
+	t_cmd	*cmd;
 	int		status;
 	int		i;
 	int		pid;
 
-	while (exec->l_cmd)
+	cmd = exec->l_cmd;
+	while (cmd)
 	{
-		if (exec->l_cmd->built_in)
-			exec->l_cmd->pid = built_in_child_process(exec);
+		if (cmd->built_in < 7)
+			cmd->pid = built_in_child_process(exec, cmd);
 		else
-			exec->l_cmd->pid = fork_process(exec);
-		if (exec->l_cmd->io_red->op == HEREDOC_RED)
-			unlink(exec->l_cmd->io_red->redir);
-		pid = exec->l_cmd->pid;
-		exec->l_cmd = exec->l_cmd->next;
+			cmd->pid = fork_process(exec, cmd);
+		pid = cmd->pid;
+		cmd = cmd->next;
 	}
 	close(exec->tmp_fdin);
 	i = -1;
@@ -51,16 +48,16 @@ void	pipex_process(t_exec *exec)
 		wait(0);
 }
 
-pid_t	fork_process(t_exec *exec)
+pid_t	fork_process(t_exec *exec, t_cmd *cmd)
 {
 	pid_t	pid;
 
 	if (pipe(exec->pipefd) < 0)
-		perror("pipe");
-	pid = fork();
-	if (pid < 0)
+		perror("pipe"); // HELP
+	cmd->pid = fork();
+	if (cmd->pid < 0)
 		return (perror("FORK"), 0);
-	if (pid == 0)
+	if (cmd->pid == 0)
 	{
 		exec_redir_in(exec);
 		exec_redir_out(exec);

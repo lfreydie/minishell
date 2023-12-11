@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
+/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/07 17:02:17 by lefreydier       ###   ########.fr       */
+/*   Updated: 2023/12/11 21:54:10 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ t_cmd	*add_cmd(t_data *data)
 	while (last_cmd && last_cmd->next)
 		last_cmd = last_cmd->next;
 	new_cmd = gc(ft_calloc(sizeof(t_cmd), 1));
-	if (!new_cmd)
-		exit(1); // code erreur
 	new_cmd->id = data->num_cmd - 1;
 	new_cmd->launch = true;
 	if (!last_cmd)
@@ -31,6 +29,22 @@ t_cmd	*add_cmd(t_data *data)
 	else
 		last_cmd->next = new_cmd;
 	return (new_cmd);
+}
+
+void	set_built_in(t_data *data, t_cmd *cmd)
+{
+	char	*str;
+	int		len_str;
+
+	while (cmd->value[0] && cmd->built_in != NO)
+	{
+		str = data->built_gram[cmd->built_in];
+		len_str = ft_strlen(str);
+		if (!ft_strncmp(cmd->value[0], str, len_str) \
+		&& !cmd->value[0][len_str + 1])
+			break ;
+		cmd->built_in++;
+	}
 }
 
 void	append_cmd(t_data *data, t_tok *tk, t_cmd *cmd)
@@ -41,8 +55,6 @@ void	append_cmd(t_data *data, t_tok *tk, t_cmd *cmd)
 	(void) data;
 	cmd->n_args_cmd++;
 	n_cmd = gc(ft_calloc(sizeof(char *), cmd->n_args_cmd + 1));
-	if (!n_cmd)
-		exit(1);
 	j = 0;
 	while (cmd->value && cmd->value[j])
 	{
@@ -51,6 +63,8 @@ void	append_cmd(t_data *data, t_tok *tk, t_cmd *cmd)
 	}
 	n_cmd[j] = gc(ft_strdup(tk->value));
 	cmd->value = n_cmd;
+	if (cmd->n_args_cmd == 1)
+		set_built_in(data, cmd);
 }
 
 void	token_word(t_data *data, t_cmd *cmd, t_tok *tk)
@@ -68,7 +82,7 @@ void	token_word(t_data *data, t_cmd *cmd, t_tok *tk)
 	}
 }
 
-void	parse_token(t_data *data)
+int	parse_token(t_data *data)
 {
 	t_cmd	*cmd;
 	t_tok	*tk;
@@ -79,7 +93,8 @@ void	parse_token(t_data *data)
 	prev_tk = NULL;
 	while (tk && tk->op != NWLINE)
 	{
-		check_syntax(data, tk, prev_tk);
+		if (check_syntax(tk, prev_tk) == -1)
+			return (FAILED);
 		if (tk->type == CTRL_OP)
 			cmd = add_cmd(data);
 		else if (tk->type == RED_OP)
@@ -92,4 +107,5 @@ void	parse_token(t_data *data)
 		prev_tk = tk;
 		tk = tk->next;
 	}
+	return (SUCCESS);
 }

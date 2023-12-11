@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:15:50 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/11/29 17:43:41 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/11 21:55:16 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ char	*find_var(char *ptr)
 	else
 		return (NULL);
 	var = gc(malloc(sizeof(char) * i + 1));
-	if (!var)
-		exit (1); // code erreur
 	ft_strlcpy(var, ptr, i + 1);
 	return (var);
 }

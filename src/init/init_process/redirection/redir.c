@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:10:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/04 19:48:39 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:22:27 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ t_red	*lstadd_red(t_cmd *cmd)
 	while (l_red && l_red->next)
 		l_red = l_red->next;
 	n_red = gc(ft_calloc(sizeof(t_red), 1));
-	if (!n_red)
-		exit (1);
 	if (!l_red)
 		cmd->io_red = n_red;
 	else
@@ -48,7 +46,10 @@ void	manage_redir_out(t_cmd *cmd, t_red *red)
 		cmd->fd[OUT] = open(red->redir, \
 		O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (cmd->fd[OUT] < 0)
-		exit (1);
+	{
+		cmd->launch = false;
+		ft_error_msg(SHELL, red->redir, NULL, NOFILE);
+	}
 }
 
 void	manage_redir_in(t_data *data, t_cmd *cmd, t_red *red)
@@ -60,7 +61,10 @@ void	manage_redir_in(t_data *data, t_cmd *cmd, t_red *red)
 	else if (red->op == IN_RED)
 		cmd->fd[IN] = open(red->redir, O_RDONLY);
 	if (cmd->fd[IN] < 0)
-		exit (1);
+	{
+		cmd->launch = false;
+		ft_error_msg(SHELL, red->redir, NULL, NOFILE);
+	}
 }
 
 void	manage_redir(t_data *data)
@@ -72,13 +76,10 @@ void	manage_redir(t_data *data)
 	while (l_cmd)
 	{
 		l_red = l_cmd->io_red;
-		while (l_red)
+		while (l_red && l_cmd->launch)
 		{
 			if (!expand_redir(data, l_red))
-			{
 				l_cmd->launch = false;
-				break ;
-			}
 			if ((l_red->op == HEREDOC_RED) || (l_red->op == IN_RED))
 				manage_redir_in(data, l_cmd, l_red);
 			else if ((l_red->op == OUTAP_RED) || (l_red->op == OUTTR_RED))
