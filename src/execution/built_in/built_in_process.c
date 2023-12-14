@@ -6,82 +6,47 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 18:51:47 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:41:14 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	find_built_in_cmd(t_exec *exec)
+void	built_in_cmd(t_data *data, t_cmd *cmd, int fd_out)
 {
-	char	*cmd;
-
-	cmd = exec->l_cmd->value[0];
-	if (ft_strncmp(cmd, "pwd", ft_strlen(cmd)))
-		ft_pwd();
-	else if (ft_strncmp(cmd, "echo", ft_strlen(cmd)))
-		ft_echo(exec->l_cmd->value);
-	else if (ft_strncmp(cmd, "cd", ft_strlen(cmd)))
-		ft_cd(exec->l_cmd->value);
-	else if (ft_strncmp(cmd, "export", ft_strlen(cmd)))
-		ft_export(exec->l_cmd->value);
-	else if (ft_strncmp(cmd, "unset", ft_strlen(cmd)))
-		ft_unset(exec->l_cmd->value);
-	else if (ft_strncmp(cmd, "env", ft_strlen(cmd)))
-		ft_env(exec->l_cmd->value);
-	else if (ft_strncmp(cmd, "exit", ft_strlen(cmd)))
-		ft_exit();
+	if (cmd->built_in == 0)
+		ft_echo(data, cmd, fd_out);
+	else if (cmd->built_in == 1)
+		ft_cd(data, cmd, fd_out);
+	else if (cmd->built_in == 2)
+		ft_env(data, cmd, fd_out);
+	else if (cmd->built_in == 3)
+		ft_exit(data, cmd, fd_out);
+	else if (cmd->built_in == 4)
+		ft_export(data, cmd, fd_out);
+	else if (cmd->built_in == 5)
+		ft_pwd(data, cmd, fd_out);
+	else if (cmd->built_in == 6)
+		ft_unset(data, cmd, fd_out);
 }
 
-pid_t	built_in_child_process(t_exec *exec)
+void	built_in_parent_process(t_data *data, t_cmd *cmd)
 {
-	pid_t	pid;
+	int	fd_out;
 
-	if (pipe(exec->pipefd) < 0)
-		perror("pipe");
-	pid = fork();
-	if (pid < 0)
-		return (perror("FORK"), 0);
-	if (pid == 0)
+	fd_out = STDOUT;
+	if (cmd->fd[IN] > 0)
 	{
-		exec_redir_in(exec);
-		exec_redir_out(exec);
-		close_fds(exec->tmp_fdin, exec->pipefd[0], exec->pipefd[1], -1);
-		find_built_in_cmd(exec);
-		// free all for this process
-		exit(1); // code erreur
-	}
-	close(exec->tmp_fdin);
-	close(exec->pipefd[1]);
-	exec->tmp_fdin = exec->pipefd[0];
-	return (pid);
-}
-
-void	built_in_parent_process(t_exec *exec)
-{
-	t_cmd	*cmd;
-	int		fd;
-
-	cmd = exec->l_cmd;
-	if (cmd->io_red->op == HEREDOC_RED || cmd->io_red->op == IN_RED)
-	{
-		fd = open(cmd->io_red->redir, O_RDONLY);
-		if (fd < 0)
-			perror("ERR_NOP");
-		if (dup2(fd, STDIN_FILENO) < 0)
+		if (dup2(cmd->fd[IN], STDIN) < 0)
 			perror("dup2");
-		close(fd);
+		close(cmd->fd[IN]);
 	}
-	if (cmd->io_red->op == OUTAP_RED || cmd->io_red->op == OUTTR_RED)
+	if (cmd->fd[OUT] > 0)
 	{
-		if (cmd->io_red->op == OUTAP_RED)
-			fd = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_APPEND, 0644);
-		else
-			fd = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (fd < 0)
-			perror("ERR_NOP");
-		if (dup2(fd, STDIN_FILENO) < 0)
+		if (dup2(cmd->fd[OUT], STDOUT) < 0)
 			perror("dup2");
-		close(fd);
+		fd_out = cmd->fd[OUT];
+		close(cmd->fd[OUT]);
 	}
+	built_in_cmd(data, cmd, fd_out);
 }

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 21:55:07 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:32:50 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	*rrange_str_join(char *s1, char *s2)
 	if (!s2)
 		return (s1);
 	new = gc(ft_strjoin(s1, s2));
-	rm_node(s1);
-	rm_node(s2);
+	free_node(s1);
+	free_node(s2);
 	return (new);
 }
 
-char	*expand_value(t_data *data, char *var, char *ptr, int i)
+char	*expand_value(char *var, char *ptr, int i)
 {
 	char	*new;
 	char	*env_val;
@@ -34,7 +34,7 @@ char	*expand_value(t_data *data, char *var, char *ptr, int i)
 	int		var_len;
 
 	var_len = ft_strlen(var) + 1;
-	env_val = expand_env_val(data, var);
+	env_val = expand_env_val(var);
 	if (i)
 	{
 		tmp = gc(ft_substr(ptr, 0, i));
@@ -68,6 +68,6 @@ char	*rrange_str(t_tok *tk, int start, int end_q)
 		(ft_strlen(tk->value) - end_q)));
 		n_ptr = rrange_str_join(n_ptr, tmp);
 	}
-	rm_node(tk->value);
+	free_node(tk->value);
 	return (n_ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 22:06:27 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:22:04 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd)
 			write(cmd->fd[IN], line, ft_strlen(line));
 		else
 			flag = 0;
-		rm_node(line);
+		free_node(line);
 	}
 }
 
@@ -42,10 +42,10 @@ char	*heredoc_name(void)
 	{
 		count_s = gc(ft_itoa(counter));
 		name = gc(ft_strjoin("/tmp/heredoc_", count_s));
-		rm_node(count_s);
+		free_node(count_s);
 		if (access(name, F_OK))
 			break ;
-		rm_node(name);
+		free_node(name);
 		counter++;
 	}
 	return (name);

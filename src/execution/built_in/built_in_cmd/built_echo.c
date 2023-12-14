@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:19:07 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 18:51:47 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:07:22 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_echo_while(char **argv, int i, bool *newline, int fd_out)
 	}
 }
 
-int	ft_echo(t_cmd *cmd, int fd_out)
+int	ft_echo(t_data __attribute((unused)) *data, t_cmd *cmd, int fd_out)
 {
 	bool	newline;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/12/11 21:04:07 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:45:29 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,21 @@ int	main(int ac, char **av)
 
 	(void)av;
 	if (ac != 1)
-		return (ft_putstr_fd("Too many arguments", STDERR_FILENO), 1);
-	ft_bzero(&data, sizeof(t_data));
-	init_prog(&data);
+		return (printf("Too many arguments\n"), 1);
+	sig_init();
 	while (42)
 	{
+		init_prog(&data);
 		input = ft_readline();
-		if (init_process(&data, input) == -1)
+		if (!input)
 		{
-			gc_collect_part(&data);
-			continue ;
+			printf("exit\n");
+			break ;
 		}
-		// launch_exec_process(data);
-		// gc_collect_part(data);
+		if (init_process(&data, input) == -1)
+			continue ;
+		launch_exec_process(&data);
 	}
+	gc_collect();
 	return (0);
 }

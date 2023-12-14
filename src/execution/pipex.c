@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 22:39:01 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:44:28 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,109 +14,88 @@
 
 void	launch_exec_process(t_data *data)
 {
-	t_exec	exec;
-
-	exec.data = data;
-	exec.l_cmd = data->lst_cmd;
-	if (data->num_cmd == 1 && exec.l_cmd->built_in < 7)
-		built_in_parent_process(&exec);
+	if (data->num_cmd == 1 && data->lst_cmd->built_in < 7)
+		built_in_parent_process(data, data->lst_cmd);
 	else
-		pipex_process(&exec);
+		pipex_process(data);
 }
 
-void	pipex_process(t_exec *exec)
+void	pipex_process(t_data *data)
 {
 	t_cmd	*cmd;
+	pid_t	pid;
 	int		status;
 	int		i;
-	int		pid;
 
-	cmd = exec->l_cmd;
+	cmd = data->lst_cmd;
 	while (cmd)
 	{
-		if (cmd->built_in < 7)
-			cmd->pid = built_in_child_process(exec, cmd);
-		else
-			cmd->pid = fork_process(exec, cmd);
+		cmd->pid = fork_process(data, cmd);
 		pid = cmd->pid;
 		cmd = cmd->next;
 	}
-	close(exec->tmp_fdin);
+	close(data->tmp_fdin);
 	i = -1;
 	waitpid(pid, &status, 0);
-	while (++i < exec->data->num_cmd - 1)
+	while (++i < data->num_cmd - 1)
 		wait(0);
 }
 
-pid_t	fork_process(t_exec *exec, t_cmd *cmd)
+pid_t	fork_process(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid;
 
-	if (pipe(exec->pipefd) < 0)
-		perror("pipe"); // HELP
-	cmd->pid = fork();
-	if (cmd->pid < 0)
-		return (perror("FORK"), 0);
-	if (cmd->pid == 0)
+	if (pipe(data->pipefd) < 0)
+		perror("pipe");
+	pid = fork();
+	if (pid == 0)
 	{
-		exec_redir_in(exec);
-		exec_redir_out(exec);
-		close_fds(exec->tmp_fdin, exec->pipefd[0], exec->pipefd[1], -1);
-		if (ft_strchr(exec->l_cmd->value[0], '/'))
-			execute_path(exec);
+		exec_redir_in(data, cmd);
+		exec_redir_out(data, cmd);
+		close_fds(data->tmp_fdin, data->pipefd[0], data->pipefd[1], -1);
+		if (cmd->built_in < 7)
+			built_in_cmd(data, cmd, cmd->fd[OUT]);
+		else if (ft_strchr(cmd->value[0], '/'))
+			execute_path(data, cmd);
 		else
-			execute(exec);
-		exit(1); // code erreur
+			execute(data, cmd);
+		exit(1);
 	}
-	close(exec->tmp_fdin);
-	close(exec->pipefd[1]);
-	exec->tmp_fdin = exec->pipefd[0];
+	close(data->tmp_fdin);
+	close(data->pipefd[1]);
+	data->tmp_fdin = data->pipefd[0];
 	return (pid);
 }
 
-void	exec_redir_in(t_exec *exec)
+void	exec_redir_in(t_data *data, t_cmd *cmd)
 {
-	t_cmd	*cmd;
-
-	cmd = exec->l_cmd;
-	if (cmd->io_red->op == HEREDOC_RED || cmd->io_red->op == IN_RED)
+	if (cmd->fd[IN] > 0)
 	{
 		if (cmd->id != 1)
-			close(exec->tmp_fdin);
-		exec->tmp_fdin = open(cmd->io_red->redir, O_RDONLY);
+			close(data->tmp_fdin);
+		data->tmp_fdin = cmd->fd[IN];
 	}
-	if (cmd->id != 1 || cmd->io_red->op == HEREDOC_RED || cmd->io_red->op == IN_RED)
+	if (cmd->id > 1 || cmd->fd[IN] > 0)
 	{
-		if (exec->tmp_fdin >= 0 && dup2(exec->tmp_fdin, STDIN_FILENO) < 0)
+		if (data->tmp_fdin > 0 && dup2(data->tmp_fdin, STDIN) < 0)
 			perror("dup2");
-		else if (exec->tmp_fdin < 0)
-			(close_fds(exec->pipefd[0], exec->pipefd[1], -1, -1));
+		else if (data->tmp_fdin < 0)
+			(close_fds(data->pipefd[0], data->pipefd[1], -1, -1));
 	}
 }
 
-void	exec_redir_out(t_exec *exec)
+void	exec_redir_out(t_data *data, t_cmd *cmd)
 {
-	int		fd_out;
-	t_cmd	*cmd;
-
-	cmd = exec->l_cmd;
-	if (cmd->io_red->op == OUTAP_RED || cmd->io_red->op == OUTTR_RED)
+	if (cmd->fd[OUT] > 0)
 	{
-		if (cmd->io_red-> op == OUTAP_RED)
-			fd_out = open(cmd->io_red->redir, \
-			O_RDWR | O_CREAT | O_APPEND, 0644);
-		else
-			fd_out = open(cmd->io_red->redir, \
-			O_RDWR | O_CREAT | O_TRUNC, 0644);
-		if (fd_out >= 0 && dup2(fd_out, STDOUT_FILENO) < 0)
+		if (cmd->fd[OUT] > 0 && dup2(cmd->fd[OUT], STDOUT) < 0)
 			perror("dup2");
-		else if (fd_out < 0)
-			(close_fds(exec->tmp_fdin, exec->pipefd[0], exec->pipefd[1], -1));
-		close(fd_out);
+		close(cmd->fd[OUT]);
 	}
 	else if (cmd->next)
 	{
-		if (dup2(exec->pipefd[1], STDOUT_FILENO) < 0)
+		if (dup2(data->pipefd[1], STDOUT) < 0)
 			perror("dup2");
+		cmd->fd[OUT] = data->pipefd[1];
 	}
 }

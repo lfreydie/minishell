@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:11:10 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 21:16:04 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:24:22 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ int	check_syntax(t_tok *tk, t_tok *prev_tk)
 	}
 	if (tk->type == RED_OP && tk->next->type != WORD)
 		return (ft_err_syntax(SHELL, SYNERR, tk->next->value), FAILED);
+	return (SUCCESS);
 }

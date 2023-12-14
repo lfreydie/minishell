@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:49:12 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 16:48:20 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:08:18 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	init_prog(t_data *data)
 {
-	sig_init();
-	init_env(data);
+	ft_bzero(data, sizeof(t_data));
 	init_grammar(data);
 	init_built_gram(data);
+	init_env(data);
 }
 
 void	init_grammar(t_data *data)

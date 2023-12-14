@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 22:37:57 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:56:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,48 @@
 # include <signal.h>
 # include <stdbool.h>
 
+# define SHELL "minishell"
+
 # define FAILED -1
 # define SUCCESS 0
+
+# define TRUE 1
+# define FALSE 0
+
 # define READ 0
 # define WRITE 1
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
+
 # define IN 0
 # define OUT 1
 
-# define SHELL "minishell"
+# define HOMENS "HOME not set"
+# define OPWDNS "OLDPWD not set"
+# define ENVNS "environment not set"
+# define INVOPT "invalid option"
+# define ARGNB "too many arguments"
+# define ERROLDPWD "error updating OLDPWD"
+# define ERRPWD "error updating PWD"
+# define IVALID "not a valid identifier"
+# define IVALPM "invalid parameter name"
+# define IVALOP "invalid option"
+
+# define CD "cd"
+# define EXP "export"
+# define EXT "exit"
+# define ENV "env"
+# define PWD "pwd"
+# define UST "unset"
+# define ECH "echo"
 
 # define CMDERR "command not found"
 # define ISDIRE "Is a directory"
 # define PERDEN "Permission Denied"
 # define MALERR "malloc failed"
-# define NOFILE "No such file or directory"
+# define NOFLDIR "No such file or directory"
 
 # define SYNERR "syntax error near unexpected token "
 # define UNQUOTE "syntax error quote unclose "
@@ -129,17 +157,11 @@ typedef struct s_data{
 	int				num_cmd;
 	char			*grammar[6];
 	char			*built_gram[8];
+	int				tmp_fdin;
+	int				pipefd[2];
 	t_list			*garbage;
 	int				exit;
 }	t_data;
-
-typedef struct s_exec
-{
-	t_data	*data;
-	t_cmd	*l_cmd;
-	int		tmp_fdin;
-	int		pipefd[2];
-}				t_exec;
 
 //-----------------sig------------------
 void	interrupt_handler(int signum);
@@ -167,12 +189,13 @@ int		init_process(t_data *data, char *input);
 t_tok	*new_token(void);
 t_tok	*add_token(t_tok **lst_tk, t_tok *new_tk);
 char	*get_word_value(char *ptr);
-int		token_data(t_data *data, char *ptr, t_tok *tk, char **grammar);
+int		token_data(char *ptr, t_tok *tk, char **grammar);
 int		tokenize_input(t_data *data);
 //--------------init_utils--------------
 void	print_token(t_tok *lst_tk);
 int		ft_streq(char *str1, char *str2);
 void	print_cmd_list(t_data *data);
+void	print_gc_count(void);
 //----------------parse-----------------
 int		parse_token(t_data *data);
 //----------------syntax----------------
@@ -181,12 +204,12 @@ int		check_syntax(t_tok *tk, t_tok *prev_tk);
 //----------------EXPAND----------------
 //----------------expand----------------
 t_tok	*expand(t_data *data, t_tok *tk, int i);
-int		expand_quote(t_data *data, t_tok *tk, int start);
+int		expand_quote(t_tok *tk, int start);
 t_tok	*expand_var(t_data *data, t_tok *tk, int i);
 int		expand_redir(t_data *data, t_red *red);
 //----------expand_string_utils---------
 char	*rrange_str_join(char *s1, char *s2);
-char	*expand_value(t_data *data, char *var, char *ptr, int i);
+char	*expand_value(char *var, char *ptr, int i);
 char	*rrange_str(t_tok *tk, int start, int end_q);
 //-------------expand_utils-------------
 int		ft_isspace(char c);
@@ -195,7 +218,7 @@ char	*find_var(char *ptr);
 int		find_var_len(char *ptr);
 //-----------expand_var_utils-----------
 char	**word_split(char *ptr, int count);
-char	*expand_env_val(t_data *data, const char *var);
+char	*expand_env_val(char *var);
 t_tok	*manage_end_ws(t_data *data, t_tok *tk, t_tok *n_tk, int end_var);
 t_tok	*manage_ws(char **ws, t_tok *tk, int start);
 //-------------REDIRECTION--------------
@@ -211,7 +234,7 @@ void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter);
 //-----------garbage_collector----------
 void	*gc(void *ptr);
 void	*gc_null(void *ptr);
-void	rm_node(void *ptr);
+void	free_node(void *ptr);
 void	gc_collect(void);
 void	gc_collect_part(t_data *data);
 //-------garbage_collector_utils--------
@@ -228,35 +251,40 @@ void	err_sys(char *msg);
 
 //----------------pipex-----------------
 void	launch_exec_process(t_data *data);
-void	pipex_process(t_exec *exec);
-pid_t	fork_process(t_exec *exec, t_cmd *cmd);
-void	exec_redir_in(t_exec *exec);
-void	exec_redir_out(t_exec *exec);
+void	pipex_process(t_data *data);
+pid_t	fork_process(t_data *data, t_cmd *cmd);
+void	exec_redir_in(t_data *data, t_cmd *cmd);
+void	exec_redir_out(t_data *data, t_cmd *cmd);
 
 //-----------------exec-----------------
 char	*get_path_cmd(char *paths, char *cmd);
-char	**get_paths(t_exec *exec);
-void	execute(t_exec *exec);
-void	execute_path(t_exec *exec);
+char	**get_paths(t_data *data);
+void	execute(t_data *data, t_cmd *cmd);
+void	execute_path(t_data *data, t_cmd *cmd);
+
+//--------------exec_utils--------------
+void	close_fds(int fd1, int fd2, int fd3, int fd4);
+void	free_tab(char **tab);
 
 //---------------BUILT_IN---------------
 //-----------built_in_process-----------
-void	find_built_in_cmd(t_exec *exec);
-pid_t	built_in_child_process(t_exec *exec);
-void	built_in_parent_process(t_exec *exec);
+void	built_in_cmd(t_data *data, t_cmd *cmd, int fd_out);
+void	built_in_parent_process(t_data *data, t_cmd *cmd);
 //-------------BUILT_IN_CMD-------------
 //---------------built_cd---------------
-void	ft_cd(t_data *data, t_cmd *cmd, int fd_out);
+int		ft_cd(t_data *data, t_cmd *cmd, int fd_out);
 //--------------built_echo--------------
-int		ft_echo(t_cmd *cmd, int fd_out);
+int		ft_echo(t_data *data, t_cmd *cmd, int fd_out);
+//--------------built_exit--------------
+int		ft_exit(t_data *data, t_cmd *cmd, int fd_out);
 //-------------built_utils--------------
 int		ft_table_size(char **tab);
 int		ft_strccmp(const char *s1, const char *s2, char c);
 void	ft_clean_var(char **var);
 //--------------built_pwd---------------
-int		ft_pwd(t_data *data, int fd_out);
+int		ft_pwd(t_data *data, t_cmd *cmd, int fd_out);
 //-------------built_unset--------------
-int		ft_unset(t_data *data, t_cmd *cmd);
+int		ft_unset(t_data *data, t_cmd *cmd, int fd_out);
 //--------------built_env---------------
 int		ft_env(t_data *data, t_cmd *cmd, int fd_out);
 //--------------env_modif---------------
@@ -271,6 +299,7 @@ int		ft_check_arg(char *arg);
 int		ft_sign_append(char *arg);
 int		ft_value_is_empty(char *arg);
 int		ft_var_line(char **tab, char *var);
+char	*ft_var_value(char **my_env, char *target);
 
 
 #endif

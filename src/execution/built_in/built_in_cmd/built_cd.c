@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:17:10 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 19:23:13 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:05:46 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	ft_update_oldpwd(t_data *data)
 static int	ft_update_pwd(t_data *data)
 {
 	char	*tmp;
-	char	path;
+	char	*path;
 
 	path = gc(getcwd(NULL, 0));
 	tmp = gc(ft_strjoin("PWD=", path));
@@ -69,12 +69,11 @@ int	ft_cd(t_data *data, t_cmd *cmd, int fd_out)
 {
 	char	*dir;
 
-	(void)fd_out;
 	if (cmd->n_args_cmd > 2)
 		return (ft_error_msg(SHELL, CD, NULL, ARGNB), 1);
 	if (!cmd->value[1] || (cmd->value[1][0] == '-' && cmd->value[1][1] == '\0'))
 	{
-		dir = ft_home_old(data, cmd->value);
+		dir = ft_home_old(data, cmd);
 		if (!dir)
 			return (FAILED);
 		if (chdir(dir) == -1)

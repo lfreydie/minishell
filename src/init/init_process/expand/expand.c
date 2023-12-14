@@ -6,13 +6,13 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 21:57:38 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:35:23 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	expand_quote(t_data *data, t_tok *tk, int start)
+int	expand_quote(t_tok *tk, int start)
 {
 	char	*var;
 	char	quote;
@@ -28,8 +28,8 @@ int	expand_quote(t_data *data, t_tok *tk, int start)
 		&& (ft_isalpha(tk->value[i + 1]) || tk->value[i + 1] == '_'))
 		{
 			var = find_var(tk->value + i + 1);
-			tk->value = expand_value(data, var, tk->value, i);
-			i += ft_strlen(expand_env_val(data, var));
+			tk->value = expand_value(var, tk->value, i);
+			i += ft_strlen(expand_env_val(var));
 		}
 		else
 			i++;
@@ -47,7 +47,7 @@ t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 	int		var_len;
 
 	var = find_var(tk->value + i + 1);
-	ptr = expand_env_val(data, var);
+	ptr = expand_env_val(var);
 	if (!ptr)
 	{
 		var_len = ft_strlen(var);
@@ -86,7 +86,7 @@ t_tok	*expand(t_data *data, t_tok *tk, int i)
 	while (tk->value[i])
 	{
 		if (tk->value[i] == SINGLE_QUOTE || tk->value[i] == DOUBLE_QUOTE)
-			i = expand_quote(data, tk, i);
+			i = expand_quote(tk, i);
 		else if (tk->value[i] == '$' && (tk->value[i + 1] && \
 		(ft_isalpha(tk->value[i + 1]) || tk->value[i + 1] == '_' || \
 		tk->value[i + 1] == SINGLE_QUOTE || tk->value[i + 1] == DOUBLE_QUOTE)))

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/12/11 21:55:46 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:23:50 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,17 @@ char	**word_split(char *ptr, int count)
 	return (ws);
 }
 
-char	*expand_env_val(t_data *data, const char *var)
+char	*expand_env_val(char *var)
 {
 	char	*env_val;
 	int		var_len;
-	int		i;
 
 	if (!var)
 		return (NULL);
 	env_val = NULL;
 	var_len = ft_strlen(var) + 1;
 	if (ft_streq("?", var))
-	{
 		env_val = gc(ft_itoa(g_sig));
-	}
 	else
 		env_val = getenv(var);
 	return (env_val);

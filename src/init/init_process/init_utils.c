@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:45:42 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/11 22:23:38 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:56:48 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,28 @@ void	print_cmd_list(t_data *data)
 			printf("\tRedirection: %s, %d\n", red->redir, red->op);
 			red = red->next;
 		}
-		printf("Next Command:\n");
+		if (current->next)
+			printf("Next Command:");
+		printf("\n");
 		current = current->next;
 	}
+}
+
+void	print_gc_count(void)
+{
+	t_list **const	garbage = _get_garbage();
+	t_list			*node;
+	int				count;
+
+	count = 0;
+	if (!*garbage)
+	{
+		node = *garbage;
+		while (node)
+		{
+			count++;
+			node = node->next;
+		}
+	}
+	printf("number of node : %d\n", count);
 }

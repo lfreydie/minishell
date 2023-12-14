@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:10:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 22:22:27 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:08:16 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	manage_redir_out(t_cmd *cmd, t_red *red)
 	if (cmd->fd[OUT] < 0)
 	{
 		cmd->launch = false;
-		ft_error_msg(SHELL, red->redir, NULL, NOFILE);
+		ft_error_msg(SHELL, red->redir, NULL, NOFLDIR);
 	}
 }
 
@@ -63,7 +63,7 @@ void	manage_redir_in(t_data *data, t_cmd *cmd, t_red *red)
 	if (cmd->fd[IN] < 0)
 	{
 		cmd->launch = false;
-		ft_error_msg(SHELL, red->redir, NULL, NOFILE);
+		ft_error_msg(SHELL, red->redir, NULL, NOFLDIR);
 	}
 }
 

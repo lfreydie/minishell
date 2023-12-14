@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 12:12:01 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 21:53:48 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/14 19:46:49 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,9 @@ char	*get_prompt(void)
 	char	*prompt;
 
 	dir = gc(getcwd(NULL, 0));
-	if (dir)
-	{
-		prompt = gc(ft_strjoin(dir, "$ "));
-		rm_node(dir);
-		return (prompt);
-	}
+	prompt = gc(ft_strjoin(dir, "$ "));
+	free_node(dir);
+	return (prompt);
 }
 
 char	*ft_readline(void)
@@ -32,11 +29,11 @@ char	*ft_readline(void)
 	char	*prompt;
 
 	prompt = get_prompt();
-	line = gc(readline(prompt));
-	rm_node(prompt);
+	line = gc_null(readline(prompt));
+	free_node(prompt);
 	if (line)
-	{
 		add_history(line);
-		return (line);
-	}
+	if (!line)
+		printf("HERE\n");
+	return (line);
 }

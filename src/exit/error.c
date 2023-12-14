@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 19:32:22 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 22:02:03 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:41:03 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	msg_err_sys(char *msg)
 
 void	err_sys(char *msg)
 {
-	msg_err_sys(msg)
+	msg_err_sys(msg);
 	gc_collect();
 	exit (1);
 }

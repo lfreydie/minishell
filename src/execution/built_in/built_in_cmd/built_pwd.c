@@ -6,15 +6,15 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:19:59 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 18:51:47 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:04:59 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(t_data *data, int fd_out)
+int	ft_pwd(t_data *data, t_cmd __attribute__((unused)) *cmd, int fd_out)
 {
-	char	path;
+	char	*path;
 
 	path = gc(getcwd(NULL, 0));
 	if (path)

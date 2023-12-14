@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:20:59 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 18:58:28 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/14 18:10:09 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ int	ft_export(t_data *data, t_cmd *cmd, int fd_out)
 	if (cmd->n_args_cmd == 1)
 		return (ft_print_export(data, fd_out));
 	data->exit = ft_export_while(data, cmd->value, 1);
+	__environ = data->env;
 	return (data->exit);
 }
