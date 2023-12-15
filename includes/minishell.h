@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/14 18:56:44 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:05:51 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,17 +112,6 @@ typedef enum e_op{
 	NONE
 }	t_op;
 
-typedef enum e_built{
-	B_ECHO,
-	B_CD,
-	B_ENV,
-	B_EXIT,
-	B_EXPORT,
-	B_PWD,
-	B_UNSET,
-	NO
-}	t_built;
-
 typedef struct s_tok{
 	t_type			type;
 	t_op			op;
@@ -140,7 +129,7 @@ typedef struct s_cmd{
 	int				id;
 	char			**value;
 	int				n_args_cmd;
-	t_built			built_in;
+	bool			built_in;
 	bool			launch;
 	pid_t			pid;
 	t_red			*io_red;
@@ -156,7 +145,7 @@ typedef struct s_data{
 	char			**env;
 	int				num_cmd;
 	char			*grammar[6];
-	char			*built_gram[8];
+	char			*built_gram[14];
 	int				tmp_fdin;
 	int				pipefd[2];
 	t_list			*garbage;
@@ -168,7 +157,7 @@ void	interrupt_handler(int signum);
 void	sig_init(void);
 //--------------read_line---------------
 char	*get_prompt(void);
-char	*ft_readline(void);
+void	ft_readline(char **line);
 
 //-----------------INIT-----------------
 
@@ -184,7 +173,7 @@ void	init_env(t_data *data);
 
 //-------------INIT_PROCESS-------------
 //-------------init_process-------------
-int		init_process(t_data *data, char *input);
+int		init_process(t_data *data);
 //----------------token-----------------
 t_tok	*new_token(void);
 t_tok	*add_token(t_tok **lst_tk, t_tok *new_tk);
@@ -265,6 +254,7 @@ void	execute_path(t_data *data, t_cmd *cmd);
 //--------------exec_utils--------------
 void	close_fds(int fd1, int fd2, int fd3, int fd4);
 void	free_tab(char **tab);
+int		ft_strcmp(const char *s1, const char *s2);
 
 //---------------BUILT_IN---------------
 //-----------built_in_process-----------
@@ -281,6 +271,7 @@ int		ft_exit(t_data *data, t_cmd *cmd, int fd_out);
 int		ft_table_size(char **tab);
 int		ft_strccmp(const char *s1, const char *s2, char c);
 void	ft_clean_var(char **var);
+char	*ft_var_value(char **my_env, char *target);
 //--------------built_pwd---------------
 int		ft_pwd(t_data *data, t_cmd *cmd, int fd_out);
 //-------------built_unset--------------
@@ -300,6 +291,5 @@ int		ft_sign_append(char *arg);
 int		ft_value_is_empty(char *arg);
 int		ft_var_line(char **tab, char *var);
 char	*ft_var_value(char **my_env, char *target);
-
 
 #endif

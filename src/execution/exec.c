@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/12 19:22:04 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:06:23 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,6 @@ char	**get_paths(t_data *data)
 	i = 0;
 	if (!data->env)
 		return (NULL);
-	// while (exec->data->env[i])
-	// {
-	// 	env_path = ft_strnstr(exec->data->env[i], "PATH=", 5);
-	// 	if (env_path)
-	// 		break ;
-	// 	i++;
-	// }
-	// if (!env_path)
-	// 	exit(1); // code erreur
 	env_path = getenv("PATH");
 	paths = gc(ft_split(env_path + 5, ':'));
 	free_node(env_path);

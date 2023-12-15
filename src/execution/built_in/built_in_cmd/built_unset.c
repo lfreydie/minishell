@@ -6,12 +6,11 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:21:39 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/14 18:10:33 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:02:06 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_unset(t_data *data, t_cmd *cmd, int __attribute((unused)) fd_out)
 {

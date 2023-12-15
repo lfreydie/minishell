@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:49:12 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/14 18:08:18 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:59:54 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 void	init_prog(t_data *data)
 {
-	ft_bzero(data, sizeof(t_data));
+	data->line = NULL;
+	data->lst_cmd = NULL;
+	data->lst_tk = NULL;
+	data->num_cmd = 0;
+	data->tmp_fdin = -1;
 	init_grammar(data);
 	init_built_gram(data);
-	init_env(data);
 }
 
 void	init_grammar(t_data *data)
@@ -30,13 +33,38 @@ void	init_grammar(t_data *data)
 	data->grammar[5] = S_NEWLINE;
 }
 
+// void	init_built_gram(t_data *data)
+// {
+// 	data->built_gram[0] = "echo";
+// 	data->built_gram[1] = "echo ";
+// 	data->built_gram[2] = "cd";
+// 	data->built_gram[3] = "cd ";
+// 	data->built_gram[4] = "env";
+// 	data->built_gram[5] = "env ";
+// 	data->built_gram[6] = "exit";
+// 	data->built_gram[7] = "exit ";
+// 	data->built_gram[8] = "export";
+// 	data->built_gram[9] = "export ";
+// 	data->built_gram[10] = "pwd";
+// 	data->built_gram[11] = "pwd ";
+// 	data->built_gram[12] = "unset";
+// 	data->built_gram[13] = "unset ";
+// }
+
 void	init_built_gram(t_data *data)
 {
 	data->built_gram[0] = "echo";
-	data->built_gram[1] = "cd";
-	data->built_gram[2] = "env";
-	data->built_gram[3] = "exit";
-	data->built_gram[4] = "export";
-	data->built_gram[5] = "pwd";
-	data->built_gram[6] = "unset";
+	data->built_gram[1] = "echo ";
+	data->built_gram[2] = "cd";
+	data->built_gram[3] = "cd ";
+	data->built_gram[4] = "pwd";
+	data->built_gram[5] = "pwd ";
+	data->built_gram[6] = "export";
+	data->built_gram[7] = "export ";
+	data->built_gram[8] = "unset";
+	data->built_gram[9] = "unset ";
+	data->built_gram[10] = "env";
+	data->built_gram[11] = "env ";
+	data->built_gram[12] = "exit";
+	data->built_gram[13] = "exit ";
 }

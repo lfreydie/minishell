@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/11 21:54:10 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:51:31 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,19 @@ t_cmd	*add_cmd(t_data *data)
 
 void	set_built_in(t_data *data, t_cmd *cmd)
 {
-	char	*str;
-	int		len_str;
+	int		i;
 
-	while (cmd->value[0] && cmd->built_in != NO)
+	i = 0;
+	while (cmd->value[0] && i < 14)
 	{
-		str = data->built_gram[cmd->built_in];
-		len_str = ft_strlen(str);
-		if (!ft_strncmp(cmd->value[0], str, len_str) \
-		&& !cmd->value[0][len_str + 1])
-			break ;
-		cmd->built_in++;
+		if (!ft_strcmp(data->built_gram[i], cmd->value[0]))
+		{
+			cmd->built_in = TRUE;
+			return ;
+		}
+		i++;
 	}
+	cmd->built_in = FALSE;
 }
 
 void	append_cmd(t_data *data, t_tok *tk, t_cmd *cmd)

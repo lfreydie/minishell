@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/14 19:44:28 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:52:09 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	launch_exec_process(t_data *data)
 {
-	if (data->num_cmd == 1 && data->lst_cmd->built_in < 7)
+	if (data->num_cmd == 1 && data->lst_cmd->built_in)
 		built_in_parent_process(data, data->lst_cmd);
 	else
 		pipex_process(data);
@@ -53,7 +53,7 @@ pid_t	fork_process(t_data *data, t_cmd *cmd)
 		exec_redir_in(data, cmd);
 		exec_redir_out(data, cmd);
 		close_fds(data->tmp_fdin, data->pipefd[0], data->pipefd[1], -1);
-		if (cmd->built_in < 7)
+		if (cmd->built_in)
 			built_in_cmd(data, cmd, cmd->fd[OUT]);
 		else if (ft_strchr(cmd->value[0], '/'))
 			execute_path(data, cmd);
@@ -61,7 +61,8 @@ pid_t	fork_process(t_data *data, t_cmd *cmd)
 			execute(data, cmd);
 		exit(1);
 	}
-	close(data->tmp_fdin);
+	if (data->tmp_fdin > -1)
+		close(data->tmp_fdin);
 	close(data->pipefd[1]);
 	data->tmp_fdin = data->pipefd[0];
 	return (pid);

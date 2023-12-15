@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/14 19:41:14 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:56:38 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 
 void	built_in_cmd(t_data *data, t_cmd *cmd, int fd_out)
 {
-	if (cmd->built_in == 0)
-		ft_echo(data, cmd, fd_out);
-	else if (cmd->built_in == 1)
+	if (cmd->value[0][0] == 'e')
+	{
+		if (cmd->value[0][1] == 'c')
+			ft_echo(data, cmd, fd_out);
+		else if (cmd->value[0][1] == 'n')
+			ft_env(data, cmd, fd_out);
+		else if (cmd->value[0][2] == 'i')
+			ft_exit(data, cmd, fd_out);
+		else
+			ft_export(data, cmd, fd_out);
+	}
+	else if (cmd->value[0][0] == 'c')
 		ft_cd(data, cmd, fd_out);
-	else if (cmd->built_in == 2)
-		ft_env(data, cmd, fd_out);
-	else if (cmd->built_in == 3)
-		ft_exit(data, cmd, fd_out);
-	else if (cmd->built_in == 4)
-		ft_export(data, cmd, fd_out);
-	else if (cmd->built_in == 5)
+	else if (cmd->value[0][0] == 'p')
 		ft_pwd(data, cmd, fd_out);
-	else if (cmd->built_in == 6)
+	else
 		ft_unset(data, cmd, fd_out);
 }
 
