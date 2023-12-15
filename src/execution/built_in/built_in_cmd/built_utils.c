@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 18:32:27 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/15 18:04:24 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:10:23 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,26 @@ void	ft_clean_var(char **var)
 		i++;
 	ft_memmove((*var) + i, (*var) + i + 1, size - (i + 1));
 	(*var)[size - 1] = '\0';
+}
+
+char	*ft_find_var(char **my_env, char *target)
+{
+	int		i;
+	size_t	size;
+
+	i = 0;
+	size = ft_strlen(target);
+	if (size == 0 || !target)
+		return (NULL);
+	while (my_env[i])
+	{
+		if (ft_strncmp(my_env[i], target, size) == 0
+			&& (my_env[i][size] == '='
+			|| (my_env[i][size] == '+' && my_env[i][size + 1] == '=')))
+			return (my_env[i]);
+		i++;
+	}
+	return (NULL);
 }
 
 char	*ft_var_value(char **my_env, char *target)

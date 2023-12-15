@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 18:10:22 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/15 18:04:12 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:10:10 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,6 @@ int	ft_sign_append(char *arg)
 		i++;
 	}
 	return (FALSE);
-}
-
-char	*ft_find_var(char **my_env, char *target)
-{
-	int		i;
-	size_t	size;
-
-	i = 0;
-	size = ft_strlen(target);
-	if (size == 0 || !target)
-		return (NULL);
-	while (my_env[i])
-	{
-		if (ft_strncmp(my_env[i], target, size) == 0
-			&& (my_env[i][size] == '='
-			|| (my_env[i][size] == '+' && my_env[i][size + 1] == '=')))
-			return (my_env[i]);
-		i++;
-	}
-	return (NULL);
 }
 
 int	ft_value_is_empty(char *arg)

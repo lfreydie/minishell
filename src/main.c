@@ -6,13 +6,27 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:07:02 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/15 18:07:05 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 19:16:39 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 sig_atomic_t	g_sig;
+
+int	is_only_space(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	main(int ac, char __attribute__((unused)) **av)
 {
@@ -31,6 +45,8 @@ int	main(int ac, char __attribute__((unused)) **av)
 			printf("exit\n");
 			break ;
 		}
+		if (is_only_space(data.line))
+			continue ;
 		if (init_process(&data) == -1)
 			continue ;
 		launch_exec_process(&data);

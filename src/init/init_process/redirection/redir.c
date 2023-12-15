@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:10:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/12 17:08:16 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 18:18:18 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	manage_redir_out(t_cmd *cmd, t_red *red)
 		cmd->launch = false;
 		ft_error_msg(SHELL, red->redir, NULL, NOFLDIR);
 	}
+	printf("redir : %d\n", cmd->fd[OUT]);
 }
 
 void	manage_redir_in(t_data *data, t_cmd *cmd, t_red *red)
@@ -65,6 +66,7 @@ void	manage_redir_in(t_data *data, t_cmd *cmd, t_red *red)
 		cmd->launch = false;
 		ft_error_msg(SHELL, red->redir, NULL, NOFLDIR);
 	}
+	printf("redir : %d\n", cmd->fd[OUT]);
 }
 
 void	manage_redir(t_data *data)
@@ -78,6 +80,7 @@ void	manage_redir(t_data *data)
 		l_red = l_cmd->io_red;
 		while (l_red && l_cmd->launch)
 		{
+			printf("REDIRECTION\n");
 			if (!expand_redir(data, l_red))
 				l_cmd->launch = false;
 			if ((l_red->op == HEREDOC_RED) || (l_red->op == IN_RED))
