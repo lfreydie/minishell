@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/15 18:06:23 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/15 22:10:03 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ char	**get_paths(t_data *data)
 {
 	char		*env_path;
 	char		**paths;
-	int			i;
 
-	i = 0;
 	if (!data->env)
 		return (NULL);
 	env_path = getenv("PATH");
