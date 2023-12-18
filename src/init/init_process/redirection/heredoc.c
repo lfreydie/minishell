@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/12 19:22:04 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 20:05:29 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd)
 		if (!line)
 			(close(cmd->fd[IN]), err_sys(MALERR));
 		if (!ft_streq(line, limiter))
+		{
 			write(cmd->fd[IN], line, ft_strlen(line));
+			write(cmd->fd[IN], "\n", 1);
+		}
 		else
 			flag = 0;
 		free_node(line);
@@ -56,9 +59,11 @@ void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter)
 	char	*name;
 
 	name = heredoc_name();
-	cmd->fd[IN] = open(cmd->io_red->redir, O_RDWR | O_CREAT | O_EXCL, 0744);
+	cmd->fd[IN] = open(name, O_RDWR | O_CREAT | O_EXCL, 0744);
 	if (cmd->fd[IN] < 0)
-		err_sys(PERDEN);
-	unlink(name);
+		return ;
 	heredoc_write(data, limiter, cmd);
+	close(cmd->fd[IN]);
+	cmd->fd[IN] = open(name, O_RDONLY);
+	unlink(name);
 }

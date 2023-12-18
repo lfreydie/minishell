@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/12 19:32:50 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 23:34:15 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*rrange_str_join(char *s1, char *s2)
 	return (new);
 }
 
-char	*expand_value(char *var, char *ptr, int i)
+char	*expand_value(t_data *data, char *var, char *ptr, int i)
 {
 	char	*new;
 	char	*env_val;
@@ -34,7 +34,7 @@ char	*expand_value(char *var, char *ptr, int i)
 	int		var_len;
 
 	var_len = ft_strlen(var) + 1;
-	env_val = expand_env_val(var);
+	env_val = expand_env_val(data, var);
 	if (i)
 	{
 		tmp = gc(ft_substr(ptr, 0, i));

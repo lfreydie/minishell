@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/12/12 16:23:50 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 23:39:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**word_split(char *ptr, int count)
 	return (ws);
 }
 
-char	*expand_env_val(char *var)
+char	*expand_env_val(t_data *data, char *var)
 {
 	char	*env_val;
 	int		var_len;
@@ -48,7 +48,7 @@ char	*expand_env_val(char *var)
 	env_val = NULL;
 	var_len = ft_strlen(var) + 1;
 	if (ft_streq("?", var))
-		env_val = gc(ft_itoa(g_sig));
+		env_val = gc(ft_itoa(data->exit));
 	else
 		env_val = getenv(var);
 	return (env_val);
@@ -65,12 +65,12 @@ t_tok	*manage_end_ws(t_data *data, t_tok *tk, t_tok *n_tk, int end_var)
 		last_tk = last_tk->next;
 	if (tk->value[end_var + 1])
 	{
-		if (last_tk == n_tk)
-			return (n_tk);
 		tmp = gc(ft_substr(tk->value, end_var + 1, \
-		ft_strlen(tk->value) - end_var - 1));
+		ft_strlen(tk->value) - (end_var + 1)));
 		len = ft_strlen(last_tk->value);
 		last_tk->value = rrange_str_join(last_tk->value, tmp);
+		if (last_tk == n_tk)
+			return (n_tk);
 		expand(data, last_tk, len);
 	}
 	return (n_tk);
@@ -96,7 +96,7 @@ t_tok	*manage_ws(char **ws, t_tok *tk, int start)
 			current_tk->value = rrange_str_join(tmp, ws[index]);
 		}
 		else
-			current_tk->value = gc(ft_strdup(ws[index]));
+			current_tk->value = ws[index];
 	}
 	return (lst_exp);
 }

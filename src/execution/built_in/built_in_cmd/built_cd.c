@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:17:10 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/12 18:05:46 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 22:32:42 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*ft_home_old(t_data *data, t_cmd *cmd)
 {
 	char	*dir;
 
-	if (!cmd->value[1])
+	if (!cmd->value[1] || cmd->value[1][0] == '~')
 	{
 		dir = ft_var_value(data->env, "HOME");
 		if (!dir)
@@ -71,14 +71,16 @@ int	ft_cd(t_data *data, t_cmd *cmd, int fd_out)
 
 	if (cmd->n_args_cmd > 2)
 		return (ft_error_msg(SHELL, CD, NULL, ARGNB), 1);
-	if (!cmd->value[1] || (cmd->value[1][0] == '-' && cmd->value[1][1] == '\0'))
+	if (!cmd->value[1] || (cmd->value[1][0] == '-' && cmd->value[1][1] == '\0') \
+	|| (cmd->value[1][0] == '~' && cmd->value[1][1] == '\0'))
 	{
 		dir = ft_home_old(data, cmd);
 		if (!dir)
 			return (FAILED);
 		if (chdir(dir) == -1)
 			return (ft_error_msg(SHELL, CD, cmd->value[1], NULL), 127);
-		if (ft_pwd(data, NULL, fd_out) == FAILED)
+		if ((cmd->value[1] && cmd->value[1][0] == '-') \
+		&& ft_pwd(data, NULL, fd_out) == FAILED)
 			return (FAILED);
 	}
 	else if (chdir(cmd->value[1]) == -1)
@@ -87,5 +89,6 @@ int	ft_cd(t_data *data, t_cmd *cmd, int fd_out)
 		return (ft_error_msg(SHELL, CD, NULL, ERROLDPWD), 3);
 	if (ft_update_pwd(data))
 		return (ft_error_msg(SHELL, CD, NULL, ERRPWD), 3);
+	__environ = data->env;
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/15 18:06:23 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 23:29:54 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	execute(t_data *data, t_cmd *cmd)
 		}
 		i++;
 	}
+	ft_error_msg(NULL, cmd->value[0], NULL, CMDERR);
+	data->exit = 127;
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:19:07 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/12 17:07:22 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 21:30:15 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	ft_echo_while(char **argv, int i, bool *newline, int fd_out)
 	flag = 0;
 	while (argv[i])
 	{
-		if (*newline == 0 && argv[i][0] == '-' && flag == 0
-		&& argv[i][1] == 'n' && ft_newline(argv[i]))
+		if (!*newline && !flag && ft_newline(argv[i]))
 		{
 			i++;
 			continue ;
@@ -50,6 +49,8 @@ void	ft_echo_while(char **argv, int i, bool *newline, int fd_out)
 		else
 			flag = 1;
 		ft_putstr_fd(argv[i], fd_out);
+		if (argv[i + 1])
+			ft_putstr_fd(" ", fd_out);
 		i++;
 	}
 }

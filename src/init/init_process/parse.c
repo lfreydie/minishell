@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/15 17:51:31 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 23:16:50 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd	*add_cmd(t_data *data)
 		last_cmd = last_cmd->next;
 	new_cmd = gc(ft_calloc(sizeof(t_cmd), 1));
 	new_cmd->id = data->num_cmd - 1;
-	new_cmd->launch = true;
+	new_cmd->launch = TRUE;
 	if (!last_cmd)
 		data->lst_cmd = new_cmd;
 	else

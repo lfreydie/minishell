@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/15 17:52:09 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 00:06:19 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,17 @@ pid_t	fork_process(t_data *data, t_cmd *cmd)
 		exec_redir_in(data, cmd);
 		exec_redir_out(data, cmd);
 		close_fds(data->tmp_fdin, data->pipefd[0], data->pipefd[1], -1);
-		if (cmd->built_in)
+		if (cmd->launch == FALSE)
+			exit(data->exit);
+		else if (cmd->built_in)
 			built_in_cmd(data, cmd, cmd->fd[OUT]);
 		else if (ft_strchr(cmd->value[0], '/'))
 			execute_path(data, cmd);
 		else
 			execute(data, cmd);
-		exit(1);
+		exit(data->exit);
 	}
-	if (data->tmp_fdin > -1)
-		close(data->tmp_fdin);
-	close(data->pipefd[1]);
+	close_fds(data->tmp_fdin, data->pipefd[1], cmd->fd[IN], cmd->fd[OUT]);
 	data->tmp_fdin = data->pipefd[0];
 	return (pid);
 }
@@ -76,20 +76,15 @@ void	exec_redir_in(t_data *data, t_cmd *cmd)
 			close(data->tmp_fdin);
 		data->tmp_fdin = cmd->fd[IN];
 	}
-	if (cmd->id > 1 || cmd->fd[IN] > 0)
-	{
-		if (data->tmp_fdin > 0 && dup2(data->tmp_fdin, STDIN) < 0)
-			perror("dup2");
-		else if (data->tmp_fdin < 0)
-			(close_fds(data->pipefd[0], data->pipefd[1], -1, -1));
-	}
+	if (data->tmp_fdin > 0 && dup2(data->tmp_fdin, STDIN) < 0)
+		perror("dup2");
 }
 
 void	exec_redir_out(t_data *data, t_cmd *cmd)
 {
 	if (cmd->fd[OUT] > 0)
 	{
-		if (cmd->fd[OUT] > 0 && dup2(cmd->fd[OUT], STDOUT) < 0)
+		if (dup2(cmd->fd[OUT], STDOUT) < 0)
 			perror("dup2");
 		close(cmd->fd[OUT]);
 	}

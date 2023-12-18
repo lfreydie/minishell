@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 12:12:01 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/15 17:00:08 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 22:23:26 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ char	*get_prompt(void)
 	char	*dir;
 	char	*prompt;
 
-	dir = gc(getcwd(NULL, 0));
+	dir = gc_null(getcwd(NULL, 0));
+	if (!dir)
+		dir = getenv("PWD");
 	prompt = gc(ft_strjoin(dir, "$ "));
-	free_node(dir);
 	return (prompt);
 }
 

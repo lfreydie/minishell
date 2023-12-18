@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/15 18:05:51 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/18 23:34:59 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,12 +193,12 @@ int		check_syntax(t_tok *tk, t_tok *prev_tk);
 //----------------EXPAND----------------
 //----------------expand----------------
 t_tok	*expand(t_data *data, t_tok *tk, int i);
-int		expand_quote(t_tok *tk, int start);
+int		expand_quote(t_data *data, t_tok *tk, int start);
 t_tok	*expand_var(t_data *data, t_tok *tk, int i);
 int		expand_redir(t_data *data, t_red *red);
 //----------expand_string_utils---------
 char	*rrange_str_join(char *s1, char *s2);
-char	*expand_value(char *var, char *ptr, int i);
+char	*expand_value(t_data *data, char *var, char *ptr, int i);
 char	*rrange_str(t_tok *tk, int start, int end_q);
 //-------------expand_utils-------------
 int		ft_isspace(char c);
@@ -207,7 +207,7 @@ char	*find_var(char *ptr);
 int		find_var_len(char *ptr);
 //-----------expand_var_utils-----------
 char	**word_split(char *ptr, int count);
-char	*expand_env_val(char *var);
+char	*expand_env_val(t_data *data, char *var);
 t_tok	*manage_end_ws(t_data *data, t_tok *tk, t_tok *n_tk, int end_var);
 t_tok	*manage_ws(char **ws, t_tok *tk, int start);
 //-------------REDIRECTION--------------
