@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/18 23:29:54 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 00:16:56 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ char	**get_paths(t_data *data)
 {
 	char		*env_path;
 	char		**paths;
-	int			i;
 
-	i = 0;
 	if (!data->env)
 		return (NULL);
 	env_path = getenv("PATH");
