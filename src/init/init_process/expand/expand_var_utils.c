@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lefreydier <lefreydier@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:04:38 by blandineber       #+#    #+#             */
-/*   Updated: 2023/12/18 23:39:44 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 01:21:07 by lefreydier       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,10 @@ char	**word_split(char *ptr, int count)
 char	*expand_env_val(t_data *data, char *var)
 {
 	char	*env_val;
-	int		var_len;
 
 	if (!var)
 		return (NULL);
 	env_val = NULL;
-	var_len = ft_strlen(var) + 1;
 	if (ft_streq("?", var))
 		env_val = gc(ft_itoa(data->exit));
 	else
