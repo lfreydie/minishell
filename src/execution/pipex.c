@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/19 00:06:19 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 09:58:05 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ pid_t	fork_process(t_data *data, t_cmd *cmd)
 	pid = fork();
 	if (pid == 0)
 	{
+		sig_init(CHILD);
 		exec_redir_in(data, cmd);
 		exec_redir_out(data, cmd);
 		close_fds(data->tmp_fdin, data->pipefd[0], data->pipefd[1], -1);

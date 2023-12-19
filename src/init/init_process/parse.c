@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/18 23:16:50 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 10:34:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	parse_token(t_data *data)
 	prev_tk = NULL;
 	while (tk && tk->op != NWLINE)
 	{
-		if (check_syntax(tk, prev_tk) == -1)
+		if (check_syntax(data, tk, prev_tk) == -1)
 			return (FAILED);
 		if (tk->type == CTRL_OP)
 			cmd = add_cmd(data);

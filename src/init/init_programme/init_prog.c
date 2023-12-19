@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:49:12 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/15 17:59:54 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 10:00:03 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init_prog(t_data *data)
 {
+	sig_init(MAIN);
 	data->line = NULL;
 	data->lst_cmd = NULL;
 	data->lst_tk = NULL;

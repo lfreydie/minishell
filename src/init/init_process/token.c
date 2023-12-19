@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:04:37 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/12 16:25:25 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 10:32:58 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_tok	*add_token(t_tok **lst_tk, t_tok *new_tk)
 	return (new_tk);
 }
 
-char	*get_word_value(char *ptr)
+char	*get_word_value(t_data *data, char *ptr)
 {
 	char	*value;
 	char	quote;
@@ -54,7 +54,7 @@ char	*get_word_value(char *ptr)
 			while (ptr[i] && ptr[i] != quote)
 				i++;
 			if (!ptr[i])
-				return (ft_err_syntax(SHELL, UNQUOTE, NULL), NULL);
+				return (ft_err_syntax(data, SHELL, UNQUOTE, NULL), NULL);
 		}
 		i++;
 	}
@@ -62,7 +62,7 @@ char	*get_word_value(char *ptr)
 	return (value);
 }
 
-int	token_data(char *ptr, t_tok *tk, char **grammar)
+int	token_data(t_data *data, char *ptr, t_tok *tk, char **grammar)
 {
 	if (!*ptr)
 		tk->op = NWLINE;
@@ -83,7 +83,7 @@ int	token_data(char *ptr, t_tok *tk, char **grammar)
 	if (tk->op == NWLINE)
 		tk->value = S_NEWLINE;
 	else if (tk->op == NONE)
-		tk->value = get_word_value(ptr);
+		tk->value = get_word_value(data, ptr);
 	if (!tk->value)
 		return (FAILED);
 	return (SUCCESS);
@@ -101,7 +101,7 @@ int	tokenize_input(t_data *data)
 		while (*ptr == SPACE)
 			ptr++;
 		tk = add_token(&data->lst_tk, new_token());
-		if (token_data(ptr, tk, data->grammar) == -1)
+		if (token_data(data, ptr, tk, data->grammar) == -1)
 			return (FAILED);
 		ptr += ft_strlen(tk->value);
 	}

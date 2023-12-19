@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 17:52:17 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/15 17:35:13 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 09:27:45 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	close_fds(int fd1, int fd2, int fd3, int fd4)
 {
 	if (fd1 > 0)
 		close(fd1);
-	else if (fd2 > 0)
+	if (fd2 > 0)
 		close(fd2);
-	else if (fd3 > 0)
+	if (fd3 > 0)
 		close(fd3);
-	else if (fd4 > 0)
+	if (fd4 > 0)
 		close(fd4);
 }
 

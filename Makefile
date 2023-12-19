@@ -6,13 +6,13 @@
 #    By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/07 15:01:41 by lfreydie          #+#    #+#              #
-#    Updated: 2023/12/14 17:13:04 by lfreydie         ###   ########.fr        #
+#    Updated: 2023/12/19 09:22:28 by lfreydie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC ?= gcc
 NAME := minishell
-CFLAGS += -Wall -Wextra -Werror -g
+CFLAGS += -Wall -Wextra -Werror -g3
 LIB_FLAGS = -L$(LIBFT_DIR) -lft -lreadline
 
 

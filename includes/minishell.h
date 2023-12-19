@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/18 23:34:59 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 10:43:24 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@
 
 # define IN 0
 # define OUT 1
+
+# define PARENT 0
+# define CHILD 1
+# define MAIN 2
+# define HEREDOC 3
 
 # define HOMENS "HOME not set"
 # define OPWDNS "OLDPWD not set"
@@ -154,7 +159,7 @@ typedef struct s_data{
 
 //-----------------sig------------------
 void	interrupt_handler(int signum);
-void	sig_init(void);
+void	sig_init(int mode);
 //--------------read_line---------------
 char	*get_prompt(void);
 void	ft_readline(char **line);
@@ -177,8 +182,8 @@ int		init_process(t_data *data);
 //----------------token-----------------
 t_tok	*new_token(void);
 t_tok	*add_token(t_tok **lst_tk, t_tok *new_tk);
-char	*get_word_value(char *ptr);
-int		token_data(char *ptr, t_tok *tk, char **grammar);
+char	*get_word_value(t_data *data, char *ptr);
+int		token_data(t_data *data, char *ptr, t_tok *tk, char **grammar);
 int		tokenize_input(t_data *data);
 //--------------init_utils--------------
 void	print_token(t_tok *lst_tk);
@@ -188,7 +193,7 @@ void	print_gc_count(void);
 //----------------parse-----------------
 int		parse_token(t_data *data);
 //----------------syntax----------------
-int		check_syntax(t_tok *tk, t_tok *prev_tk);
+int		check_syntax(t_data *data, t_tok *tk, t_tok *prev_tk);
 //-------------INIT_PROCESS-------------
 //----------------EXPAND----------------
 //----------------expand----------------
@@ -231,7 +236,7 @@ t_list	**_get_garbage(void);
 int		ft_ptreq(char **tab, void *ptr);
 //-----------------exit-----------------
 //-----------------error----------------
-void	ft_err_syntax(char *shell, char *msg, char *str);
+void	ft_err_syntax(t_data *data, char *shell, char *msg, char *str);
 void	ft_error_msg(char *shell, char *cmd, char *arg, char *error);
 void	msg_err_sys(char *msg);
 void	err_sys(char *msg);

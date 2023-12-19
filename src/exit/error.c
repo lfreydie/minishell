@@ -6,13 +6,13 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 19:32:22 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/12 19:41:03 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 10:43:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_err_syntax(char *shell, char *msg, char *str)
+void	ft_err_syntax(t_data *data, char *shell, char *msg, char *str)
 {
 	int	fd;
 
@@ -27,6 +27,7 @@ void	ft_err_syntax(char *shell, char *msg, char *str)
 	printf("\n");
 	dup2(1, fd);
 	close(fd);
+	data->exit = 2;
 }
 
 void	ft_error_msg(char *shell, char *cmd, char *arg, char *error)
