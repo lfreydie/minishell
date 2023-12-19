@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:07:02 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/19 10:00:23 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:53:15 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int ac, char __attribute__((unused)) **av)
 	if (ac != 1)
 		return (printf("Too many arguments\n"), 1);
 	init_env(&data);
+	data.exit = 0;
 	while (42)
 	{
 		init_prog(&data);

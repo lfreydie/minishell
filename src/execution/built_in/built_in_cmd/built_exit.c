@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:22:43 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/18 21:37:32 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:00:01 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	ft_exit(t_data *data, t_cmd *cmd, int fd_out)
 		return (ft_error_msg(SHELL, EXT, NULL, ARGNB), 2);
 	if (cmd->value[1])
 		data->exit = (ft_atoi(cmd->value[1]) % 256);
-	else
-		data->exit = 0;
 	ft_putstr_fd("exit\n", 1);
 	gc_collect();
 	exit(data->exit);

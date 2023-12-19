@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:52:46 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/19 10:08:32 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:16:38 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	interrupt_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
+		ft_putendl_fd("", 2);
 		if (!g_sig)
 		{
 			rl_on_new_line();
@@ -26,16 +26,14 @@ void	interrupt_handler(int signum)
 			rl_redisplay();
 		}
 	}
+}
+
+void	parent_handler(int signum)
+{
+	if (signum == SIGINT)
+		ft_putendl_fd("", 2);
 	else if (signum == SIGQUIT)
-	{
-		printf("\nQuit (core dumped)\n");
-		// if (!g_sig)
-		// {
-		// 	rl_on_new_line();
-		// 	rl_replace_line("Quit (core dumped)\n", 0);
-		// 	rl_redisplay();
-		// }
-	}
+		ft_putendl_fd("Quit (core dumped)", 2);
 }
 
 void	sig_init(int mode)
@@ -48,8 +46,8 @@ void	sig_init(int mode)
 	}
 	else if (mode == PARENT)
 	{
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, parent_handler);
+		signal(SIGQUIT, parent_handler);
 	}
 	else if (mode == CHILD)
 	{

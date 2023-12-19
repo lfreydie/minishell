@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/19 00:16:56 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:56:31 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,54 @@ void	execute(t_data *data, t_cmd *cmd)
 {
 	char		**paths;
 	char		*path_cmd;
+	struct stat	stats;
 	int			i;
 
-	i = 0;
+	i = -1;
 	paths = get_paths(data);
-	while (paths[i])
+	while (paths[++i])
 	{
 		path_cmd = get_path_cmd(paths[i], cmd->value[0]);
-		if (!access(path_cmd, F_OK))
+		stat(path_cmd, &stats);
+		if (!access(path_cmd, F_OK) && !S_ISDIR(stats.st_mode))
 		{
-			execve(path_cmd, cmd->value, data->env);
-			perror(path_cmd);
+			if (!access(path_cmd, X_OK))
+				execve(path_cmd, cmd->value, data->env);
+			else
+			{
+				ft_error_msg(SHELL, cmd->value[0], NULL, PERDEN);
+				data->exit = 126;
+				return ;
+			}
 		}
-		i++;
 	}
-	ft_error_msg(NULL, cmd->value[0], NULL, CMDERR);
+	ft_error_msg(SHELL, cmd->value[0], NULL, CMDERR);
 	data->exit = 127;
-	return ;
 }
 
 void	execute_path(t_data *data, t_cmd *cmd)
 {
+	struct stat	stats;
+
+	if (access(cmd->value[0], F_OK))
+	{
+		ft_error_msg(SHELL, cmd->value[0], NULL, NOFLDIR);
+		data->exit = 127;
+		return ;
+	}
+	stat(cmd->value[0], &stats);
+	if (S_ISDIR(stats.st_mode))
+	{
+		ft_error_msg(SHELL, cmd->value[0], NULL, ISDIRE);
+		data->exit = 126;
+		return ;
+	}
 	if (!access(cmd->value[0], X_OK))
 		execve(cmd->value[0], cmd->value, data->env);
-	if (access(cmd->value[0], F_OK))
-		execute(data, cmd);
+	else
+	{
+		ft_error_msg(SHELL, cmd->value[0], NULL, PERDEN);
+		data->exit = 126;
+	}
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/19 09:58:05 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:27:59 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void	pipex_process(t_data *data)
 	close(data->tmp_fdin);
 	i = -1;
 	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		data->exit = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->exit = WTERMSIG(status) + 128;
 	while (++i < data->num_cmd - 1)
 		wait(0);
 }
@@ -64,6 +68,7 @@ pid_t	fork_process(t_data *data, t_cmd *cmd)
 			execute(data, cmd);
 		exit(data->exit);
 	}
+	sig_init(PARENT);
 	close_fds(data->tmp_fdin, data->pipefd[1], cmd->fd[IN], cmd->fd[OUT]);
 	data->tmp_fdin = data->pipefd[0];
 	return (pid);
@@ -73,7 +78,7 @@ void	exec_redir_in(t_data *data, t_cmd *cmd)
 {
 	if (cmd->fd[IN] > 0)
 	{
-		if (cmd->id != 1)
+		if (cmd->id > 0)
 			close(data->tmp_fdin);
 		data->tmp_fdin = cmd->fd[IN];
 	}
