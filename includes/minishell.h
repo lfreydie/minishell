@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/20 18:38:52 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 20:32:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ int		ft_isspace(char c);
 int		count_word(char *ptr);
 char	*find_var(char *ptr);
 int		find_var_len(char *ptr);
+void	manage_cmd_null(t_data *data);
 //-----------expand_var_utils-----------
 char	**word_split(char *ptr, int count);
 char	*expand_env_val(t_data *data, char *var);

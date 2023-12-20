@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:15:50 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/11 21:55:16 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 20:41:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,31 @@ int	find_var_len(char *ptr)
 			count++;
 	}
 	return (count);
+}
+
+void	manage_cmd_null(t_data *data)
+{
+	t_cmd	*cpy;
+	int		j;
+	char	**n_cmd;
+
+	cpy = data->lst_cmd;
+	while (cpy)
+	{
+		if (!cpy->value || (!cpy->value[0][0] && cpy->n_args_cmd == 1))
+			cpy->launch = FALSE;
+		else if (cpy->n_args_cmd > 1)
+		{
+			cpy->n_args_cmd--;
+			j = 1;
+			n_cmd = gc(ft_calloc(sizeof(char *), cpy->n_args_cmd + 1));
+			while (cpy->value && cpy->value[j])
+			{
+				n_cmd[j] = gc(ft_strdup(cpy->value[j]));
+				j++;
+			}
+		}
+		if ((cpy->value && cpy->value[0]) || cpy->launch == FALSE)
+			cpy = cpy->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/18 23:42:35 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 20:17:20 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 		if (tk->value[i + var_len + 1])
 			tk->value = rrange_str_join(ptr, gc(ft_substr(tk->value, i + \
 			var_len + 1, (ft_strlen(tk->value) - (i + var_len + 1)))));
+		else if (!i)
+			tk->value = (char *)gc(ft_calloc(sizeof(char), 1));
 		return (tk);
 	}
 	ws = word_split(ptr, count_word(ptr));
@@ -84,7 +86,7 @@ int	expand_redir(t_data *data, t_red *red)
 
 t_tok	*expand(t_data *data, t_tok *tk, int i)
 {
-	while (tk->value[i])
+	while (tk->value && tk->value[i])
 	{
 		if (tk->value[i] == SINGLE_QUOTE || tk->value[i] == DOUBLE_QUOTE)
 			i = expand_quote(data, tk, i);

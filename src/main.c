@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:07:02 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 18:52:00 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 19:31:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,27 @@
 
 sig_atomic_t	g_sig;
 
-int	is_only_space(char *str)
+int	is_only_space(t_data *data, char *str)
 {
 	int	i;
+	int	exit;
 
 	i = 0;
+	exit = 0;
 	while (str[i])
 	{
-		if (str[i] != ' ' && str[i] != '\t')
+		if (str[i] != ' ' && str[i] != '\t' \
+		&& (str[i] != '#' || (str[i] == '#' && \
+		(str[i - 1] == ':' || str[i + 1] == ':'))) \
+		&& (str[i] != ':' || (str[i] == ':' \
+		&& (str[i - 1] == ':' || str[i + 1] == ':'))) \
+		&& str[i] != '!')
 			return (0);
+		if (str[i] == '!')
+			exit = 1;
 		i++;
 	}
+	data->exit = exit;
 	return (1);
 }
 
@@ -45,7 +55,7 @@ int	main(int ac, char __attribute__((unused)) **av)
 			printf("exit\n");
 			break ;
 		}
-		if (is_only_space(data.line))
+		if (is_only_space(&data, data.line))
 			continue ;
 		if (init_process(&data) == FAILED)
 			continue ;
