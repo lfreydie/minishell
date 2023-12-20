@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 16:15:50 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/20 20:41:17 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 23:02:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,18 +88,19 @@ void	manage_cmd_null(t_data *data)
 	{
 		if (!cpy->value || (!cpy->value[0][0] && cpy->n_args_cmd == 1))
 			cpy->launch = FALSE;
-		else if (cpy->n_args_cmd > 1)
+		else if (!cpy->value || (!cpy->value[0][0] && cpy->n_args_cmd > 1))
 		{
 			cpy->n_args_cmd--;
 			j = 1;
 			n_cmd = gc(ft_calloc(sizeof(char *), cpy->n_args_cmd + 1));
 			while (cpy->value && cpy->value[j])
 			{
-				n_cmd[j] = gc(ft_strdup(cpy->value[j]));
+				n_cmd[j - 1] = gc(ft_strdup(cpy->value[j]));
 				j++;
 			}
+			cpy->value = n_cmd;
 		}
-		if ((cpy->value && cpy->value[0]) || cpy->launch == FALSE)
+		if ((cpy->value && cpy->value[0][0]) || cpy->launch == FALSE)
 			cpy = cpy->next;
 	}
 }

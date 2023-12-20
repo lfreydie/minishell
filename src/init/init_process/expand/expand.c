@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 20:17:20 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 23:26:19 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ int	expand_redir(t_data *data, t_red *red)
 	if (!tmp_tk->next)
 		red->redir = gc(ft_strdup(tmp_tk->value));
 	else
+	{
+		data->exit = 1;
+		ft_error_msg(SHELL, red->redir, NULL, AMBRED);
 		return (0);
+	}
 	return (1);
 }
 

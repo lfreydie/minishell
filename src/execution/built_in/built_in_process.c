@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 16:48:12 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 22:38:02 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,39 +17,29 @@ void	built_in_cmd(t_data *data, t_cmd *cmd, int fd_out)
 	if (cmd->value[0][0] == 'e')
 	{
 		if (cmd->value[0][1] == 'c')
-			ft_echo(data, cmd, fd_out);
+			data->exit = ft_echo(data, cmd, fd_out);
 		else if (cmd->value[0][1] == 'n')
-			ft_env(data, cmd, fd_out);
+			data->exit = ft_env(data, cmd, fd_out);
 		else if (cmd->value[0][2] == 'i')
-			ft_exit(data, cmd, fd_out);
+			data->exit = ft_exit(data, cmd, fd_out);
 		else
-			ft_export(data, cmd, fd_out);
+			data->exit = ft_export(data, cmd, fd_out);
 	}
 	else if (cmd->value[0][0] == 'c')
-		ft_cd(data, cmd, fd_out);
+		data->exit = ft_cd(data, cmd, fd_out);
 	else if (cmd->value[0][0] == 'p')
-		ft_pwd(data, cmd, fd_out);
+		data->exit = ft_pwd(data, cmd, fd_out);
 	else
-		ft_unset(data, cmd, fd_out);
+		data->exit = ft_unset(data, cmd, fd_out);
 }
 
 void	built_in_parent_process(t_data *data, t_cmd *cmd)
 {
 	int	fd_out;
 
-	fd_out = STDOUT;
-	if (cmd->fd[IN] > 0)
-	{
-		if (dup2(cmd->fd[IN], STDIN_FILENO) < 0)
-			perror("dup2");
-		close(cmd->fd[IN]);
-	}
-	if (cmd->fd[OUT] > 0)
-	{
-		if (dup2(cmd->fd[OUT], STDOUT_FILENO) < 0)
-			perror("dup2");
+	if (cmd->fd[OUT])
 		fd_out = cmd->fd[OUT];
-		close(cmd->fd[OUT]);
-	}
+	else
+		fd_out = STDOUT_FILENO;
 	built_in_cmd(data, cmd, fd_out);
 }

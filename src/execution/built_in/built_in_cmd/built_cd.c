@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:17:10 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/18 22:32:42 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 21:51:29 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static int	ft_update_oldpwd(t_data *data)
 	while (data->env[line][i] != '=')
 		i++;
 	tmp = gc(ft_strjoin("OLDPWD=", data->env[line] + i + 1));
-	if (!tmp)
-		return (FAILED);
 	ft_replace_var(&data->env, tmp);
 	return (SUCCESS);
 }
@@ -38,8 +36,6 @@ static int	ft_update_pwd(t_data *data)
 
 	path = gc(getcwd(NULL, 0));
 	tmp = gc(ft_strjoin("PWD=", path));
-	if (!tmp)
-		return (FAILED);
 	ft_replace_var(&data->env, tmp);
 	return (SUCCESS);
 }
@@ -84,7 +80,7 @@ int	ft_cd(t_data *data, t_cmd *cmd, int fd_out)
 			return (FAILED);
 	}
 	else if (chdir(cmd->value[1]) == -1)
-		return (ft_error_msg(SHELL, CD, cmd->value[1], NOFLDIR), 127);
+		return (ft_error_msg(SHELL, CD, cmd->value[1], NOFLDIR), 1);
 	if (ft_update_oldpwd(data))
 		return (ft_error_msg(SHELL, CD, NULL, ERROLDPWD), 3);
 	if (ft_update_pwd(data))

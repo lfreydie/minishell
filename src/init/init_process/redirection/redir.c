@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:10:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 18:38:32 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 22:55:03 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	manage_redir_out(t_data *data, t_cmd *cmd, t_red *red)
 	{
 		cmd->launch = FALSE;
 		data->exit = 1;
-		ft_error_msg(SHELL, red->redir, NULL, NOFLDIR);
+		ft_error_msg(SHELL, red->redir, NULL, PERDEN);
 	}
 }
 

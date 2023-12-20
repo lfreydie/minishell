@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/20 20:32:17 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 23:25:11 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@
 # define IVALID "not a valid identifier"
 # define IVALPM "invalid parameter name"
 # define IVALOP "invalid option"
+# define AMBRED "ambiguous redirect"
 
 # define CD "cd"
 # define EXP "export"
@@ -78,7 +79,8 @@
 
 # define CMDERR "command not found"
 # define ISDIRE "Is a directory"
-# define PERDEN "Permission Denied"
+# define PERDEN "Permission denied"
+# define NUMREQ "numeric argument required"
 # define MALERR "malloc failed"
 # define NOFLDIR "No such file or directory"
 

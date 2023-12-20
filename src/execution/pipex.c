@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 20:35:52 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 23:27:44 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	launch_exec_process(t_data *data)
 {
-	if (data->num_cmd == 1 && data->lst_cmd->built_in)
+	if (data->num_cmd == 1 && data->lst_cmd->built_in && \
+	data->lst_cmd->launch == TRUE)
 		built_in_parent_process(data, data->lst_cmd);
 	else
 		pipex_process(data);
