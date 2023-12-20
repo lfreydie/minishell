@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 15:10:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/19 10:41:46 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 18:38:32 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,15 @@ void	manage_redir_out(t_data *data, t_cmd *cmd, t_red *red)
 	}
 }
 
-void	manage_redir_in(t_data *data, t_cmd *cmd, t_red *red)
+int	manage_redir_in(t_data *data, t_cmd *cmd, t_red *red)
 {
 	if (cmd->fd[IN] > 0)
 		close(cmd->fd[IN]);
 	if (red->op == HEREDOC_RED)
-		heredoc_set(data, cmd, red->redir);
+	{
+		if (heredoc_set(data, cmd, red->redir) == FAILED)
+			return (FAILED);
+	}
 	else if (red->op == IN_RED)
 		cmd->fd[IN] = open(red->redir, O_RDONLY);
 	if (cmd->fd[IN] < 0)
@@ -67,9 +70,10 @@ void	manage_redir_in(t_data *data, t_cmd *cmd, t_red *red)
 		data->exit = 1;
 		ft_error_msg(SHELL, red->redir, NULL, NOFLDIR);
 	}
+	return (SUCCESS);
 }
 
-void	manage_redir(t_data *data)
+int	manage_redir(t_data *data)
 {
 	t_cmd	*l_cmd;
 	t_red	*l_red;
@@ -83,11 +87,15 @@ void	manage_redir(t_data *data)
 			if (!expand_redir(data, l_red))
 				l_cmd->launch = FALSE;
 			if ((l_red->op == HEREDOC_RED) || (l_red->op == IN_RED))
-				manage_redir_in(data, l_cmd, l_red);
+			{
+				if (manage_redir_in(data, l_cmd, l_red) == FAILED)
+					return (FAILED);
+			}
 			else if ((l_red->op == OUTAP_RED) || (l_red->op == OUTTR_RED))
 				manage_redir_out(data, l_cmd, l_red);
 			l_red = l_red->next;
 		}
 		l_cmd = l_cmd->next;
 	}
+	return (SUCCESS);
 }

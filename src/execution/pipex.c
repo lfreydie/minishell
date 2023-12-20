@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:13:16 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/19 17:27:59 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 17:18:39 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ pid_t	fork_process(t_data *data, t_cmd *cmd)
 		if (cmd->launch == FALSE)
 			exit(data->exit);
 		else if (cmd->built_in)
-			built_in_cmd(data, cmd, cmd->fd[OUT]);
+			built_in_cmd(data, cmd, STDOUT_FILENO);
 		else if (ft_strchr(cmd->value[0], '/'))
 			execute_path(data, cmd);
 		else
@@ -82,7 +82,7 @@ void	exec_redir_in(t_data *data, t_cmd *cmd)
 			close(data->tmp_fdin);
 		data->tmp_fdin = cmd->fd[IN];
 	}
-	if (data->tmp_fdin > 0 && dup2(data->tmp_fdin, STDIN) < 0)
+	if (data->tmp_fdin > 0 && dup2(data->tmp_fdin, STDIN_FILENO) < 0)
 		perror("dup2");
 }
 
@@ -90,14 +90,13 @@ void	exec_redir_out(t_data *data, t_cmd *cmd)
 {
 	if (cmd->fd[OUT] > 0)
 	{
-		if (dup2(cmd->fd[OUT], STDOUT) < 0)
+		if (dup2(cmd->fd[OUT], STDOUT_FILENO) < 0)
 			perror("dup2");
 		close(cmd->fd[OUT]);
 	}
 	else if (cmd->next)
 	{
-		if (dup2(data->pipefd[1], STDOUT) < 0)
+		if (dup2(data->pipefd[1], STDOUT_FILENO) < 0)
 			perror("dup2");
-		cmd->fd[OUT] = data->pipefd[1];
 	}
 }

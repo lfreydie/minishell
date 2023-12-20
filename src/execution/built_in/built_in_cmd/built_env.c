@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:22:19 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/11 18:57:32 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:54:01 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	ft_env(t_data *data, t_cmd *cmd, int fd_out)
 
 	i = 0;
 	if (cmd->n_args_cmd > 1)
-		return (FAILED);
-	if (!data || !data->env)
-		return (printf("ERR ENV"), 1);
+		return (ft_error_msg(SHELL, ENV, NULL, ARGNB), data->exit = 2, FAILED);
+	if (!data->env)
+		init_env(data);
 	while (data->env[i])
 	{
 		j = 0;
@@ -35,5 +35,5 @@ int	ft_env(t_data *data, t_cmd *cmd, int fd_out)
 			i++;
 		}
 	}
-	return (0);
+	return (data->exit = 0, 0);
 }

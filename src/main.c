@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:07:02 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/19 16:53:15 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 18:52:00 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	main(int ac, char __attribute__((unused)) **av)
 		}
 		if (is_only_space(data.line))
 			continue ;
-		if (init_process(&data) == -1)
+		if (init_process(&data) == FAILED)
 			continue ;
-		sig_init(PARENT);
+		sig_init(MAIN);
 		launch_exec_process(&data);
 	}
 	gc_collect();

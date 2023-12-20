@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:10:11 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/18 23:18:26 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 18:50:54 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	init_process(t_data *data)
 {
-	if (tokenize_input(data) == -1)
+	if (tokenize_input(data) == FAILED)
 		return (FAILED);
-	if (parse_token(data) == -1)
+	if (parse_token(data) == FAILED)
 		return (FAILED);
-	manage_redir(data);
+	if (manage_redir(data) == FAILED)
+		return (FAILED);
 	return (SUCCESS);
 }

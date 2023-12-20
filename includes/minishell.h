@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/19 10:43:24 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 18:38:52 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@
 # define IN 0
 # define OUT 1
 
-# define PARENT 0
-# define CHILD 1
-# define MAIN 2
+# define MAIN 0
+# define PARENT 1
+# define CHILD 2
 # define HEREDOC 3
+# define PARENT_H 4
 
 # define HOMENS "HOME not set"
 # define OPWDNS "OLDPWD not set"
@@ -219,10 +220,10 @@ t_tok	*manage_ws(char **ws, t_tok *tk, int start);
 //----------------redir-----------------
 t_red	*lstadd_red(t_cmd *cmd);
 void	add_red(t_red *red, t_tok *tk);
-void	manage_redir(t_data *data);
+int		manage_redir(t_data *data);
 //---------------heredoc----------------
 void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd);
-void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter);
+int		heredoc_set(t_data *data, t_cmd *cmd, char *limiter);
 
 //-----------------EXIT-----------------
 //-----------garbage_collector----------

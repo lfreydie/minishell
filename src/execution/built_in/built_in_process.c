@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/15 17:56:38 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:48:12 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	built_in_parent_process(t_data *data, t_cmd *cmd)
 	fd_out = STDOUT;
 	if (cmd->fd[IN] > 0)
 	{
-		if (dup2(cmd->fd[IN], STDIN) < 0)
+		if (dup2(cmd->fd[IN], STDIN_FILENO) < 0)
 			perror("dup2");
 		close(cmd->fd[IN]);
 	}
 	if (cmd->fd[OUT] > 0)
 	{
-		if (dup2(cmd->fd[OUT], STDOUT) < 0)
+		if (dup2(cmd->fd[OUT], STDOUT_FILENO) < 0)
 			perror("dup2");
 		fd_out = cmd->fd[OUT];
 		close(cmd->fd[OUT]);

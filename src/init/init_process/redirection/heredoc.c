@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/19 10:09:55 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/20 18:57:21 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd)
 	{
 		line = gc_null(readline("> "));
 		if (!line)
-			(close(cmd->fd[IN]), err_sys(MALERR));
+		{
+			ft_error_msg(SHELL, "warning", NULL, \
+			"here-document delimited by end-of-file (wanted `eof')");
+			return ;
+		}
 		if (!ft_streq(line, limiter))
 		{
 			write(cmd->fd[IN], line, ft_strlen(line));
@@ -54,18 +58,31 @@ char	*heredoc_name(void)
 	return (name);
 }
 
-void	heredoc_set(t_data *data, t_cmd *cmd, char *limiter)
+int	heredoc_set(t_data *data, t_cmd *cmd, char *limiter)
 {
 	char	*name;
+	pid_t	pid;
+	int		i;
+	int		status;
 
 	name = heredoc_name();
 	cmd->fd[IN] = open(name, O_RDWR | O_CREAT | O_EXCL, 0744);
 	if (cmd->fd[IN] < 0)
-		return ;
-	sig_init(HEREDOC);
-	heredoc_write(data, limiter, cmd);
+		return (SUCCESS);
+	pid = fork();
+	if (pid == 0)
+	{
+		sig_init(HEREDOC);
+		heredoc_write(data, limiter, cmd);
+		exit (0);
+	}
+	sig_init(PARENT_H);
+	i = -1;
+	waitpid(pid, &status, 0);
 	close(cmd->fd[IN]);
 	cmd->fd[IN] = open(name, O_RDONLY);
-	unlink(name);
-	sig_init(PARENT);
+	(unlink(name), sig_init(MAIN));
+	if (WIFSIGNALED(status))
+		return (data->exit = WTERMSIG(status) + 128, FAILED);
+	return (SUCCESS);
 }
