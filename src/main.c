@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:07:02 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 23:48:56 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:02:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ int	main(int ac, char __attribute__((unused)) **av)
 	while (42)
 	{
 		init_prog(&data);
-		ft_readline(&data.line);
+		ft_readline(&data, &data.line);
 		if (!data.line)
 		{
 			printf("exit\n");
-			break ;
+			gc_collect();
+			return (data.exit);
 		}
 		if (is_only_space(&data, data.line))
 			continue ;

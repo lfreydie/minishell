@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 15:10:11 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/20 18:50:54 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:20:32 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ int	init_process(t_data *data)
 		return (FAILED);
 	if (manage_redir(data) == FAILED)
 		return (FAILED);
+	manage_cmd_null(data);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 14:34:44 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 23:26:19 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:42:52 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ t_tok	*expand_var(t_data *data, t_tok *tk, int i)
 		return (tk);
 	}
 	ws = word_split(ptr, count_word(ptr));
+	if (!ws[0])
+		return (tk->value = expand_value(data, var, tk->value, i), tk);
 	n_tk = manage_ws(ws, tk, i);
-	n_tk = manage_end_ws(data, tk, n_tk, (i + ft_strlen(var)));
-	return (n_tk);
+	return (n_tk = manage_end_ws(data, tk, n_tk, (i + ft_strlen(var))));
 }
 
 int	expand_redir(t_data *data, t_red *red)

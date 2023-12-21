@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:28:35 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 20:10:22 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:48:39 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*expand_value(t_data *data, char *var, char *ptr, int i)
 		tmp = gc(ft_substr(ptr, 0, i));
 		new = rrange_str_join(tmp, env_val);
 	}
+	else
+		new = env_val;
 	if (ptr[i + var_len])
 	{
 		tmp = gc(ft_substr(ptr, i + var_len, \

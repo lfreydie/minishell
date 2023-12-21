@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 12:12:01 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/20 22:08:53 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:02:28 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_prompt(void)
 	return (prompt);
 }
 
-void	ft_readline(char **line)
+void	ft_readline(t_data *data, char **line)
 {
 	char	*prompt;
 
@@ -33,4 +33,6 @@ void	ft_readline(char **line)
 	free_node(prompt);
 	if (*line)
 		add_history(*line);
+	else
+		data->exit = 130;
 }

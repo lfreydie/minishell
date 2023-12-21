@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 11:26:46 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/19 16:56:31 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:18:19 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,17 @@ char	**get_paths(t_data *data)
 	if (!data->env)
 		return (NULL);
 	env_path = getenv("PATH");
-	paths = gc(ft_split(env_path + 5, ':'));
-	free_node(env_path);
+	if (env_path)
+		paths = gc(ft_split(env_path + 5, ':'));
+	else
+		return (NULL);
 	return (paths);
+}
+
+void	error_set_up(t_data *data, t_cmd *cmd)
+{
+	ft_error_msg(SHELL, cmd->value[0], NULL, PERDEN);
+	data->exit = 126;
 }
 
 void	execute(t_data *data, t_cmd *cmd)
@@ -45,6 +53,8 @@ void	execute(t_data *data, t_cmd *cmd)
 
 	i = -1;
 	paths = get_paths(data);
+	if (!paths)
+		execute_path(data, cmd);
 	while (paths[++i])
 	{
 		path_cmd = get_path_cmd(paths[i], cmd->value[0]);
@@ -55,14 +65,12 @@ void	execute(t_data *data, t_cmd *cmd)
 				execve(path_cmd, cmd->value, data->env);
 			else
 			{
-				ft_error_msg(SHELL, cmd->value[0], NULL, PERDEN);
-				data->exit = 126;
+				error_set_up(data, cmd);
 				return ;
 			}
 		}
 	}
-	ft_error_msg(SHELL, cmd->value[0], NULL, CMDERR);
-	data->exit = 127;
+	(ft_error_msg(SHELL, cmd->value[0], NULL, CMDERR), data->exit = 127);
 }
 
 void	execute_path(t_data *data, t_cmd *cmd)

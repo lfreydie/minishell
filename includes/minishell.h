@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 15:42:55 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/20 23:25:11 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:02:35 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	interrupt_handler(int signum);
 void	sig_init(int mode);
 //--------------read_line---------------
 char	*get_prompt(void);
-void	ft_readline(char **line);
+void	ft_readline(t_data *data, char **line);
 
 //-----------------INIT-----------------
 

@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:36:31 by lefreydier        #+#    #+#             */
-/*   Updated: 2023/12/20 18:57:21 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 00:37:25 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd)
 		{
 			ft_error_msg(SHELL, "warning", NULL, \
 			"here-document delimited by end-of-file (wanted `eof')");
+			close(cmd->fd[IN]);
 			return ;
 		}
 		if (!ft_streq(line, limiter))
@@ -37,6 +38,7 @@ void	heredoc_write(t_data *data, char *limiter, t_cmd *cmd)
 			flag = 0;
 		free_node(line);
 	}
+	close(cmd->fd[IN]);
 }
 
 char	*heredoc_name(void)

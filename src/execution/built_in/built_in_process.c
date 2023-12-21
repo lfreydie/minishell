@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 12:55:09 by lfreydie          #+#    #+#             */
-/*   Updated: 2023/12/20 22:38:02 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 00:42:17 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,5 @@ void	built_in_parent_process(t_data *data, t_cmd *cmd)
 	else
 		fd_out = STDOUT_FILENO;
 	built_in_cmd(data, cmd, fd_out);
+	close_fds(cmd->fd[IN], cmd->fd[OUT], -1, -1);
 }

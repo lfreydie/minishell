@@ -6,7 +6,7 @@
 /*   By: lfreydie <lfreydie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 11:08:37 by bberthod          #+#    #+#             */
-/*   Updated: 2023/12/20 21:23:40 by lfreydie         ###   ########.fr       */
+/*   Updated: 2023/12/21 01:20:18 by lfreydie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,5 @@ int	parse_token(t_data *data)
 		prev_tk = tk;
 		tk = tk->next;
 	}
-	manage_cmd_null(data);
 	return (SUCCESS);
 }
